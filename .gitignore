@@ -1,0 +1,7 @@
+*.o
+trajOpt
+*.dat
+screenshot*
+*.log
+stats
+.dropbox

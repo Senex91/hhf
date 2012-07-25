@@ -1,0 +1,41 @@
+<scene exported_by="ajc" formatVersion="1.0.1" previous_export_time="1342211679.448" export_time="1342211688.457" >
+	<nodes >
+		<node name="Lamp" >
+			<position y="5.903862" x="4.076245" z="-1.005454" />
+			<rotation qy="0.755880" qx="0.169076" qz="-0.272171" qw="0.570947" />
+			<scale y="1.000000" x="1.000000" z="1.000000" />
+			<game >
+				<sensors />
+				<actuators />
+			</game>
+		</node>
+		<node name="Camera" >
+			<position y="1.754879" x="-0.515075" z="-2.489690" />
+			<rotation qy="-0.959586" qx="0.014916" qz="0.276169" qw="0.051986" />
+			<scale y="1.000000" x="0.999999" z="0.999999" />
+			<game >
+				<sensors />
+				<actuators />
+			</game>
+			<camera projectionType="perspective" fov="28.841546255021967" name="Camera" >
+				<clipping nearPlaneDist="0.10000000149011612" farPlaneDist="100.0" />
+			</camera>
+		</node>
+		<node name="plane 727" >
+			<position y="1.683311" x="0.000000" z="-0.000000" />
+			<rotation qy="0.000000" qx="0.000000" qz="-0.000000" qw="1.000000" />
+			<scale y="1.000000" x="1.000000" z="1.000000" />
+			<game >
+				<sensors />
+				<actuators />
+			</game>
+			<entity anisotropic_friction="False" lock_trans_y="False" damping_trans="0.03999999910593033" damping_rot="0.10000000149011612" inertia_tensor="0.4000000059604645" actor="False" velocity_min="0.0" lock_trans_z="False" physics_type="STATIC" lock_trans_x="False" meshFile="plane727.mesh" friction_y="1.0" friction_x="1.0" friction_z="1.0" velocity_max="0.0" ghost="False" name="plane727" mass_radius="1.0" mass="1.0" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" />
+		</node>
+	</nodes>
+	<externals />
+	<environment >
+		<colourBackground r="0.05087608844041824" b="0.05087608844041824" g="0.05087608844041824" />
+		<colourAmbient r="0.0" b="0.0" g="0.0" />
+		<colourDiffuse r="0.05087608844041824" b="0.05087608844041824" g="0.05087608844041824" />
+	</environment>
+</scene>
