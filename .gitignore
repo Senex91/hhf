@@ -1,5 +1,6 @@
 *.o
-courtIchiro
+courtIchiroServer
+courtIchiroClient
 *.dat
 screenshot*
 *.log
