@@ -2,6 +2,13 @@
 #include <cstdlib>
 #include <cstdio>
 
+bool operator<(const IPaddress& l, const IPaddress& r) {
+	if(l.host == r.host) {
+		return r.port < r.port;
+	}
+	return l.host < r.host;
+}
+
 Server::Server(): connections() {
 	if (SDLNet_Init() < 0) {
 		fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());

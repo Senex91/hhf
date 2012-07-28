@@ -6,12 +6,7 @@
 #include "ClientConnection.h"
 #include "NetworkConstants.h"
 
-bool operator<(const IPaddress& l, const IPaddress& r) {
-	if(l.host == r.host) {
-		return r.port < r.port;
-	}
-	return l.host < r.host;
-}
+bool operator<(const IPaddress& l, const IPaddress& r);
 
 class Server {
 public:
