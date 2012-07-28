@@ -20,6 +20,8 @@ public:
 	const GameState& getGameState() { return latest; }
 	
 private:
+	void sendText(std::string str);
+	
 	Game& game;
 	
 	UDPsocket socket;
