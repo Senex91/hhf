@@ -17,6 +17,10 @@ void Map::destroy() {
 	
 }
 
+void Map::setGameState(GameState gamestate){
+
+}
+
 void Map::update() {
 	
 }
