@@ -2,6 +2,7 @@
 #define GAME_STATE_H
 
 #include <vector>
+#include <string>
 
 struct Elf{
     double x;
@@ -18,6 +19,9 @@ struct GameState{
     std::vector<Elf> elves;
     Felhound felhound;
 };
+
+std::string serializeGameState(const GameState&);
+GameState deserializeGameState(const std::string&);
 
 #endif
 
