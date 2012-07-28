@@ -2,21 +2,30 @@
 #define SERVER_CONNECTION_H
 
 #include <string>//
-#include <shared/GameState.h>
+#include <GameState.h>
 #include <SDL_net.h>
+
+class Game;
 
 class ServerConnection {
 public:
-    ServerConnection(std::string, int);
-    ~ServerConnection();
-
-    GameState getGameState();
-
+	ServerConnection(Game& game);
+	~ServerConnection();
+	
+	void initialize();
+	void destroy();
+	
+	void update();
+	
+	const GameState& getGameState() { return latest; }
+	
 private:
-    UDPsocket socket;
-    UDPpacket* packet;
-
-
+	Game& game;
+	
+	UDPsocket socket;
+	UDPpacket* packet;
+	GameState latest;
+	
 };
 
 #endif

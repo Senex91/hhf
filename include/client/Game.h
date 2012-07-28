@@ -4,6 +4,7 @@
 #include "OgreManager.h"
 #include "Map.h"
 #include "OISManager.h"
+#include "ServerConnection.h"
 
 class Game {
 public:
@@ -20,6 +21,7 @@ public:
 	inline void setRunning(const bool& r) { running = r; }
 	
 private:
+	ServerConnection connection;
 	OgreManager ogre;
 	OISManager ois;
 	Map map;

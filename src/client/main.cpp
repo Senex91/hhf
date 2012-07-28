@@ -1,6 +1,7 @@
 
 //#include "PlaneWorld.h"
 #include "Game.h"
+#include "Debug.h"
 
 int main(){
     // Create application object
@@ -11,6 +12,8 @@ int main(){
     //DemoSample demo;
 
     //return demo.run();
+    
+    DEBUG("starting client");
     
     Game game;
 

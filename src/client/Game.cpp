@@ -1,6 +1,7 @@
 #include "Game.h"
 
-Game::Game() : ogre(*this), ois(*this), map(*this) {
+Game::Game() : ogre(*this), ois(*this), map(*this), connection(*this) {
+	connection.initialize();
 	ogre.initialize();
 	ois.initialize();
 	map.initialize();
