@@ -23,7 +23,7 @@ ClientConnection::~ClientConnection() {
 	
 }
 
-void ClientConnection::sendGameState(GameState gamestate){
+void ClientConnection::sendGameState(const GameState& gamestate){
 	std::string toSend = serializeGameState(gamestate);
 	memcpy (p->data, toSend.c_str(),toSend.size()+1);
 	//p->data = reinterpret_cast<const Uint8*>(toSend.c_str());
