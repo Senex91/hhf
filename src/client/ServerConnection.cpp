@@ -4,6 +4,10 @@
 #include "NetworkConstants.h"
 #include "Game.h"
 #include <iostream>
+#include <string>
+
+using std::cin;
+using std::string;
 
 ServerConnection::ServerConnection(Game&) : game(game) {
 	
@@ -30,6 +34,9 @@ void ServerConnection::initialize() {
 		fprintf(stderr, "SDLNet_AllocPacket: %s\n", SDLNet_GetError());
 		exit(EXIT_FAILURE);
 	}
+	
+	SDLNet_ResolveHost(&packet->address,"127.0.0.1",SERVER_PORT);
+	sendText("join");
 }
 
 void ServerConnection::destroy() {
@@ -48,4 +55,10 @@ void ServerConnection::update() {
 		printf("\tAddress: %x %x\n", packet->address.host, packet->address.port);
 		
 	}
+}
+
+void ServerConnection::sendText(string text) {
+	memcpy(packet->data,text.c_str(),text.size()+1);
+	packet->len = text.size()+1;
+	SDLNet_UDP_Send(socket,-1,packet);
 }
