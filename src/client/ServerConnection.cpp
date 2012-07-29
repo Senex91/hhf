@@ -36,7 +36,18 @@ void ServerConnection::initialize() {
 	}
 	
 	SDLNet_ResolveHost(&packet->address,"127.0.0.1",SERVER_PORT);
-	sendText("join");
+	bool receivedID = false;
+	while(!receivedID) {
+		sendText("join");
+		SDL_Delay(50);
+		if(receivePacket()) {
+			char* data = (char*)packet->data;
+			if(data[0] == HANDSHAKE_CMD) {
+				myID = data[1];
+				receivedID = true;
+			}
+		}
+	}
 }
 
 void ServerConnection::destroy() {
@@ -45,7 +56,7 @@ void ServerConnection::destroy() {
 
 void ServerConnection::update() {
 	/* Wait a packet. UDP_Recv returns != 0 if a packet is coming */
-	if (SDLNet_UDP_Recv(socket, packet)) {
+	if (receivePacket()) {
 		printf("UDP Packet incoming\n");
 		printf("\tChan:    %d\n", packet->channel);
 		printf("\tData:    %s\n", (char *)packet->data);
@@ -61,4 +72,8 @@ void ServerConnection::sendText(string text) {
 	memcpy(packet->data,text.c_str(),text.size()+1);
 	packet->len = text.size()+1;
 	SDLNet_UDP_Send(socket,-1,packet);
+}
+
+bool ServerConnection::receivePacket() {
+	return SDLNet_UDP_Recv(socket, packet);
 }

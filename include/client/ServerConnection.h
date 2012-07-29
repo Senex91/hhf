@@ -21,12 +21,15 @@ public:
 	
 private:
 	void sendText(std::string str);
+	bool receivePacket();
 	
 	Game& game;
 	
 	UDPsocket socket;
 	UDPpacket* packet;
 	GameState latest;
+	
+	int myID;
 	
 };
 

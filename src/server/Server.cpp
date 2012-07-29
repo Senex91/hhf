@@ -9,7 +9,7 @@ bool operator<(const IPaddress& l, const IPaddress& r) {
 	return l.host < r.host;
 }
 
-Server::Server(): connections() {
+Server::Server(): connections(), id(1) {
 	if (SDLNet_Init() < 0) {
 		fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
 		exit(EXIT_FAILURE);
@@ -57,7 +57,7 @@ void Server::run() {
 				current = connections[p->address];
 				// current.
 			} else{ // connection does not exist
-				current = new ClientConnection(p->address);
+				current = new ClientConnection(p->address,id++);
 				connections[p->address] = current;
 			}
 

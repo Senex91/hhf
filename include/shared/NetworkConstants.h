@@ -1,7 +1,12 @@
 #ifndef NETWORK_CONSTANTS_H
 #define NETWORK_CONSTANTS_H
 
-extern int SERVER_PORT;
-extern int CLIENT_PORT;
+#define SERVER_PORT 501337
+#define CLIENT_PORT 413413
+
+#define HANDSHAKE_CMD 1
+#define STATE_CMD 2
+#define MOVE_CMD 3
+#define BLINK_CMD 4
 
 #endif

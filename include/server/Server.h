@@ -16,6 +16,8 @@ public:
 	void run();
 	
 private:
+	
+	char id;
 
 	UDPsocket sd;       /* Socket descriptor */
 	UDPpacket *p;       /* Pointer to packet memory */
