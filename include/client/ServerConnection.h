@@ -4,6 +4,7 @@
 #include <string>//
 #include <GameState.h>
 #include <SDL_net.h>
+#include <OgreVector3.h>
 
 class Game;
 
@@ -19,14 +20,19 @@ public:
 	
 	const GameState& getGameState() { return latest; }
 	
+	void move(const Ogre::Vector3& pos);
+	
 private:
 	void sendText(std::string str);
+	bool receivePacket();
 	
 	Game& game;
 	
 	UDPsocket socket;
 	UDPpacket* packet;
 	GameState latest;
+	
+	int myID;
 	
 };
 

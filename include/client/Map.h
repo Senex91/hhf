@@ -16,7 +16,7 @@ public:
 	void initialize();
 	void destroy();
     
-    void setGameState(GameState);
+    void setGameState(const GameState&);
 	
 	void update();
 	

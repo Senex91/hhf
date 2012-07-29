@@ -18,8 +18,9 @@ Game::~Game() {
 void Game::run() {
 	running = true;
 	while(running) {
-		// GameState state = connection.getState();
 		connection.update();
+		// GameState state = connection.getGameState();
+		// map.set
 		map.update();
 		ois.update();
 		ogre.update();

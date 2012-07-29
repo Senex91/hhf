@@ -14,6 +14,20 @@ int main(){
     //return demo.run();
     
     DEBUG("starting client");
+
+    // std::vector<Elf> elves;
+    // elves.push_back((Elf) {1, 0, 0, 0, 0});
+    // elves.push_back((Elf) {2, 0, 1, 0, 0});
+    // elves.push_back((Elf) {3, 1, 0, 0, 0});
+    // GameState state1;
+    // state1.elves = elves;
+    // state1.felhound = (Felhound) {2,2, 0, 0};
+
+
+    // GameState state2;
+    // state2 = state1;
+
+    // DEBUG(gameStateToString(state2));
     
     Game game;
 

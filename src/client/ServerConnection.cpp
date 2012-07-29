@@ -5,6 +5,8 @@
 #include "Game.h"
 #include <iostream>
 #include <string>
+#include "Command.h"
+#include "Debug.h"
 
 using std::cin;
 using std::string;
@@ -24,7 +26,7 @@ void ServerConnection::initialize() {
 	}
 	
 	/* Open a socket */
-	if (!(socket = SDLNet_UDP_Open(CLIENT_PORT))) {
+	if (!(socket = SDLNet_UDP_Open(0))) {
 		fprintf(stderr, "SDLNet_UDP_Open: %s\n", SDLNet_GetError());
 		exit(EXIT_FAILURE);
 	}
@@ -36,7 +38,18 @@ void ServerConnection::initialize() {
 	}
 	
 	SDLNet_ResolveHost(&packet->address,"127.0.0.1",SERVER_PORT);
-	sendText("join");
+	bool receivedID = false;
+	while(!receivedID) {
+		sendText("join");
+		SDL_Delay(50);
+		if(receivePacket()) {
+			char* data = (char*)packet->data;
+			if(data[0] == HANDSHAKE_CMD) {
+				myID = data[1];
+				receivedID = true;
+			}
+		}
+	}
 }
 
 void ServerConnection::destroy() {
@@ -45,7 +58,7 @@ void ServerConnection::destroy() {
 
 void ServerConnection::update() {
 	/* Wait a packet. UDP_Recv returns != 0 if a packet is coming */
-	if (SDLNet_UDP_Recv(socket, packet)) {
+	if (receivePacket()) {
 		printf("UDP Packet incoming\n");
 		printf("\tChan:    %d\n", packet->channel);
 		printf("\tData:    %s\n", (char *)packet->data);
@@ -53,13 +66,29 @@ void ServerConnection::update() {
 		printf("\tMaxlen:  %d\n", packet->maxlen);
 		printf("\tStatus:  %d\n", packet->status);
 		printf("\tAddress: %x %x\n", packet->address.host, packet->address.port);
-		
-		
+
+		std::string received((char *) packet->data + 1);
+		latest = deserializeGameState(received);
+		DEBUG(gameStateToString(latest));
+		game.getMap().setGameState(latest);
+
 	}
 }
 
 void ServerConnection::sendText(string text) {
+	DEBUG("Sending:" << text);
 	memcpy(packet->data,text.c_str(),text.size()+1);
 	packet->len = text.size()+1;
-	SDLNet_UDP_Send(socket,-1,packet);
+	if(!SDLNet_UDP_Send(socket,-1,packet)) {
+		DEBUG("UDP packet failed to send");
+	}
+}
+
+bool ServerConnection::receivePacket() {
+	return SDLNet_UDP_Recv(socket, packet);
+}
+
+void ServerConnection::move(const Ogre::Vector3& pos) {
+	MoveCommand m(myID,pos.x,pos.z);
+	sendText(m.write());
 }

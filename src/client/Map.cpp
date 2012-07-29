@@ -2,7 +2,11 @@
 #include "Game.h"
 #include "Debug.h"
 
-Map::Map(Game& game) : game(game){
+Map::Map(Game& game) : game(game), gameState(){
+    std::vector<Elf> elves;
+    elves.push_back((Elf) {1, 0, 0, 0, 0});
+    gameState.elves = elves;
+    gameState.felhound = (Felhound) {2, 2, 0, 0};
 	
 }
 
@@ -148,51 +152,60 @@ void Map::destroy() {
 	
 }
 
-void Map::setGameState(GameState gamestate){
-	gameState = gamestate;
+void Map::setGameState(const GameState& gamestate){
+	// gameState = gamestate;
+    std::vector<Elf> elfList;
+    elfList.push_back((Elf) {1, 0, 0, 0, 0});
+    elfList.push_back((Elf) {2, 0, 1, 0, 0});
+    elfList.push_back((Elf) {3, 1, 0, 0, 0});
+    GameState state1;
+    gameState.elves = elfList;
+    gameState.felhound = (Felhound) {2,2, 0, 0};
+
+    // gameState = state1;gameState
 }
 
 void Map::update() {
 
 	
 
-    std::vector<Elf> elfList;
-    elfList.push_back((Elf) {0, 0, 0});
-    elfList.push_back((Elf) {1, 0, 10});
-    elfList.push_back((Elf) {2, 10, 30});
-    GameState state1;
-    state1.elves = elfList;
-    state1.felhound = (Felhound) {2,2};
+    // std::vector<Elf> elfList;
+    // elfList.push_back((Elf) {0, 0, 0});
+    // elfList.push_back((Elf) {1, 0, 10});
+    // elfList.push_back((Elf) {2, 10, 30});
+    // GameState state1;
+    // state1.elves = elfList;
+    // state1.felhound = (Felhound) {2,2};
 
-    gameState = state1;
+    // gameState = state1;
 
     DEBUG(gameStateToString(gameState));
 
-	for(int elfID = 0; elfID< gameState.elves.size(); elfID++){
-        //DEBUG("Current elf:" << elfID);
+	// for(int elfID = 0; elfID< gameState.elves.size(); elfID++){
+ //        //DEBUG("Current elf:" << elfID);
 
-		OgreElf* current = NULL;
+	// 	OgreElf* current = NULL;
 
-		// If the elf does exist
-		if (elves.count(elfID)){
-			current = elves[elfID];
-		} else{ // Current elf doesn't exist
-			current = new OgreElf(
-				game.getOgreManager().getSceneManager(), 
-				elfID);
-			elves[elfID] = current;
-		}
+	// 	// If the elf does exist
+	// 	if (elves.count(elfID)){
+	// 		current = elves[elfID];
+	// 	} else{ // Current elf doesn't exist
+	// 		current = new OgreElf(
+	// 			game.getOgreManager().getSceneManager(), 
+	// 			elfID);
+	// 		elves[elfID] = current;
+	// 	}
 
-		//get Elf struct
-		Elf currentElfData;
-		for(int i = 0; i<gameState.elves.size(); i++){
-			if(gameState.elves[i].id == elfID){
-				currentElfData = gameState.elves[i];
-				break;
-			}
-		}
+	// 	//get Elf struct
+	// 	Elf currentElfData;
+	// 	for(int i = 0; i<gameState.elves.size(); i++){
+	// 		if(gameState.elves[i].id == elfID){
+	// 			currentElfData = gameState.elves[i];
+	// 			break;
+	// 		}
+	// 	}
 
-		current->setPosition(currentElfData.x, 0, currentElfData.y);
-	}
+	// 	current->setPosition(currentElfData.x, 0, currentElfData.y);
+	// }
 	
 }

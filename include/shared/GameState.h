@@ -8,16 +8,25 @@ struct Elf{
     int id;		//must start at 0
     double x;
     double y;
+	
+	double xvel;
+	double yvel;
 };
 
 struct Felhound{
     double x;
     double y;
+	
+	double xvel;
+	double yvel;
 };
 
 struct GameState{
+    GameState(void);
+    GameState(const GameState&);
     std::vector<Elf> elves;
     Felhound felhound;
+    const GameState& operator=(const GameState&);
 };
 
 std::string serializeGameState(const GameState&);
