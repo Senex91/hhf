@@ -71,6 +71,12 @@ bool OISManager::keyReleased( const OIS::KeyEvent &arg ) {
 // OIS::MouseListener
 bool OISManager::mouseMoved( const OIS::MouseEvent &arg ) {
 	game.getCameraMan()->injectMouseMove(arg);
+	float x = (float)arg.state.X.abs / (float)arg.state.width;
+	float y = (float)arg.state.Y.abs / (float)arg.state.height;
+	
+	Ogre::Vector3 pt = game.getOgreManager().rayCast(x,y);
+	game.getConnection().move(pt);
+	
 	return true;
 }
 bool OISManager::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {

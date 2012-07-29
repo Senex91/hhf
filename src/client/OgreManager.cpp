@@ -94,6 +94,8 @@ void OgreManager::initialize() {
 	sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 	root->addFrameListener(this);
+	
+	raySceneQuery = sceneManager->createRayQuery(Ogre::Ray());
 }
 
 void OgreManager::destroy() {
@@ -108,4 +110,15 @@ void OgreManager::update() {
 bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt){
 	game.getCameraMan()->frameRenderingQueued(evt);
 	return true;
+}
+
+Ogre::Vector3 OgreManager::rayCast(const float& x,const float& y) {
+	Ogre::Ray r = camera->getCameraToViewportRay(x,y);
+	Ogre::Plane p(Ogre::Vector3(0,1,0),0);
+	std::pair<bool,float> pt = Ogre::Math::intersects(r,p);
+	if(pt.first) {
+		return r.getPoint(pt.second);
+	} else {
+		return Ogre::Vector3(0,0,0);
+	}
 }

@@ -12,7 +12,7 @@ class BlinkCommand;
 class ThrowCommand;
 class CommandVisitor;
 
-Command* deserializeCommand();
+Command* deserializeCommand(std::string);
 
 class Command {
 public:

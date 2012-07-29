@@ -17,6 +17,7 @@ public:
 	
 	void update();
 	
+	Ogre::Vector3 rayCast(const float& x,const float& y);
 	
 	Ogre::Root* getRoot() { return root; }
 	Ogre::Camera* getCamera() { return camera; }
@@ -37,6 +38,7 @@ private:
 	Ogre::RenderWindow* window;
 	Ogre::String resourcesCfg;
 	Ogre::String pluginsCfg;
+	Ogre::RaySceneQuery* raySceneQuery;
 };
 
 #endif

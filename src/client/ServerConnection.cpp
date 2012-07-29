@@ -5,6 +5,8 @@
 #include "Game.h"
 #include <iostream>
 #include <string>
+#include "Command.h"
+#include "Debug.h"
 
 using std::cin;
 using std::string;
@@ -24,7 +26,7 @@ void ServerConnection::initialize() {
 	}
 	
 	/* Open a socket */
-	if (!(socket = SDLNet_UDP_Open(CLIENT_PORT))) {
+	if (!(socket = SDLNet_UDP_Open(0))) {
 		fprintf(stderr, "SDLNet_UDP_Open: %s\n", SDLNet_GetError());
 		exit(EXIT_FAILURE);
 	}
@@ -69,11 +71,19 @@ void ServerConnection::update() {
 }
 
 void ServerConnection::sendText(string text) {
+	DEBUG("Sending:" << text);
 	memcpy(packet->data,text.c_str(),text.size()+1);
 	packet->len = text.size()+1;
-	SDLNet_UDP_Send(socket,-1,packet);
+	if(!SDLNet_UDP_Send(socket,-1,packet)) {
+		DEBUG("UDP packet failed to send");
+	}
 }
 
 bool ServerConnection::receivePacket() {
 	return SDLNet_UDP_Recv(socket, packet);
+}
+
+void ServerConnection::move(const Ogre::Vector3& pos) {
+	MoveCommand m(myID,pos.x,pos.z);
+	sendText(m.write());
 }

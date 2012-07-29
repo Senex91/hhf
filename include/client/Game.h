@@ -17,6 +17,7 @@ public:
 	inline OISManager& getOISManager() { return ois; }
 	inline OgreBites::SdkCameraMan* getCameraMan() { return cameraMan; }
 	inline Map& getMap() { return map; }
+	inline ServerConnection& getConnection() { return connection; }
 	inline const bool& getRunning() { return running; }
 	
 	inline void setRunning(const bool& r) { running = r; }

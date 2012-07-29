@@ -6,12 +6,8 @@
 #include <stdio.h>
 #include "NetworkConstants.h"
 
-ClientConnection::ClientConnection(IPaddress ad,char id) : address(ad), id(id) {
-	if (!(sd = SDLNet_UDP_Open(0)))
-	{
-		fprintf(stderr, "SDLNet_UDP_Open: %s\n", SDLNet_GetError());
-		exit(EXIT_FAILURE);
-	}
+ClientConnection::ClientConnection(IPaddress ad,char id,UDPsocket& sd) : address(ad), id(id), sd(sd) {
+	ad.port = CLIENT_PORT;
 	if (!(p = SDLNet_AllocPacket(512)))
 	{
 		fprintf(stderr, "SDLNet_AllocPacket: %s\n", SDLNet_GetError());
@@ -31,7 +27,7 @@ ClientConnection::~ClientConnection() {
 }
 
 void ClientConnection::sendGameState(const GameState& gamestate){
-	sendText(serializeGameState(gamestate));
+	sendText(GameStateCommand(gamestate).write());
 	
 }
 

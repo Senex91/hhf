@@ -8,11 +8,17 @@ struct Elf{
     int id;
     double x;
     double y;
+	
+	double xvel;
+	double yvel;
 };
 
 struct Felhound{
     double x;
     double y;
+	
+	double xvel;
+	double yvel;
 };
 
 struct GameState{
