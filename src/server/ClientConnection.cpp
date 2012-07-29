@@ -1,3 +1,4 @@
+#include "GameState.h"
 #include "ClientConnection.h"
 #include "string.h"
 #include "string"
@@ -23,8 +24,7 @@ ClientConnection::~ClientConnection() {
 }
 
 void ClientConnection::sendGameState(GameState gamestate){
-	std::string toSend;
-	toSend = "hello";
+	std::string toSend = serializeGameState(gamestate);
 	memcpy (p->data, toSend.c_str(),toSend.size()+1);
 	//p->data = reinterpret_cast<const Uint8*>(toSend.c_str());
 	p->len = (toSend.size() + 1);

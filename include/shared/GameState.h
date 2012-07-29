@@ -5,9 +5,9 @@
 #include <string>
 
 struct Elf{
+    int id;
     double x;
     double y;
-    int id;
 };
 
 struct Felhound{
@@ -21,6 +21,7 @@ struct GameState{
 };
 
 std::string serializeGameState(const GameState&);
+std::string gameStateToString(const GameState&);
 GameState deserializeGameState(const std::string&);
 
 #endif
