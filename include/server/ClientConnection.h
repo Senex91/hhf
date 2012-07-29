@@ -1,12 +1,14 @@
 #ifndef CLIENT_CONNECTION
 #define CLIENT_CONNECTION
 
+#include "GameState.h"
 #include "SDL_net.h"
 
 class ClientConnection {
 public:
 	ClientConnection(IPaddress);
 	~ClientConnection();
+	void sendGameState(GameState);
 	
 	
 	

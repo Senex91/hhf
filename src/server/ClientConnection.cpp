@@ -1,4 +1,6 @@
 #include "ClientConnection.h"
+#include "string.h"
+#include "string"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -18,4 +20,15 @@ ClientConnection::ClientConnection(IPaddress ad) : address(ad) {
 
 ClientConnection::~ClientConnection() {
 	
+}
+
+void ClientConnection::sendGameState(GameState gamestate){
+	std::string toSend;
+	toSend = "hello";
+	memcpy (p->data, toSend.c_str(),toSend.size()+1);
+	//p->data = reinterpret_cast<const Uint8*>(toSend.c_str());
+	p->len = (toSend.size() + 1);
+
+	SDLNet_UDP_Send(sd, -1, p);
+
 }
