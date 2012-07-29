@@ -1,6 +1,8 @@
 #include "Elf.h"
 
-OgreElf::OgreElf(Ogre::SceneManager* manager, int id): manager(manager), id(id), name(){
+OgreElf::OgreElf(Ogre::SceneManager* pManager, int pId){
+	manager = pManager;
+	id = pId;
 
 	name = OgreElf_ENTITY_NAME + id;
 	entity = manager->createEntity(name, OgreElf_MESHNAME);

@@ -80,6 +80,21 @@ void Server::run() {
 			}
 		}
 
+		if(timer++ % 51 == 0){
+			std::vector<Elf> elves;
+			elves.push_back((Elf) {1, 9, 9});
+			elves.push_back((Elf) {2, 9, 9});
+			elves.push_back((Elf) {3, 9, 9});
+			GameState state1;
+			state1.elves = elves;
+			state1.felhound = (Felhound) {2,2};
+
+			std::map<IPaddress, ClientConnection*>::iterator it;
+			for(it = connections.begin(); it != connections.end(); it++){
+				((*it).second)->sendGameState(state1);
+			}
+		}
+
 
 		SDL_Delay(10);
 

@@ -54,6 +54,7 @@ void ServerConnection::update() {
 		printf("\tStatus:  %d\n", packet->status);
 		printf("\tAddress: %x %x\n", packet->address.host, packet->address.port);
 		
+		
 	}
 }
 

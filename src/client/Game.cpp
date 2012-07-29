@@ -18,6 +18,7 @@ Game::~Game() {
 void Game::run() {
 	running = true;
 	while(running) {
+		// GameState state = connection.getState();
 		connection.update();
 		map.update();
 		ois.update();

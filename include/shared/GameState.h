@@ -5,7 +5,7 @@
 #include <string>
 
 struct Elf{
-    int id;
+    int id;		//must start at 0
     double x;
     double y;
 };

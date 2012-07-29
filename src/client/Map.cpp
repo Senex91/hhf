@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Game.h"
 #include "Debug.h"
+
 Map::Map(Game& game) : game(game){
 	
 }
@@ -11,16 +12,16 @@ Map::~Map() {
 
 void Map::initialize() {
 	// Create an Entity
-    Ogre::Entity* ogreHead = game.getOgreManager().getSceneManager()->createEntity("Head", "ogrehead.mesh");
-    // Create a SceneNode and attach the Entity to it
-    Ogre::SceneNode* headNode = game.getOgreManager().getSceneManager()->getRootSceneNode()->createChildSceneNode("HeadNode");
-    headNode->attachObject(ogreHead);
-    // game.getOgreManager().getSceneManager()->getRootSceneNode()->addChild(headNode);
+    // Ogre::Entity* ogreHead = game.getOgreManager().getSceneManager()->createEntity("Head", "ogrehead.mesh");
+    // // Create a SceneNode and attach the Entity to it
+    // Ogre::SceneNode* headNode = game.getOgreManager().getSceneManager()->getRootSceneNode()->createChildSceneNode("HeadNode");
+    // headNode->attachObject(ogreHead);
+    // // game.getOgreManager().getSceneManager()->getRootSceneNode()->addChild(headNode);
 
  
-    // Create a Light and set its position
-    Ogre::Light* light = game.getOgreManager().getSceneManager()->createLight("MainLight");
-    light->setPosition(20.0f, 80.0f, 50.0f);
+    // // Create a Light and set its position
+    // Ogre::Light* light = game.getOgreManager().getSceneManager()->createLight("MainLight");
+    // light->setPosition(20.0f, 80.0f, 50.0f);
 
     // game.getOgreManager().getSceneManager()->setAmbientLight(Ogre::ColourValue(0, 0, 0));
     // game.getOgreManager().getSceneManager()->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
@@ -153,14 +154,29 @@ void Map::setGameState(GameState gamestate){
 
 void Map::update() {
 
-		for(int elfID = 0; elfID< gameState.elves.size(); elfID++){
+	
+
+    std::vector<Elf> elfList;
+    elfList.push_back((Elf) {0, 0, 0});
+    elfList.push_back((Elf) {1, 0, 10});
+    elfList.push_back((Elf) {2, 10, 30});
+    GameState state1;
+    state1.elves = elfList;
+    state1.felhound = (Felhound) {2,2};
+
+    gameState = state1;
+
+    DEBUG(gameStateToString(gameState));
+
+	for(int elfID = 0; elfID< gameState.elves.size(); elfID++){
+        //DEBUG("Current elf:" << elfID);
+
 		OgreElf* current = NULL;
 
 		// If the elf does exist
-		if (elves.count(elfID) == 1){
+		if (elves.count(elfID)){
 			current = elves[elfID];
 		} else{ // Current elf doesn't exist
-			DEBUG("making an elf!");
 			current = new OgreElf(
 				game.getOgreManager().getSceneManager(), 
 				elfID);
