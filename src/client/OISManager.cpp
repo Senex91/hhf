@@ -21,7 +21,7 @@ void OISManager::initialize() {
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
     pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-    pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
+    pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
     pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
 
@@ -58,21 +58,26 @@ void OISManager::update() {
 
 // OIS::KeyListener
 bool OISManager::keyPressed( const OIS::KeyEvent &arg ) {
+	game.getCameraMan()->injectKeyDown(arg);
 	return true;
 }
 bool OISManager::keyReleased( const OIS::KeyEvent &arg ) {
 	if(arg.key == OIS::KC_F12) {
 		game.setRunning(false);
 	}
+	game.getCameraMan()->injectKeyUp(arg);
 	return true;
 }
 // OIS::MouseListener
 bool OISManager::mouseMoved( const OIS::MouseEvent &arg ) {
+	game.getCameraMan()->injectMouseMove(arg);
 	return true;
 }
 bool OISManager::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
+	game.getCameraMan()->injectMouseDown(arg,id);
 	return true;
 }
 bool OISManager::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
+	game.getCameraMan()->injectMouseUp(arg, id);
 	return true;
 }

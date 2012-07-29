@@ -28,6 +28,7 @@
 #ifndef __SdkCameraMan_H__
 #define __SdkCameraMan_H__
 
+#include <OIS.h>
 #include "Ogre.h"
 #include <limits>
 #include <iostream>
@@ -155,7 +156,7 @@ namespace OgreBites
             {
                 if (mStyle != CS_ORBIT && style == CS_ORBIT)
                 {
-                    setTarget(mTarget ? mTarget : mCamera->getSceneManager()->getRootSceneNode());
+                    setTarget(mTarget ? mTarget : mCamera->getSceneManager()->getRootSceneNode()->createChildSceneNode("cameraNode"));
                     mCamera->setFixedYawAxis(true);
                     manualStop();
                     setYawPitchDist(Ogre::Degree(0), Ogre::Degree(15), 150);

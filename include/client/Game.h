@@ -15,6 +15,7 @@ public:
 	
 	inline OgreManager& getOgreManager() { return ogre; }
 	inline OISManager& getOISManager() { return ois; }
+	inline OgreBites::SdkCameraMan* getCameraMan() { return cameraMan; }
 	inline Map& getMap() { return map; }
 	inline const bool& getRunning() { return running; }
 	
@@ -26,6 +27,8 @@ private:
 	OISManager ois;
 	Map map;
 	bool running;
+
+	OgreBites::SdkCameraMan* cameraMan; // basic camera controller
 };
 
 #endif
