@@ -65,10 +65,16 @@ void OgreManager::initialize() {
 	camera = sceneManager->createCamera("PlayerCam");
 	
 	// Position it at 500 in Z direction
-	camera->setPosition(Ogre::Vector3(0,0,80));
+	camera->setPosition(Ogre::Vector3(0,0,500));
 	// Look back along -Z
 	camera->lookAt(Ogre::Vector3(0,0,-300));
 	camera->setNearClipDistance(5);
+
+	// camera->setPosition(Ogre::Vector3(1683, 50, 2116));
+ //    camera->lookAt(Ogre::Vector3(1963, 50, 1660));
+ //    camera->setNearClipDistance(0.1);
+ //    camera->setFarClipDistance(50000);
+
 	//-------------------------------------------------------------------------------------
 	// create viewports
 	// Create one viewport, entire window
@@ -86,6 +92,8 @@ void OgreManager::initialize() {
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	//-------------------------------------------------------------------------------------
 	sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+
+	root->addFrameListener(this);
 }
 
 void OgreManager::destroy() {
@@ -93,5 +101,11 @@ void OgreManager::destroy() {
 }
 
 void OgreManager::update() {
+	Ogre::WindowEventUtilities::messagePump();
 	root->renderOneFrame();
+}
+
+bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt){
+	game.getCameraMan()->frameRenderingQueued(evt);
+	return true;
 }

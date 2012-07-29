@@ -3,6 +3,9 @@
 
 #include <GameState.h>
 
+#include "map"
+#include "Elf.h"
+
 class Game;
 
 class Map {
@@ -20,6 +23,8 @@ public:
 private:
 	Game& game;
     GameState gameState;
+
+    std::map<int, OgreElf*> elves;
 };
 
 #endif

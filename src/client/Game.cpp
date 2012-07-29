@@ -5,6 +5,8 @@ Game::Game() : ogre(*this), ois(*this), map(*this), connection(*this) {
 	ogre.initialize();
 	ois.initialize();
 	map.initialize();
+	cameraMan = new OgreBites::SdkCameraMan(ogre.getCamera());
+	// cameraMan->setStyle(OgreBites::CS_ORBIT);
 }
 
 Game::~Game() {

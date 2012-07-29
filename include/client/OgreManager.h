@@ -3,9 +3,11 @@
 
 #include <Ogre.h>
 
+#include "TOCameraMan.h"
+
 class Game;
 
-class OgreManager {
+class OgreManager: public Ogre::FrameListener{
 public:
 	OgreManager(Game&);
 	~OgreManager();
@@ -15,10 +17,16 @@ public:
 	
 	void update();
 	
+	
 	Ogre::Root* getRoot() { return root; }
 	Ogre::Camera* getCamera() { return camera; }
 	Ogre::SceneManager* getSceneManager() { return sceneManager; }
 	Ogre::RenderWindow* getWindow() { return window; }
+
+protected:
+
+	   // Ogre::FrameListener
+    virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	
 private:
 	Game& game;
