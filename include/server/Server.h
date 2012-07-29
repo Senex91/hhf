@@ -6,6 +6,13 @@
 #include "ClientConnection.h"
 #include "NetworkConstants.h"
 
+bool operator<(const IPaddress& l, const IPaddress& r) {
+	if(l.host == r.host) {
+		return r.port < r.port;
+	}
+	return l.host < r.host;
+}
+
 class Server {
 public:
 	Server();
@@ -19,7 +26,7 @@ private:
 	UDPpacket *p;       /* Pointer to packet memory */
 	bool running;
 
-	std::map<IPAddress, ClientConnection*> connections;
+	std::map<IPaddress, ClientConnection*> connections;
 
 };
 

@@ -16,6 +16,7 @@ Game::~Game() {
 void Game::run() {
 	running = true;
 	while(running) {
+		connection.update();
 		map.update();
 		ois.update();
 		ogre.update();

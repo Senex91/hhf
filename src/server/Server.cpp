@@ -45,12 +45,12 @@ void Server::run() {
 
 			// GET OUR CONNECTION
 			ClientConnection* current = NULL;
-			if(connections.count(p->address)) { 
+			if(connections.count(p->address)) {
 				// proceed if connection exists
 				current = connections[p->address];
 				// current.
 			} else{ // connection does not exist
-				current = new ClientConnction(p->address);
+				current = new ClientConnection(p->address);
 				connections[p->address] = current;
 			}
 
@@ -67,7 +67,7 @@ void Server::run() {
 			state1.elves = elves;
 			state1.felhound = (Felhound) {2,2};
 
-			std::map<IPAddress, ClientConnection*>::iterator it;
+			std::map<IPaddress, ClientConnection*>::iterator it;
 			for(it = connections.begin(); it != connections.end(); it++){
 				((*it).second)->sendGameState(state1);
 			}

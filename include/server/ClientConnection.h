@@ -8,7 +8,7 @@ class ClientConnection {
 public:
 	ClientConnection(IPaddress);
 	~ClientConnection();
-	void sendGameState(GameState);
+	void sendGameState(const GameState&);
 	
 	
 	
