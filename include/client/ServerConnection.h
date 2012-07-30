@@ -5,18 +5,18 @@
 #include <GameState.h>
 #include <SDL_net.h>
 #include <OgreVector3.h>
+#include "Map.h"
 
-class Game;
+// class Game;
 
 class ServerConnection {
 public:
-	ServerConnection(Game& game);
+	ServerConnection();
 	~ServerConnection();
 	
 	void initialize();
 	void destroy();
-	
-	void update();
+	void update(Map&);
 	
 	const GameState& getGameState() { return latest; }
 	
@@ -26,13 +26,13 @@ private:
 	void sendText(std::string str);
 	bool receivePacket();
 	
-	Game& game;
+	// Game& game;
 	
-	UDPsocket socket;
-	UDPpacket* packet;
+	// UDPsocket socket;
+	// UDPpacket* packet;
 	GameState latest;
 	
-	int myID;
+	// int myID;
 	
 };
 

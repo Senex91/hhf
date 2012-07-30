@@ -3,14 +3,14 @@
 
 #include <GameState.h>
 
-#include "map"
+// #include "map"
 #include "Elf.h"
 
-class Game;
+// class Game;
 
 class Map {
 public:
-	Map(Game& game);
+	Map();
 	~Map();
 	
 	void initialize();
@@ -21,10 +21,10 @@ public:
 	void update();
 	
 private:
-	Game& game;
+	// Game& game;
     GameState gameState;
 
-    std::map<int, OgreElf*> elves;
+    // std::map<int, OgreElf*> elves;
 };
 
 #endif

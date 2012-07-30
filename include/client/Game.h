@@ -13,9 +13,9 @@ public:
 	
 	void run();
 	
-	inline OgreManager& getOgreManager() { return ogre; }
-	inline OISManager& getOISManager() { return ois; }
-	inline OgreBites::SdkCameraMan* getCameraMan() { return cameraMan; }
+	// inline OgreManager& getOgreManager() { return ogre; }
+	// inline OISManager& getOISManager() { return ois; }
+	// inline OgreBites::SdkCameraMan* getCameraMan() { return cameraMan; }
 	inline Map& getMap() { return map; }
 	inline ServerConnection& getConnection() { return connection; }
 	inline const bool& getRunning() { return running; }
@@ -24,12 +24,12 @@ public:
 	
 private:
 	ServerConnection connection;
-	OgreManager ogre;
-	OISManager ois;
+	// OgreManager ogre;
+	// OISManager ois;
 	Map map;
 	bool running;
 
-	OgreBites::SdkCameraMan* cameraMan; // basic camera controller
+	// OgreBites::SdkCameraMan* cameraMan; // basic camera controller
 };
 
 #endif

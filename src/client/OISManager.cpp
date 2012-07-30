@@ -1,3 +1,5 @@
+#if 0
+
 #include "OISManager.h"
 #include "Game.h"
 
@@ -87,3 +89,4 @@ bool OISManager::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID i
 	game.getCameraMan()->injectMouseUp(arg, id);
 	return true;
 }
+#endif

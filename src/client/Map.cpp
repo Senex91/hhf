@@ -2,12 +2,11 @@
 #include "Game.h"
 #include "Debug.h"
 
-Map::Map(Game& game) : game(game), gameState(){
+Map::Map() : gameState(){
     std::vector<Elf> elves;
     elves.push_back((Elf) {1, 0, 0, 0, 0});
     gameState.elves = elves;
     gameState.felhound = (Felhound) {2, 2, 0, 0};
-	
 }
 
 Map::~Map() {
@@ -68,82 +67,91 @@ void Map::initialize() {
     // spotLight->setPosition(Ogre::Vector3(300, 300, 0));
  
     // spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
-    int numcols = 100;
-    int numrows = 100;
-    float unitsize = 3.0;
 
-    Ogre::ManualObject* grid = game.getOgreManager().getSceneManager()->createManualObject("grid");    
 
-    grid->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
 
-    float width = (float)numcols * unitsize;
-    float depth = (float)numrows * unitsize;
-    Ogre::Vector3 center = Ogre::Vector3((-width / 2.0f), 0 ,( -depth / 2.0f));
 
-    Ogre::ColourValue white = Ogre::ColourValue(1.0f, 1.0f, 1.0f, 0.5f); 
-    int count = 0;
-    for (int i = 0; i < numrows; ++i)
-    {   
-        Ogre::Vector3 s, e;
-        s.x = 0.0f;
-        s.z = i * unitsize; s.y = 0.0f;
 
-        e.x = width;
-        e.z = i * unitsize;
-        e.y = 0.0f;
 
-        grid->position(s + center);
-        grid->colour(white);
-        grid->position(e + center);
-        grid->colour(white);
-        grid->index(count++);
-        grid->index(count++);
-    }   
-    grid->position(Ogre::Vector3(0.0f, 0.0f, numrows * unitsize) + center);
-    grid->colour(white);
-    grid->position(Ogre::Vector3(width, 0.0f, numrows * unitsize) + center);
-    grid->colour(white);
-    grid->index(count++);
-    grid->index(count++);
 
-    for (int i = 0; i < numcols; ++i)
-    {   
-        Ogre::Vector3 s, e;
-        s.x = i * unitsize;
-        s.z = depth;
-        s.y = 0.0f;
 
-        e.x = i * unitsize;
-        e.z = 0.0f;
-        e.y = 0.0f;
+    
+    // int numcols = 100;
+    // int numrows = 100;
+    // float unitsize = 3.0;
 
-        grid->position(s + center);
-        grid->colour(white);
-        grid->position(e + center);
-        grid->colour(white);
-        grid->index(count++);
-        grid->index(count++);
-    }   
-    grid->position(Ogre::Vector3(numcols * unitsize, 0.0f, 0.0f) + center);
-    grid->colour(white);
-    grid->position(Ogre::Vector3(numcols * unitsize, 0.0f, depth) + center);
-    grid->colour(white);
-    grid->index(count++);
-    grid->index(count++);
-    grid->end();
+    // Ogre::ManualObject* grid = game.getOgreManager().getSceneManager()->createManualObject("grid");    
 
-    Ogre::String meshName= "Grid";
-    Ogre::String lResourceGroup = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
-    grid->convertToMesh(meshName); 
+    // grid->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+
+    // float width = (float)numcols * unitsize;
+    // float depth = (float)numrows * unitsize;
+    // Ogre::Vector3 center = Ogre::Vector3((-width / 2.0f), 0 ,( -depth / 2.0f));
+
+    // Ogre::ColourValue white = Ogre::ColourValue(1.0f, 1.0f, 1.0f, 0.5f); 
+    // int count = 0;
+    // for (int i = 0; i < numrows; ++i)
+    // {   
+    //     Ogre::Vector3 s, e;
+    //     s.x = 0.0f;
+    //     s.z = i * unitsize; s.y = 0.0f;
+
+    //     e.x = width;
+    //     e.z = i * unitsize;
+    //     e.y = 0.0f;
+
+    //     grid->position(s + center);
+    //     grid->colour(white);
+    //     grid->position(e + center);
+    //     grid->colour(white);
+    //     grid->index(count++);
+    //     grid->index(count++);
+    // }   
+    // grid->position(Ogre::Vector3(0.0f, 0.0f, numrows * unitsize) + center);
+    // grid->colour(white);
+    // grid->position(Ogre::Vector3(width, 0.0f, numrows * unitsize) + center);
+    // grid->colour(white);
+    // grid->index(count++);
+    // grid->index(count++);
+
+    // for (int i = 0; i < numcols; ++i)
+    // {   
+    //     Ogre::Vector3 s, e;
+    //     s.x = i * unitsize;
+    //     s.z = depth;
+    //     s.y = 0.0f;
+
+    //     e.x = i * unitsize;
+    //     e.z = 0.0f;
+    //     e.y = 0.0f;
+
+    //     grid->position(s + center);
+    //     grid->colour(white);
+    //     grid->position(e + center);
+    //     grid->colour(white);
+    //     grid->index(count++);
+    //     grid->index(count++);
+    // }   
+    // grid->position(Ogre::Vector3(numcols * unitsize, 0.0f, 0.0f) + center);
+    // grid->colour(white);
+    // grid->position(Ogre::Vector3(numcols * unitsize, 0.0f, depth) + center);
+    // grid->colour(white);
+    // grid->index(count++);
+    // grid->index(count++);
+    // grid->end();
+
+    // Ogre::String meshName= "Grid";
+    // Ogre::String lResourceGroup = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
+    // grid->convertToMesh(meshName); 
 	
-    Ogre::Entity* gridEntity = game.getOgreManager().getSceneManager()->createEntity("Grid");
-    Ogre::SceneNode* gridNode = game.getOgreManager().getSceneManager()->getRootSceneNode()->createChildSceneNode("GridNode");
-    gridNode->attachObject(gridEntity);
+    // Ogre::Entity* gridEntity = game.getOgreManager().getSceneManager()->createEntity("Grid");
+    // Ogre::SceneNode* gridNode = game.getOgreManager().getSceneManager()->getRootSceneNode()->createChildSceneNode("GridNode");
+    // gridNode->attachObject(gridEntity);
 
-    Ogre::MaterialPtr gridMat = gridEntity->getSubEntity(0)->getMaterial();
-    gridMat->getTechnique(0)->getPass(0)->setAmbient(Ogre::ColourValue(.5, .5, .5, 0));
-    gridMat->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(.5, .5, .5, 0));
-    gridEntity->setMaterialName(gridMat->getName());
+    // Ogre::MaterialPtr gridMat = gridEntity->getSubEntity(0)->getMaterial();
+    // gridMat->getTechnique(0)->getPass(0)->setAmbient(Ogre::ColourValue(.5, .5, .5, 0));
+    // gridMat->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(.5, .5, .5, 0));
+    // gridEntity->setMaterialName(gridMat->getName());
 
 
 }
@@ -154,6 +162,9 @@ void Map::destroy() {
 
 void Map::setGameState(const GameState& gamestate){
 	// gameState = gamestate;
+    DEBUG("SetGameState....");
+
+    DEBUG(gameStateToString(gameState));
     std::vector<Elf> elfList;
     elfList.push_back((Elf) {1, 0, 0, 0, 0});
     elfList.push_back((Elf) {2, 0, 1, 0, 0});
@@ -161,6 +172,8 @@ void Map::setGameState(const GameState& gamestate){
     GameState state1;
     gameState.elves = elfList;
     gameState.felhound = (Felhound) {2,2, 0, 0};
+
+    DEBUG(gameStateToString(gameState));
 
     // gameState = state1;gameState
 }

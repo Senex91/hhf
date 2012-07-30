@@ -35,6 +35,10 @@ void Server::run() {
 	running = true;
 	int timer = 0;
 	while (running) {
+
+		/**************************************
+					RECEIVE DATA
+		****************************************/
 		/* Wait a packet. UDP_Recv returns != 0 if a packet is coming */
 		if (SDLNet_UDP_Recv(sd, p)) {
 			printf("UDP Packet incoming\n");
@@ -55,12 +59,17 @@ void Server::run() {
 				current = new ClientConnection(p->address,id++,sd); //handshaking happens internally
 				connections[p->address] = current;
 			}
+
+
+			// GET COMMAND
 			Command* command = deserializeCommand(std::string((char*)p->data));
 			if(command) {
 				processCommand(p->address,*command);
 				delete command;
 			}
 		}
+
+
 		if(timer++ % 100 == 0){
 			
 			std::vector<Elf> elves;
