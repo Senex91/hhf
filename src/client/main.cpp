@@ -1,7 +1,8 @@
 
-//#include "PlaneWorld.h"
-#include "Game.h"
+#include "Client.h"
 #include "Debug.h"
+
+#include <string>
 
 int main(){
     // Create application object
@@ -28,15 +29,21 @@ int main(){
     // state2 = state1;
 
     // DEBUG(gameStateToString(state2));
-    
-    Game game;
 
-    try {
-        game.run();
-    } catch( Ogre::Exception& e ) {
-        std::cerr << "An exception has occured: " <<
-            e.getFullDescription().c_str() << std::endl;
-    }
+    Client* client = Client::getInstance();
+    client->name = "Andrew";
+
+    DEBUG(client->name);
+    DEBUG((Client::getInstance())->name);
+    
+    // Game game;
+
+    // try {
+    //     game.run();
+    // } catch( Ogre::Exception& e ) {
+    //     std::cerr << "An exception has occured: " <<
+    //         e.getFullDescription().c_str() << std::endl;
+    // }
 
 
 
