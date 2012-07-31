@@ -6,3 +6,4 @@ screenshot*
 *.log
 stats
 .dropbox
+*.test
