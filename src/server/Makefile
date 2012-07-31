@@ -1,19 +1,34 @@
 CC := g++
-INCLUDES := -I/usr/local/include/CEGUI/ -I/usr/include/OGRE/ -I/usr/include/OIS/ -I/usr/include/SDL/ -I$(INCL_HOME)/shared/ -I$(INCL_HOME)/server/
-CFLAGS := -Wall -c $(INCLUDES) -O3
+FOLDER := server/
+INCLUDES := -I/usr/local/include/CEGUI/ -I/usr/include/OGRE/ -I/usr/include/OIS/ -I/usr/include/SDL/ -I$(INCL_HOME)/$(FOLDER)/ -I$(INCL_HOME)/shared/
+CFLAGS := -Wall -c $(INCLUDES) -O3 -g
 SOURCES := $(wildcard *.cpp)
 OBJECT_NAMES := $(SOURCES:.cpp=.o)
-PREFIX := $(OBJ_HOME)/server/
-OBJECTS := $(addprefix $(PREFIX),$(OBJECT_NAMES))
+OBJ_PREFIX := $(OBJ_HOME)/$(FOLDER)
+OBJECTS := $(addprefix $(OBJ_PREFIX),$(OBJECT_NAMES))
 
-.PHONY:
+INCLUDE_TESTS := $(INCL_HOME)/$(FOLDER)/tests/
+TEST_PREFIX := $(TEST_HOME)/$(FOLDER)/
+TEST_HEADERS := $(notdir $(wildcard $(INCLUDE_TESTS)*.h))
+TEST_SOURCES := $(addprefix tests/,$(TEST_HEADERS:.h=.cpp))
+TESTS := $(addprefix $(TEST_PREFIX),$(TEST_HEADERS:.h=.o))
+
+.PHONY: main
 main: $(OBJECTS)
 	
 
-$(PREFIX)%.o: %.cpp
-	g++ $(CFLAGS) $< -o $@ -g
+$(OBJ_PREFIX)%.o: %.cpp
+	g++ $(CFLAGS) $< -o $@
 
+.PHONY: tests
+tests: $(TESTS)
+	
 
+$(TEST_PREFIX)%.o: tests/%.cpp
+	g++ $(CFLAGS) -I/usr/include/cxxtest/ $< -o $@
+
+tests/%.cpp: $(INCLUDE_TESTS)%.h
+	cxxtestgen --error-printer -o $@ $< 
 
 .PHONY: clean
 clean:

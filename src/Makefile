@@ -1,14 +1,15 @@
 
-.PHONY:
+.PHONY: main
 main:
 	cd shared && $(MAKE)
 	cd client && $(MAKE)
 	cd server && $(MAKE)
 
-%.o: %.cpp
-	g++ $(CFLAGS) $< -o $(OBJ_HOME)/$@ -g
-
-
+.PHONY: tests
+tests:
+	cd shared && $(MAKE) tests
+	cd client && $(MAKE) tests
+	cd server && $(MAKE) tests
 
 .PHONY: clean
 clean:
