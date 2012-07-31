@@ -3,11 +3,9 @@
 
 #include <OIS.h>
 
-class Game;
-
 class OISManager : public OIS::KeyListener, public OIS::MouseListener {
 public:
-	OISManager(Game&);
+	OISManager();
 	~OISManager();
 	
 	void initialize();
@@ -24,7 +22,6 @@ public:
 	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	
 private:
-	Game& game;
 	
 	OIS::InputManager* inputManager;
 	OIS::Mouse*    mouse;

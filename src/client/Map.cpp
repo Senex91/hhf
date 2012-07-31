@@ -1,5 +1,7 @@
+#if 0
+
 #include "Map.h"
-#include "Game.h"
+// #include "Game.h"
 #include "Debug.h"
 
 Map::Map(Game& game) : game(game), gameState(){
@@ -209,3 +211,5 @@ void Map::update() {
 	// }
 	
 }
+
+#endif

@@ -1,7 +1,7 @@
 #include "OISManager.h"
-#include "Game.h"
+#include "Client.h"
 
-OISManager::OISManager(Game& game) : game(game) {
+OISManager::OISManager(){
 	inputManager = NULL;
 	mouse = NULL;
 	keyboard = NULL;
@@ -17,7 +17,7 @@ void OISManager::initialize() {
 	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
 
-	game.getOgreManager().getWindow()->getCustomAttribute("WINDOW", &windowHnd);
+	Client::getInstance().getOgreManager().getWindow()->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
     pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
@@ -36,7 +36,7 @@ void OISManager::initialize() {
 	
 	unsigned int width, height, depth;
     int left, top;
-    game.getOgreManager().getWindow()->getMetrics(width, height, depth, left, top);
+    Client::getInstance().getOgreManager().getWindow()->getMetrics(width, height, depth, left, top);
  
     const OIS::MouseState &ms = mouse->getMouseState();
     ms.width = width;
@@ -58,32 +58,32 @@ void OISManager::update() {
 
 // OIS::KeyListener
 bool OISManager::keyPressed( const OIS::KeyEvent &arg ) {
-	game.getCameraMan()->injectKeyDown(arg);
+	Client::getInstance().getCameraMan().injectKeyDown(arg);
 	return true;
 }
 bool OISManager::keyReleased( const OIS::KeyEvent &arg ) {
 	if(arg.key == OIS::KC_F12) {
-		game.setRunning(false);
+		Client::getInstance().setRunning(false);
 	}
-	game.getCameraMan()->injectKeyUp(arg);
+	Client::getInstance().getCameraMan().injectKeyUp(arg);
 	return true;
 }
 // OIS::MouseListener
 bool OISManager::mouseMoved( const OIS::MouseEvent &arg ) {
-	game.getCameraMan()->injectMouseMove(arg);
+	Client::getInstance().getCameraMan().injectMouseMove(arg);
 	float x = (float)arg.state.X.abs / (float)arg.state.width;
 	float y = (float)arg.state.Y.abs / (float)arg.state.height;
 	
-	Ogre::Vector3 pt = game.getOgreManager().rayCast(x,y);
-	game.getConnection().move(pt);
+	Ogre::Vector3 pt = Client::getInstance().getOgreManager().rayCast(x,y);
+	// Client::getInstance().getConnection().move(pt);
 	
 	return true;
 }
 bool OISManager::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
-	game.getCameraMan()->injectMouseDown(arg,id);
+	Client::getInstance().getCameraMan().injectMouseDown(arg,id);
 	return true;
 }
 bool OISManager::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
-	game.getCameraMan()->injectMouseUp(arg, id);
+	Client::getInstance().getCameraMan().injectMouseUp(arg, id);
 	return true;
 }
