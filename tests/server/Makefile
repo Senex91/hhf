@@ -10,4 +10,4 @@ main: $(EXECUTABLES)
 	
 
 %.test : %.o
-	g++ -o $@ $< $(LINK_FILES) $(MY_OBJS) $(SHARED_OBJS)
+	g++ -o $@ $< $(MY_OBJS) $(SHARED_OBJS) $(LINK_FILES) 

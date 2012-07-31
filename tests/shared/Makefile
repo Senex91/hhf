@@ -8,4 +8,4 @@ main: $(EXECUTABLES)
 	
 
 %.test : %.o
-	g++ -o $@ $< $(LINK_FILES) $(SHARED_OBJS)
+	g++ -o $@ $< $(SHARED_OBJS) $(LINK_FILES) 
