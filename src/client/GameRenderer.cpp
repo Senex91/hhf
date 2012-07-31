@@ -1,8 +1,9 @@
 #include "GameRenderer.h"
 
+#include "Debug.h"
 
 
-GameRenderer::GameRenderer(){
+GameRenderer::GameRenderer(): server(), world(){
 
 }
 
@@ -10,7 +11,10 @@ GameRenderer::~GameRenderer(){
 
 }
 
-void GameRenderer::renderNextState(GameState const& newState){
+void GameRenderer::renderNextState(){
+	GameState state = server.getGameState();
+	world.drawGameState(state);
+	// DEBUG(gameStateToString(newState));
 
 }
 

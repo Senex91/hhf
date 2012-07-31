@@ -17,6 +17,9 @@ NetServer::~NetServer(){
 
 GameState const& NetServer::getGameState(){
 
+	latestState.felhound.x = latestState.felhound.x + 1;
+	latestState.felhound.y = latestState.felhound.y + 1;
+
 	return latestState;
 }
 

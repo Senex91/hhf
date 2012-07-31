@@ -10,7 +10,7 @@ public:
 	OgreWorld();
 	~OgreWorld();
 
-	void drawGameState(GameState);
+	void drawGameState(GameState const&);
 	
 private:
 

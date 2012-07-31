@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "NetServer.h"
+#include "OgreWorld.h"
 #include "GameState.h"
 
 /**
@@ -13,9 +15,11 @@ public:
 	GameRenderer();
 	~GameRenderer();
 
-	void renderNextState(GameState const&);
+	void renderNextState();
 	
 private:
+	NetServer server;
+	OgreWorld world;
 
 };
 #endif

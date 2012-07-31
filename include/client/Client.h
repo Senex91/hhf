@@ -27,7 +27,6 @@ private:
 
 	// data
 	GameRenderer gameRenderer;
-	NetServer server;
 	bool running;
 
 };

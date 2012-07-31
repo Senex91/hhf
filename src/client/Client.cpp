@@ -12,19 +12,19 @@ Client& Client::getInstance() {
 	return client;
 }
 
-Client::Client(): gameRenderer(), server(), running(false){
+Client::Client(): gameRenderer(), running(false){
 	
 }
 
 Client::~Client(){
-	DEBUG("client destructor called");
+	// DEBUG("client destructor called");
 }
 
 void Client::run(){
 	running = true;
 	while(running){
-		GameState currentState =  server.getGameState();
-		DEBUG(gameStateToString(currentState));
+		gameRenderer.renderNextState();
+		// GameState currentState =  server.getGameState();
 		// gameRenderer.renderNextState(currentState);
 		SDL_Delay(1000); // TODO magic number
 	}
