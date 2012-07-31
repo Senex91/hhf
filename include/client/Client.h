@@ -2,6 +2,8 @@
 #define CLIENT_H
 
 #include <string>
+#include "GameRenderer.h"
+#include "NetServer.h"
 
 /**
  * @brief Client runs a Client instance of a game.
@@ -10,19 +12,23 @@
  */
 class Client {
 public:
-	static Client* getInstance();
+	static Client& getInstance();
 
-	std::string name;
-	
+	void run();
+
 private:
 
 	// Singleton things
 	Client();
+	~Client();
 	Client (Client const&);
 	Client& operator=(Client const&);
-	static Client* instance;
+	// static Client* instance;
 
 	// data
+	GameRenderer gameRenderer;
+	NetServer server;
+	bool running;
 
 };
 

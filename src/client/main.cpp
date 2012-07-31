@@ -30,11 +30,12 @@ int main(){
 
     // DEBUG(gameStateToString(state2));
 
-    Client* client = Client::getInstance();
-    client->name = "Andrew";
+    Client& client = Client::getInstance();
+    client.run();
+    // client->name = "Andrew";
 
-    DEBUG(client->name);
-    DEBUG((Client::getInstance())->name);
+    // DEBUG(client->name);
+    // DEBUG((Client::getInstance())->name);
     
     // Game game;
 
