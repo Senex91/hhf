@@ -12,8 +12,10 @@ Client& Client::getInstance() {
 	return client;
 }
 
-Client::Client(): gameRenderer(), running(false){
-	
+Client::Client(): ogre(), ois(), gameRenderer(), server(), running(false){
+	ogre.initialize();
+	ois.initialize();
+	cameraMan = new OgreBites::SdkCameraMan(ogre.getCamera());
 }
 
 Client::~Client(){
@@ -23,9 +25,14 @@ Client::~Client(){
 void Client::run(){
 	running = true;
 	while(running){
-		gameRenderer.renderNextState();
-		// GameState currentState =  server.getGameState();
-		// gameRenderer.renderNextState(currentState);
+
+		// Library construct operations
+		ogre.update();
+		ois.update();
+
+		// Game operations
+		GameState currentState =  server.getGameState();
+		gameRenderer.renderNextState(currentState);
 		SDL_Delay(1000); // TODO magic number
 	}
 

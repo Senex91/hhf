@@ -1,7 +1,7 @@
 #include "OgreManager.h"
-#include "Game.h"
+#include "Client.h"
 
-OgreManager::OgreManager(Game& game) : game(game) {
+OgreManager::OgreManager() {
 	
 }
 
@@ -108,7 +108,7 @@ void OgreManager::update() {
 }
 
 bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt){
-	game.getCameraMan()->frameRenderingQueued(evt);
+	Client::getInstance().getCameraMan().frameRenderingQueued(evt);
 	return true;
 }
 

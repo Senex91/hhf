@@ -3,10 +3,7 @@
 
 #include <string>
 
-#include "NetServer.h"
-#include "OgreWorld.h"
 #include "GameState.h"
-
 /**
  * @brief GameRenderer renders the game as received by the server.
  */
@@ -15,11 +12,9 @@ public:
 	GameRenderer();
 	~GameRenderer();
 
-	void renderNextState();
+	void renderNextState(GameState const& );
 	
 private:
-	NetServer server;
-	OgreWorld world;
 
 };
 #endif

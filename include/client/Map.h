@@ -1,3 +1,4 @@
+#if 0 
 #ifndef MAP_H
 #define MAP_H
 
@@ -27,4 +28,5 @@ private:
     std::map<int, OgreElf*> elves;
 };
 
+#endif
 #endif

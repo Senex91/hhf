@@ -5,11 +5,9 @@
 
 #include "TOCameraMan.h"
 
-class Game;
-
 class OgreManager: public Ogre::FrameListener{
 public:
-	OgreManager(Game&);
+	OgreManager();
 	~OgreManager();
 	
 	void initialize();
@@ -30,8 +28,6 @@ protected:
     virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	
 private:
-	Game& game;
-	
 	Ogre::Root *root;
 	Ogre::Camera* camera;
 	Ogre::SceneManager* sceneManager;
