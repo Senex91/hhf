@@ -3,9 +3,6 @@
 
 #include "Debug.h"
 
-#include <algorithm>
-
-
 OISManager::OISManager(): listeners(){
 	inputManager = NULL;
 	mouse = NULL;
@@ -71,11 +68,6 @@ void OISManager::removeInputListener(InputListener* listener){
 }
 // OIS::KeyListener
 bool OISManager::keyPressed( const OIS::KeyEvent &arg ) {
-	// Client::getInstance().getCameraMan().injectKeyDown(arg);
-	DEBUG("Key Pressed" <<arg.key);
-	// for(int i = 0; i<listeners.size(); i++){
-	// 	listeners[i]->keyPressed(arg);
-	// }
 	for(std::set<InputListener*>::iterator it = listeners.begin(); 
 		it !=listeners.end(); it++){
 		(*it)->keyPressed(arg);
@@ -83,30 +75,31 @@ bool OISManager::keyPressed( const OIS::KeyEvent &arg ) {
 	return true;
 }
 bool OISManager::keyReleased( const OIS::KeyEvent &arg ) {
-	if(arg.key == OIS::KC_F12) {
-		Client::getInstance().setRunning(false);
+	for(std::set<InputListener*>::iterator it = listeners.begin(); 
+		it !=listeners.end(); it++){
+		(*it)->keyReleased(arg);
 	}
-	// Client::getInstance().getCameraMan().injectKeyUp(arg);
-	DEBUG("Key released" << arg.key);
 	return true;
 }
 // OIS::MouseListener
 bool OISManager::mouseMoved( const OIS::MouseEvent &arg ) {
-	DEBUG("mouse move");
-	// Client::getInstance().getCameraMan().injectMouseMove(arg);
-	float x = (float)arg.state.X.abs / (float)arg.state.width;
-	float y = (float)arg.state.Y.abs / (float)arg.state.height;
-	
-	// Ogre::Vector3 pt = Client::getInstance().getOgreManager().rayCast(x,y);
-	// Client::getInstance().getConnection().move(pt);
-	
+	for(std::set<InputListener*>::iterator it = listeners.begin(); 
+		it !=listeners.end(); it++){
+		(*it)->mouseMoved(arg);
+	}
 	return true;
 }
 bool OISManager::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
-	// Client::getInstance().getCameraMan().injectMouseDown(arg,id);
+	for(std::set<InputListener*>::iterator it = listeners.begin(); 
+		it !=listeners.end(); it++){
+		(*it)->mousePressed(arg,id);
+	}
 	return true;
 }
 bool OISManager::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
-	// Client::getInstance().getCameraMan().injectMouseUp(arg, id);
+	for(std::set<InputListener*>::iterator it = listeners.begin(); 
+		it !=listeners.end(); it++){
+		(*it)->mouseReleased(arg,id);
+	}
 	return true;
 }

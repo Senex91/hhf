@@ -17,8 +17,12 @@ Client::~Client(){
 }
 
 void Client::initialize(){
+	// Library construct operations
 	ogre.initialize();
 	ois.initialize();
+
+	// Game objects
+	gameRenderer.initialize();
 
 }
 
@@ -32,8 +36,8 @@ void Client::run(){
 		ogre.update();
 
 		// Game operations
-		// GameState currentState =  server.getGameState();
-		// gameRenderer.renderNextState(currentState);
+		GameState currentState =  server.getGameState();
+		gameRenderer.renderNextState(currentState);
 		// SDL_Delay(1000); // TODO magic number
 	}
 
@@ -46,9 +50,9 @@ bool Client::keyPressed( const OIS::KeyEvent &arg ) {
 	return true;
 }
 bool Client::keyReleased( const OIS::KeyEvent &arg ) {
-	// if(arg.key == OIS::KC_F12) {
-	// 	Client::getInstance().setRunning(false);
-	// }
+	if(arg.key == OIS::KC_F12) {
+		setRunning(false);
+	}
 	// Client::getInstance().getCameraMan().injectKeyUp(arg);
 	return true;
 }

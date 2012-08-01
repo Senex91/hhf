@@ -24,7 +24,7 @@ public:
 	static Client& getInstance();
 
 	inline OgreManager& getOgreManager() { return ogre; }
-	// inline OISManager& getOISManager() { return ois; }
+	inline OISManager& getOISManager() { return ois; }
 	// inline OgreBites::SdkCameraMan& getCameraMan() { return *cameraMan; }
 
 	inline void setRunning(const bool& r) { running = r; }
