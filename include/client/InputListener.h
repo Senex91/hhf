@@ -1,11 +1,8 @@
 #ifndef INPUTLISTENER_H
 #define INPUTLISTENER_H
 
-#include <string>
-
 #include <OIS.h>
 
-#include "GameState.h"
 /**
  * @brief InputListener renders the game as received by the server.
  */

@@ -27,9 +27,7 @@ public:
 	// inline OISManager& getOISManager() { return ois; }
 	// inline OgreBites::SdkCameraMan& getCameraMan() { return *cameraMan; }
 
-	inline void setRunning(const bool& r) { running = true; }
-
-	std::string name;
+	inline void setRunning(const bool& r) { running = r; }
 
 	void initialize();
 	void run();

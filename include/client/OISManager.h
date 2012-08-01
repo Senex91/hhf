@@ -3,6 +3,10 @@
 
 #include <OIS.h>
 
+// listeners
+#include "InputListener.h"
+#include <set>
+
 class OISManager : public OIS::KeyListener, public OIS::MouseListener {
 public:
 	OISManager();
@@ -20,12 +24,20 @@ public:
 	virtual bool mouseMoved( const OIS::MouseEvent &arg );
 	virtual bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+
+
+	// Input Listeners
+	void addInputListener(InputListener*);
+	void removeInputListener(InputListener*);
 	
 private:
 	
 	OIS::InputManager* inputManager;
 	OIS::Mouse*    mouse;
 	OIS::Keyboard* keyboard;
+
+	// Input Listeners
+	std::set<InputListener*> listeners;
 };
 
 

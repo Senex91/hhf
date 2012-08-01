@@ -1,10 +1,7 @@
 #include "Client.h"
-
 #include <cstddef>
 #include <SDL.h>
-
 #include "GameState.h"
-
 #include "Debug.h"
 
 Client& Client::getInstance() {
@@ -22,20 +19,22 @@ Client::~Client(){
 void Client::initialize(){
 	ogre.initialize();
 	ois.initialize();
+
 }
 
 void Client::run(){
+	ois.addInputListener(this);
 	running = true;
 	while(running){
 
 		// Library construct operations
-		// ois.update();
+		ois.update();
 		ogre.update();
 
 		// Game operations
-		GameState currentState =  server.getGameState();
-		gameRenderer.renderNextState(currentState);
-		SDL_Delay(1000); // TODO magic number
+		// GameState currentState =  server.getGameState();
+		// gameRenderer.renderNextState(currentState);
+		// SDL_Delay(1000); // TODO magic number
 	}
 
 }
@@ -43,6 +42,7 @@ void Client::run(){
 // OIS::KeyListener
 bool Client::keyPressed( const OIS::KeyEvent &arg ) {
 	// Client::getInstance().getCameraMan().injectKeyDown(arg);
+	DEBUG("keypressed! " << arg.key);
 	return true;
 }
 bool Client::keyReleased( const OIS::KeyEvent &arg ) {

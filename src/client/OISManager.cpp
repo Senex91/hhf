@@ -3,7 +3,10 @@
 
 #include "Debug.h"
 
-OISManager::OISManager(){
+#include <algorithm>
+
+
+OISManager::OISManager(): listeners(){
 	inputManager = NULL;
 	mouse = NULL;
 	keyboard = NULL;
@@ -59,15 +62,29 @@ void OISManager::update() {
 	mouse->capture();
 }
 
+void OISManager::addInputListener(InputListener* listener){
+	listeners.insert(listener);
+}
+
+void OISManager::removeInputListener(InputListener* listener){
+	listeners.erase(listener);
+}
 // OIS::KeyListener
 bool OISManager::keyPressed( const OIS::KeyEvent &arg ) {
 	// Client::getInstance().getCameraMan().injectKeyDown(arg);
 	DEBUG("Key Pressed" <<arg.key);
+	// for(int i = 0; i<listeners.size(); i++){
+	// 	listeners[i]->keyPressed(arg);
+	// }
+	for(std::set<InputListener*>::iterator it = listeners.begin(); 
+		it !=listeners.end(); it++){
+		(*it)->keyPressed(arg);
+	}
 	return true;
 }
 bool OISManager::keyReleased( const OIS::KeyEvent &arg ) {
 	if(arg.key == OIS::KC_F12) {
-		// Client::getInstance().setRunning(false);
+		Client::getInstance().setRunning(false);
 	}
 	// Client::getInstance().getCameraMan().injectKeyUp(arg);
 	DEBUG("Key released" << arg.key);
