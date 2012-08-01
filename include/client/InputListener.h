@@ -1,18 +1,16 @@
-#ifndef OIS_MANAGER_H
-#define OIS_MANAGER_H
+#ifndef INPUTLISTENER_H
+#define INPUTLISTENER_H
+
+#include <string>
 
 #include <OIS.h>
 
-class OISManager : public OIS::KeyListener, public OIS::MouseListener {
+#include "GameState.h"
+/**
+ * @brief InputListener renders the game as received by the server.
+ */
+class InputListener {
 public:
-	OISManager();
-	~OISManager();
-	
-	void initialize();
-	void destroy();
-	
-	void update();
-
 	// OIS::KeyListener
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 	virtual bool keyReleased( const OIS::KeyEvent &arg );
@@ -20,13 +18,8 @@ public:
 	virtual bool mouseMoved( const OIS::MouseEvent &arg );
 	virtual bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
-	
+
 private:
-	
-	OIS::InputManager* inputManager;
-	OIS::Mouse*    mouse;
-	OIS::Keyboard* keyboard;
+
 };
-
-
 #endif

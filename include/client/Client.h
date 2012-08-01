@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "InputListener.h"
+
 // Library constructs
 #include "OgreManager.h"
 #include "OISManager.h"
@@ -17,17 +19,28 @@
  * The Client is a singleton that enables all subcomponents 
  * to access each other.
  */
-class Client {
+class Client : public InputListener {
 public:
 	static Client& getInstance();
 
 	inline OgreManager& getOgreManager() { return ogre; }
-	inline OISManager& getOISManager() { return ois; }
-	inline OgreBites::SdkCameraMan& getCameraMan() { return *cameraMan; }
+	// inline OISManager& getOISManager() { return ois; }
+	// inline OgreBites::SdkCameraMan& getCameraMan() { return *cameraMan; }
 
-	inline void setRunning(const bool& r) { running = r; }
+	inline void setRunning(const bool& r) { running = true; }
 
+	std::string name;
+
+	void initialize();
 	void run();
+
+// OIS::KeyListener
+	virtual bool keyPressed( const OIS::KeyEvent &arg );
+	virtual bool keyReleased( const OIS::KeyEvent &arg );
+	// OIS::MouseListener
+	virtual bool mouseMoved( const OIS::MouseEvent &arg );
+	virtual bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 
 private:
 
@@ -41,7 +54,7 @@ private:
 	// Library constructs
 	OgreManager ogre;
 	OISManager ois; 
-	OgreBites::SdkCameraMan* cameraMan;
+	// OgreBites::SdkCameraMan* cameraMan;
 
 	// Game entities
 	GameRenderer gameRenderer;
