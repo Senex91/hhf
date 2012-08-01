@@ -1,7 +1,12 @@
 #include "OgreManager.h"
 #include "Client.h"
+#include "Debug.h"
 
 OgreManager::OgreManager() {
+	root = NULL;
+	camera = NULL;
+	sceneManager = NULL;
+	window = NULL;
 	
 }
 
@@ -94,6 +99,7 @@ void OgreManager::initialize() {
 	sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 	root->addFrameListener(this);
+	DEBUG("!!!!!!!!!!! OGRE INITIATE DONE !!!!!!!!!!!");
 	
 	// raySceneQuery = sceneManager->createRayQuery(Ogre::Ray());
 }
@@ -108,11 +114,11 @@ void OgreManager::update() {
 }
 
 bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt){
-	Client::getInstance().getCameraMan().frameRenderingQueued(evt);
+	// Client::getInstance().getCameraMan().frameRenderingQueued(evt);
 	return true;
 }
 
-Ogre::Vector3 OgreManager::rayCast(const float& x,const float& y) {
+// Ogre::Vector3 OgreManager::rayCast(const float& x,const float& y) {
 	// Ogre::Ray r = camera->getCameraToViewportRay(x,y);
 	// Ogre::Plane p(Ogre::Vector3(0,1,0),0);
 	// std::pair<bool,float> pt = Ogre::Math::intersects(r,p);
@@ -121,5 +127,5 @@ Ogre::Vector3 OgreManager::rayCast(const float& x,const float& y) {
 	// } else {
 	// 	return Ogre::Vector3(0,0,0);
 	// }
-	return Ogre::Vector3(0,0,0);
-}
+	// return Ogre::Vector3(0,0,0);
+// }
