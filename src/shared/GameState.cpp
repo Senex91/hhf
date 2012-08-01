@@ -32,7 +32,7 @@ std::string serializeGameState(const GameState& gs) {
 	ret << gs.felhound.xvel << delim;
 	ret << gs.felhound.yvel << delim;
 	ret << gs.elves.size() << delim;
-	for(int i=0;i<gs.elves.size();i++) {
+	for(unsigned int i=0;i<gs.elves.size();i++) {
 		ret << gs.elves[i].x << delim;
 		ret << gs.elves[i].y << delim;
 		ret << gs.elves[i].xvel << delim;
@@ -50,7 +50,7 @@ std::string gameStateToString(const GameState& gs) {
 	ret << "{FH: pos=";
 	ret << "(" << gs.felhound.x << "," << gs.felhound.y << "), vel=(" << gs.felhound.xvel << "," << gs.felhound.yvel << ")}\n";
 	ret << gs.elves.size() << "Elves:\n";
-	for(int i=0;i<gs.elves.size();i++) {
+	for(unsigned int i=0;i<gs.elves.size();i++) {
 		ret << "[";
 		ret << "id=" << gs.elves[i].id << ", ";
 		ret << "pos=(" << gs.elves[i].x << ", " << gs.elves[i].y << "), ";
@@ -69,8 +69,7 @@ GameState deserializeGameState(const std::string& str) {
 	read >> ret.felhound.xvel;
 	read >> ret.felhound.yvel;
 	int n; read >> n;
-	std::cout << n << std::endl;
-
+	
 	for(int i=0;i<n;i++) {
 		Elf e;
 		read >> e.x;

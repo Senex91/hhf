@@ -3,12 +3,50 @@
 
 using std::stringstream;
 using std::string;
+using std::size_t;
+using std::map;
+
+map<string,Command::CommandMaker> Command::deserializers;
+
+void initializeCommand() {
+	Command::registerDeserializer(JOIN_CMD,JoinCommand::deserialize);
+	Command::registerDeserializer(ID_CMD,IDCommand::deserialize);
+	Command::registerDeserializer(MOVE_CMD,MoveCommand::deserialize);
+	Command::registerDeserializer(STATE_CMD,GameStateCommand::deserialize);
+	Command::registerDeserializer(BLINK_CMD,BlinkCommand::deserialize);
+}
 
 Command::~Command() {
 	
 }
 
+string Command::write() {
+	stringstream s;
+	output(s);
+	return s.str();
+}
+
+Command* Command::deserialize(string str) {
+	size_t colonPos = str.find(':');
+	if(colonPos == string::npos) {
+		return NULL;
+	}
+	string commandType = str.substr(0,colonPos);
+	if(!deserializers.count(commandType)) {
+		return NULL;
+	}
+	return deserializers[commandType](str.substr(colonPos+1));
+}
+
 CommandVisitor::~CommandVisitor() {
+	
+}
+
+JoinCommand::~JoinCommand() {
+	
+}
+
+IDCommand::~IDCommand() {
 	
 }
 
@@ -20,46 +58,20 @@ MoveCommand::~MoveCommand() {
 	
 }
 
-std::string MoveCommand::write() {
-	stringstream s;
-	s << player;
-	s << moveX << " ";
-	s << moveY << " ";
-	return s.str();
+Command* MoveCommand::deserialize(string s) {
+	stringstream stream(s);
+	float moveX, moveY;
+	stream >> moveX >> moveY;
+	return new MoveCommand(moveX,moveY);
 }
 
 BlinkCommand::~BlinkCommand() {
 	
 }
 
-std::string BlinkCommand::write() {
-	stringstream s;
-	s << player;
-	s << moveX << " ";
-	s << moveY << " ";
-	return s.str();
-}
-
-Command* deserializeCommand(std::string command) {
-	char which = command[0];
-	switch(which) {
-		case STATE_CMD:
-			return new GameStateCommand(deserializeGameState(command.substr(1)));
-			break;
-		case MOVE_CMD: {
-			char player = command[1];
-			stringstream rest(command.substr(2));
-			float moveX,moveY;
-			rest >> moveX; rest >> moveY;
-			return new MoveCommand(player,moveX,moveY);
-		} break;
-		case BLINK_CMD: {
-			char player = command[1];
-			stringstream rest(command.substr(2));
-			float moveX,moveY;
-			rest >> moveX; rest >> moveY;
-			return new BlinkCommand(player,moveX,moveY);
-		} break;
-	}
-	return NULL;
+Command* BlinkCommand::deserialize(string s) {
+	stringstream stream(s);
+	float moveX, moveY;
+	stream >> moveX >> moveY;
+	return new BlinkCommand(moveX,moveY);
 }

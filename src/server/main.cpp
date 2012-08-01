@@ -1,19 +1,13 @@
-#include <iostream>
-
-#include <ClientConnection.h>
-#include "SDL_net.h"
-#include "vector"
-#include "GameState.h"
-#include "iostream"
-#include "NetworkConstants.h"
 #include "Debug.h"
 #include "Server.h"
+#include "Command.h"
 
 using std::cout;
 using std::endl;
 
 int main() {
 	DEBUG("Launching Server... please stand by...");
+	initializeCommand();
 
 	Server s;
 	s.run();

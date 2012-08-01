@@ -4,26 +4,36 @@
 #include "GameState.h"
 #include "NetworkConstants.h"
 #include "Util.h"
+#include <sstream>
+#include <map>
 
 class Command;
 class GameStateCommand;
+class JoinCommand;
+class IDCommand;
 class MoveCommand;
 class BlinkCommand;
-class ThrowCommand;
 class CommandVisitor;
 
-Command* deserializeCommand(std::string);
+void initializeCommand();
 
 class Command {
+private:
+	typedef Command* (*CommandMaker)(std::string);
 public:
 	Command() {}
 	virtual ~Command();
 	
-	virtual std::string write() = 0;
+	virtual std::string write();
 	virtual void visit(CommandVisitor& cv) = 0;
 	
-private:
+	static void registerDeserializer(std::string s, CommandMaker m) { deserializers[s] = m; }
+	static Command* deserialize(std::string str);
 	
+protected:
+	virtual void output(std::stringstream& s) = 0;
+private:
+	static std::map<std::string,CommandMaker> deserializers;
 };
 
 class CommandVisitor {
@@ -31,13 +41,47 @@ public:
 	CommandVisitor() {}
 	virtual ~CommandVisitor();
 	
+	virtual void accept(JoinCommand&) {}
+	virtual void accept(IDCommand&) {}
 	virtual void accept(GameStateCommand&) {}
 	virtual void accept(MoveCommand&) {}
 	virtual void accept(BlinkCommand&) {}
-	virtual void accept(ThrowCommand&) {}
 	
 private:
 	
+};
+
+class JoinCommand : public Command {
+public:
+	JoinCommand() {}
+	virtual ~JoinCommand();
+	
+	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
+	
+	static Command* deserialize(std::string) { return new JoinCommand(); }
+	
+protected:
+	
+	virtual void output(std::stringstream& s) { s << JOIN_CMD << ":"; }
+	
+};
+
+class IDCommand : public Command {
+public:
+	IDCommand(int id) : id(id) {}
+	virtual ~IDCommand();
+	
+	int getID() { return id; }
+	
+	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
+	
+	static Command* deserialize(std::string s) { std::stringstream stream(s); int id; stream >> id; return new IDCommand(id); }
+	
+protected:
+	
+	int id;
+	
+	virtual void output(std::stringstream& s) { s << ID_CMD << ":" << id; }
 };
 
 class GameStateCommand : public Command {
@@ -48,7 +92,12 @@ public:
 	inline const GameState& getGameState() { return gameState; }
 	
 	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
-	virtual std::string write() { return std::string(1,STATE_CMD) + serializeGameState(gameState); }
+	
+	static Command* deserialize(std::string str) { return new GameStateCommand(deserializeGameState(str)); }
+	
+protected:
+	
+	virtual void output(std::stringstream& s) { s << STATE_CMD << ":" << serializeGameState(gameState); }
 	
 private:
 	GameState gameState;
@@ -56,7 +105,7 @@ private:
 
 class MoveCommand : public Command {
 public:
-	MoveCommand(char player,float moveX,float moveY) : player(player), moveX(moveX), moveY(moveY) {}
+	MoveCommand(float moveX,float moveY) : moveX(moveX), moveY(moveY) {}
 	virtual ~MoveCommand();
 	
 	inline const char& getPlayer() { return player; }
@@ -64,7 +113,12 @@ public:
 	inline const float& getMoveY() { return moveY; }
 	
 	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
-	virtual std::string write();
+	
+	static Command* deserialize(std::string str);
+	
+protected:
+	
+	virtual void output(std::stringstream& s) { s << MOVE_CMD << ":" << moveX << " " << moveY; }
 	
 private:
 	char player;
@@ -73,7 +127,7 @@ private:
 
 class BlinkCommand : public Command {
 public:
-	BlinkCommand(char player,float moveX,float moveY) : player(player), moveX(moveX), moveY(moveY) {}
+	BlinkCommand(float moveX,float moveY) : moveX(moveX), moveY(moveY) {}
 	virtual ~BlinkCommand();
 	
 	inline const char& getPlayer() { return player; }
@@ -81,7 +135,12 @@ public:
 	inline const float& getMoveY() { return moveY; }
 	
 	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
-	virtual std::string write();
+	
+	static Command* deserialize(std::string str);
+	
+protected:
+	
+	virtual void output(std::stringstream& s) { s << BLINK_CMD << ":" << moveX << " " << moveY; }
 	
 private:
 	char player;

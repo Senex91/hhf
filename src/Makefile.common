@@ -1,5 +1,6 @@
 CXX := g++
-CXXTESTGEN := cxxtestgen
+CXXTESTGEN := cxxtestgen --error-printer 
+TEST_INCLUDES := -I/usr/include/cxxtest/ 
 INCLUDES := -I/usr/local/include/CEGUI/ -I/usr/include/OGRE/ -I/usr/include/OIS/ -I/usr/include/SDL/ -I$(INCL_HOME)/$(FOLDER)/ -I$(INCL_HOME)/shared/
 CFLAGS := -Wall -c $(INCLUDES) -O3 -g
 SOURCES := $(wildcard *.cpp)
@@ -25,10 +26,10 @@ tests: $(TESTS)
 	
 
 $(TEST_PREFIX)%.o: tests/%.cpp
-	$(CXX) $(CFLAGS) -I/usr/include/cxxtest/ $< -o $@
+	$(CXX) $(CFLAGS) $(TEST_INCLUDES) $< -o $@
 
 tests/%.cpp: $(INCLUDE_TESTS)%.h
-	$(CXXTESTGEN) --error-printer -o $@ $< 
+	$(CXXTESTGEN) -o $@ $< 
 
 .PHONY: clean
 clean:

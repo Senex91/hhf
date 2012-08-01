@@ -5,21 +5,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "NetworkConstants.h"
+#include "Debug.h"
 
-ClientConnection::ClientConnection(IPaddress ad,char id,UDPsocket& sd) : address(ad), id(id), sd(sd) {
-	ad.port = CLIENT_PORT;
-	if (!(p = SDLNet_AllocPacket(512)))
-	{
-		fprintf(stderr, "SDLNet_AllocPacket: %s\n", SDLNet_GetError());
-		exit(EXIT_FAILURE);
-	}
-	p->address = address;
-	
-	char message[3];
-	message[0] = HANDSHAKE_CMD;
-	message[1] = id;
-	message[2] = 0;
-	sendText(std::string(message));
+ClientConnection::ClientConnection(Address ad,int id,Socket& sd) : address(ad), socket(sd) {
+	this->id = id;
+	sendText(IDCommand(id).write());
 }
 
 ClientConnection::~ClientConnection() {
@@ -32,7 +22,34 @@ void ClientConnection::sendGameState(const GameState& gamestate){
 }
 
 void ClientConnection::sendText(const std::string& text) {
-	memcpy (p->data, text.c_str(),text.size()+1);
-	p->len = (text.size() + 1);
-	SDLNet_UDP_Send(sd, -1, p);
+	Packet send(text);
+	send.setAddress(address);
+	socket.sendPacket(send);
+}
+
+void ClientConnection::processCommand(Command* c) {
+	if(c == NULL) {
+		DEBUG("ClientConnection::processCommand: unrecognized command");
+	}
+	c->visit(*this);
+}
+
+void ClientConnection::accept(JoinCommand&) {
+	
+}
+
+void ClientConnection::accept(IDCommand&) {
+	
+}
+
+void ClientConnection::accept(GameStateCommand&) {
+	
+}
+
+void ClientConnection::accept(MoveCommand&) {
+	
+}
+
+void ClientConnection::accept(BlinkCommand&) {
+	
 }

@@ -1,12 +1,13 @@
 #ifndef NETWORK_CONSTANTS_H
 #define NETWORK_CONSTANTS_H
 
-#define SERVER_PORT 501337
-#define CLIENT_PORT 413413
+#define SERVER_PORT 50133
+#define CLIENT_PORT 41341
 
-#define HANDSHAKE_CMD 1
-#define STATE_CMD 2
-#define MOVE_CMD 3
-#define BLINK_CMD 4
+#define JOIN_CMD "join"
+#define STATE_CMD "state"
+#define MOVE_CMD "move"
+#define BLINK_CMD "blink"
+#define ID_CMD "id"
 
 #endif
