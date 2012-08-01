@@ -2,26 +2,30 @@
 #define CLIENT_CONNECTION
 
 #include "GameState.h"
-#include "SDL_net.h"
+#include "UDPConnection.h"
 #include <string>
 #include "Command.h"
 
-class ClientConnection {
+class ClientConnection : public CommandVisitor {
 public:
-	ClientConnection(IPaddress,char id,UDPsocket& sd);
+	ClientConnection(Address,int id,Socket& sd);
 	~ClientConnection();
 	void sendGameState(const GameState&);
 	
+	void processCommand(Command*);
 	
-	
+	virtual void accept(JoinCommand&);
+	virtual void accept(IDCommand&);
+	virtual void accept(GameStateCommand&);
+	virtual void accept(MoveCommand&);
+	virtual void accept(BlinkCommand&);
 	
 private:
 	void sendText(const std::string&);
 	
-	IPaddress address;
-	UDPsocket& sd;
-	UDPpacket *p;
-	char id;
+	Address address;
+	Socket& socket;
+	int id;
 };
 
 #endif

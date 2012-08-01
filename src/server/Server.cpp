@@ -3,28 +3,8 @@
 #include <cstdio>
 #include "Debug.h"
 
-bool operator<(const IPaddress& l, const IPaddress& r) {
-	if(l.host == r.host) {
-		return r.port < r.port;
-	}
-	return l.host < r.host;
-}
-
-Server::Server(): connections(), id(1) {
-	if (SDLNet_Init() < 0) {
-		fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
-		exit(EXIT_FAILURE);
-	}
-	if (!(sd = SDLNet_UDP_Open(SERVER_PORT))) {
-		fprintf(stderr, "SDLNet_UDP_Open: %s\n", SDLNet_GetError());
-		exit(EXIT_FAILURE);
-	}
-	
-	/* Make space for the packet */
-	if (!(p = SDLNet_AllocPacket(512))) {
-		fprintf(stderr, "SDLNet_AllocPacket: %s\n", SDLNet_GetError());
-		exit(EXIT_FAILURE);
-	}
+Server::Server(): socket(SERVER_PORT) {
+	id = 0;
 }
 
 Server::~Server() {
@@ -35,29 +15,22 @@ void Server::run() {
 	running = true;
 	int timer = 0;
 	while (running) {
-		/* Wait a packet. UDP_Recv returns != 0 if a packet is coming */
-		if (SDLNet_UDP_Recv(sd, p)) {
-			printf("UDP Packet incoming\n");
-			printf("\tChan:    %d\n", p->channel);
-			printf("\tData:    %s\n", (char *)p->data);
-			printf("\tLen:     %d\n", p->len);
-			printf("\tMaxlen:  %d\n", p->maxlen);
-			printf("\tStatus:  %d\n", p->status);
-			printf("\tAddress: %x %x\n", p->address.host, p->address.port);
-
+		Packet packet = socket.getPacket();
+		if (packet.isValid()) {
 			// GET OUR CONNECTION
+			Address address = packet.getAddress();
 			ClientConnection* current = NULL;
-			if(connections.count(p->address)) {
+			if(connections.count(address)) {
 				// proceed if connection exists
-				current = connections[p->address];
+				current = connections[address];
 				// current.
 			} else{ // connection does not exist
-				current = new ClientConnection(p->address,id++,sd); //handshaking happens internally
-				connections[p->address] = current;
+				current = new ClientConnection(address,id++,socket); //handshaking happens internally
+				connections[address] = current;
 			}
-			Command* command = deserializeCommand(std::string((char*)p->data));
+			Command* command = Command::deserialize(packet.getData());
 			if(command) {
-				processCommand(p->address,*command);
+				current->processCommand(command);
 				delete command;
 			}
 		}
@@ -71,7 +44,7 @@ void Server::run() {
 			state1.elves = elves;
 			state1.felhound = (Felhound) {2,2, 0, 0};
 
-			std::map<IPaddress, ClientConnection*>::iterator it;
+			std::map<Address, ClientConnection*>::iterator it;
 			for(it = connections.begin(); it != connections.end(); it++){
 				((*it).second)->sendGameState(state1);
 			}
@@ -94,26 +67,4 @@ void Server::run() {
 
 		SDL_Delay(10);
 	}
-}
-
-void Server::processCommand(IPaddress& sender,Command& command) {
-	ClientConnection* cc = connections[sender];
-	command.visit(*this);
-}
-
-void Server::accept(GameStateCommand&) {
-	//???
-	DEBUG("Server did not expect a GameStateCommand");
-}
-
-void Server::accept(MoveCommand&) {
-	
-}
-
-void Server::accept(BlinkCommand&) {
-	
-}
-
-void Server::accept(ThrowCommand&) {
-	
 }
