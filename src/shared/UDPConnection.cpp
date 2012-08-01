@@ -37,7 +37,7 @@ bool Address::operator<(const Address& other) const {
 	return wrapped.host < other.wrapped.host;
 }
 
-string Address::getHostName() const {
+string Address::getHostName() {
 	return string(SDLNet_ResolveIP(&wrapped));
 }
 

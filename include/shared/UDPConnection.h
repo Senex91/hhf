@@ -20,7 +20,7 @@ public:
 	
 	bool operator<(const Address&) const; //so this can be used in std::map
 	
-	std::string getHostName() const;
+	std::string getHostName();
 	Uint32 getHostNum() const;
 	Uint16 getPort() const;
 	const IPaddress& getWrapped() const;
