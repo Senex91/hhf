@@ -35,9 +35,14 @@ void Client::run(){
 		ois.update();
 		ogre.update();
 
-		// Game operations
+		// Renders newest gamestate
 		GameState currentState =  server.getGameState();
 		gameRenderer.renderNextState(currentState);
+
+		//Sends commands
+		
+
+
 		// SDL_Delay(1000); // TODO magic number
 	}
 

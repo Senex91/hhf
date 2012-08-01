@@ -4,7 +4,7 @@
 #include "InputListener.h"
 
 #include <map>
-#include "Elf.h"
+#include "OgreElf.h"
 
 #include <string>
 #include "GameState.h"

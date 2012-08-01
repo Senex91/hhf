@@ -1,4 +1,4 @@
-#include "Elf.h"
+#include "OgreElf.h"
 
 OgreElf::OgreElf(Ogre::SceneManager* pManager, int pId){
 	manager = pManager;

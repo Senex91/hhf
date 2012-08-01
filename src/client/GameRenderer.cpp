@@ -6,7 +6,7 @@
 #include "Debug.h"
 #include "Client.h"
 
-#include "Elf.h"
+#include "OgreElf.h"
 
 
 GameRenderer::GameRenderer(){
@@ -122,23 +122,13 @@ void GameRenderer::initialize(){
 void GameRenderer::renderNextState(GameState const& newState){
 	DEBUG(gameStateToString(newState));
 
-	   //  std::vector<Elf> elfList;
-    // elfList.push_back((Elf) {0, 0, 0});
-    // elfList.push_back((Elf) {1, 0, 10});
-    // elfList.push_back((Elf) {2, 10, 30});
-    // GameState state1;
-    // state1.elves = elfList;
-    // state1.felhound = (Felhound) {2,2};
-
-    // gameState = state1;
-
 	for(int elfID = 0; elfID< newState.elves.size(); elfID++){
         //DEBUG("Current elf:" << elfID);
 
 		OgreElf* current = NULL;
 
-		// If the elf does exist
-		if (elves.count(elfID)){
+		// ALLOCATE OGRE ELF
+		if (elves.count(elfID)){ // if elf exists
 			current = elves[elfID];
 		} else{ // Current elf doesn't exist
 			current = new OgreElf(
@@ -147,7 +137,8 @@ void GameRenderer::renderNextState(GameState const& newState){
 			elves[elfID] = current;
 		}
 
-		//get Elf struct
+
+		// ALLOCATE GAMESTATE ELF
 		Elf currentElfData;
 		for(int i = 0; i<newState.elves.size(); i++){
 			if(newState.elves[i].id == elfID){
@@ -155,6 +146,7 @@ void GameRenderer::renderNextState(GameState const& newState){
 				break;
 			}
 		}
+
 
 		current->setPosition(currentElfData.x, 0, currentElfData.y);
 		// current->setColour(Ogre::ColourValue(255, 0, 0));
