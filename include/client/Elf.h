@@ -3,11 +3,14 @@
 
 #define OgreElf_MESHNAME "plane727.mesh"
 #define OgreElf_ENTITY_NAME "OgreElf"
+#define OgreElf_MATERIAL_NAME "planeMaterial"
 
-#include "OgreSceneManager.h"
-#include "OgreSceneNode.h"
-#include "OgreEntity.h"
-#include "string"
+#include <OgreColourValue.h>
+#include <OgreSubEntity.h>
+#include <OgreSceneManager.h>
+#include <OgreSceneNode.h>
+#include <OgreEntity.h>
+#include <string>
 
 class OgreElf {
 public:
@@ -15,7 +18,7 @@ public:
 	~OgreElf(void);
 
 	void setPosition(float, float, float);
-
+	void setColour(Ogre::ColourValue);
 
 
 private:

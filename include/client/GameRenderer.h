@@ -3,6 +3,8 @@
 
 #include "InputListener.h"
 
+#include <map>
+#include "Elf.h"
 
 #include <string>
 #include "GameState.h"
@@ -32,6 +34,8 @@ public:
 private:
 
 	OgreBites::SdkCameraMan* cameraMan; // basic camera controller
+
+    std::map<int, OgreElf*> elves;
 
 };
 #endif

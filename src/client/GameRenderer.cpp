@@ -1,8 +1,12 @@
 #include "GameRenderer.h"
 
+#include <Ogre.h>
+
+
 #include "Debug.h"
 #include "Client.h"
-#include <Ogre.h>
+
+#include "Elf.h"
 
 
 GameRenderer::GameRenderer(){
@@ -97,11 +101,65 @@ void GameRenderer::initialize(){
     gridEntity->setMaterialName(gridMat->getName());
 
 
+
+
+
+
+//point light
+    Ogre::Light* pointLight = Client::getInstance().getOgreManager().getSceneManager()->createLight("pointLight");
+    pointLight->setType(Ogre::Light::LT_POINT);
+    pointLight->setPosition(Ogre::Vector3(0, 10, 10));
+    pointLight->setDiffuseColour(1.0, 1.0, 1.0);
+    pointLight->setSpecularColour(1.0, 1.0, 1.0);
+
+    // Client::getInstance()
+    // 	.getOgreManager()
+    // 	.getSceneManager()
+    // 	->setAmbientLight(Ogre::ColourValue(0.9, 0.9, 0.9));
+
 }
 
 void GameRenderer::renderNextState(GameState const& newState){
-	// DEBUG(gameStateToString(newState));
+	DEBUG(gameStateToString(newState));
 
+	   //  std::vector<Elf> elfList;
+    // elfList.push_back((Elf) {0, 0, 0});
+    // elfList.push_back((Elf) {1, 0, 10});
+    // elfList.push_back((Elf) {2, 10, 30});
+    // GameState state1;
+    // state1.elves = elfList;
+    // state1.felhound = (Felhound) {2,2};
+
+    // gameState = state1;
+
+	for(int elfID = 0; elfID< newState.elves.size(); elfID++){
+        //DEBUG("Current elf:" << elfID);
+
+		OgreElf* current = NULL;
+
+		// If the elf does exist
+		if (elves.count(elfID)){
+			current = elves[elfID];
+		} else{ // Current elf doesn't exist
+			current = new OgreElf(
+				Client::getInstance().getOgreManager().getSceneManager(), 
+				elfID);
+			elves[elfID] = current;
+		}
+
+		//get Elf struct
+		Elf currentElfData;
+		for(int i = 0; i<newState.elves.size(); i++){
+			if(newState.elves[i].id == elfID){
+				currentElfData = newState.elves[i];
+				break;
+			}
+		}
+
+		current->setPosition(currentElfData.x, 0, currentElfData.y);
+		// current->setColour(Ogre::ColourValue(255, 0, 0));
+		current->setColour(Ogre::ColourValue::Red);
+	}
 }
 
 
