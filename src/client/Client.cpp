@@ -19,7 +19,7 @@ Client::~Client(){
 void Client::initialize(){
 	// Library construct operations
 	ogre.initialize();
-	ois.initialize();
+	// ois.initialize();
 
 	// Game objects
 	gameRenderer.initialize();
@@ -27,12 +27,12 @@ void Client::initialize(){
 }
 
 void Client::run(){
-	ois.addInputListener(this);
+	// ois.addInputListener(this);
 	running = true;
 	while(running){
 
 		// Library construct operations
-		ois.update();
+		// ois.update();
 		ogre.update();
 
 		// Renders newest gamestate

@@ -19,8 +19,8 @@ GameRenderer::~GameRenderer(){
 
 void GameRenderer::initialize(){
 
-	cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
-	Client::getInstance().getOISManager().addInputListener(this);
+	// cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
+	// Client::getInstance().getOISManager().addInputListener(this);
 
 
 	int numcols = 100;
@@ -112,10 +112,10 @@ void GameRenderer::initialize(){
     pointLight->setDiffuseColour(1.0, 1.0, 1.0);
     pointLight->setSpecularColour(1.0, 1.0, 1.0);
 
-    // Client::getInstance()
-    // 	.getOgreManager()
-    // 	.getSceneManager()
-    // 	->setAmbientLight(Ogre::ColourValue(0.9, 0.9, 0.9));
+    Client::getInstance()
+    	.getOgreManager()
+    	.getSceneManager()
+    	->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 }
 
