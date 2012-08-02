@@ -1,31 +1,32 @@
-#include "Server.h"
+#include "NetManager.h"
 #include <cstdlib>
 #include <cstdio>
 #include "Debug.h"
 
-Server::Server(): socket(SERVER_PORT) {
+NetManager::NetManager(): socket(SERVER_PORT) {
 	id = 0;
 }
 
-Server::~Server() {
+NetManager::~NetManager() {
 	
 }
 
-void Server::run() {
+void NetManager::run() {
 	running = true;
 	int timer = 0;
 	while (running) {
+		//Exhaust packet buffer
 		Packet packet = socket.getPacket();
-		if (packet.isValid()) {
+		while(packet.isValid()) {
 			// GET OUR CONNECTION
 			Address address = packet.getAddress();
-			ClientConnection* current = NULL;
+			NetClient* current = NULL;
 			if(connections.count(address)) {
 				// proceed if connection exists
 				current = connections[address];
 				// current.
 			} else{ // connection does not exist
-				current = new ClientConnection(address,id++,socket); //handshaking happens internally
+				current = new NetClient(address,id++,socket); //handshaking happens internally
 				connections[address] = current;
 			}
 			Command* command = Command::deserialize(packet.getData());
@@ -33,6 +34,8 @@ void Server::run() {
 				current->processCommand(command);
 				delete command;
 			}
+			//Pull the next out of the buffer
+			packet = socket.getPacket();
 		}
 		if(timer++ % 100 == 0){
 			
@@ -44,7 +47,7 @@ void Server::run() {
 			state1.elves = elves;
 			state1.felhound = (Felhound) {2,2, 0, 0};
 
-			std::map<Address, ClientConnection*>::iterator it;
+			std::map<Address, NetClient*>::iterator it;
 			for(it = connections.begin(); it != connections.end(); it++){
 				((*it).second)->sendGameState(state1);
 			}
@@ -59,7 +62,7 @@ void Server::run() {
 		// 	state1.elves = elves;
 		// 	state1.felhound = (Felhound) {2,2};
 
-		// 	std::map<IPaddress, ClientConnection*>::iterator it;
+		// 	std::map<IPaddress, NetClient*>::iterator it;
 		// 	for(it = connections.begin(); it != connections.end(); it++){
 		// 		((*it).second)->sendGameState(state1);
 		// 	}

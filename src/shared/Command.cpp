@@ -20,7 +20,7 @@ Command::~Command() {
 	
 }
 
-string Command::write() {
+string Command::write() const {
 	stringstream s;
 	output(s);
 	return s.str();

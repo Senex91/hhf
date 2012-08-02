@@ -6,10 +6,10 @@
 #include <string>
 #include "Command.h"
 
-class ClientConnection : public CommandVisitor {
+class NetClient : public CommandVisitor {
 public:
-	ClientConnection(Address,int id,Socket& sd);
-	~ClientConnection();
+	NetClient(Address,int id,Socket& sd);
+	~NetClient();
 	void sendGameState(const GameState&);
 	
 	void processCommand(Command*);
