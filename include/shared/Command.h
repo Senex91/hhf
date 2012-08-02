@@ -15,12 +15,6 @@ class MoveCommand;
 class BlinkCommand;
 class CommandVisitor;
 
-/**
- * This has to be called before you use Command::deserialize.
- * There is no harm in calling it multiple times.
- */
-void initializeCommand();
-
 class Command {
 private:
 	typedef Command* (*CommandMaker)(std::string);
@@ -31,7 +25,7 @@ public:
 	virtual std::string write() const;
 	virtual void visit(CommandVisitor& cv) = 0;
 	
-	static void registerDeserializer(std::string s, CommandMaker m) { deserializers[s] = m; }
+	static bool registerDeserializer(std::string s, CommandMaker m) { deserializers[s] = m; return true; }
 	static Command* deserialize(std::string str);
 	
 protected:

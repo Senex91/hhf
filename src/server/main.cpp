@@ -1,16 +1,18 @@
 #include "Debug.h"
 #include "NetManager.h"
 #include "Command.h"
+#include "Server.h"
 
 using std::cout;
 using std::endl;
 
 int main() {
 	DEBUG("Launching Server... please stand by...");
-	initializeCommand();
 
-	NetManager s;
+	
+	Server& s = Server::getInstance();
 	s.run();
+	
 	return 0;
 
 

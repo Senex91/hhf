@@ -8,14 +8,6 @@ using std::map;
 
 map<string,Command::CommandMaker> Command::deserializers;
 
-void initializeCommand() {
-	Command::registerDeserializer(JOIN_CMD,JoinCommand::deserialize);
-	Command::registerDeserializer(ID_CMD,IDCommand::deserialize);
-	Command::registerDeserializer(MOVE_CMD,MoveCommand::deserialize);
-	Command::registerDeserializer(STATE_CMD,GameStateCommand::deserialize);
-	Command::registerDeserializer(BLINK_CMD,BlinkCommand::deserialize);
-}
-
 Command::~Command() {
 	
 }
@@ -27,6 +19,12 @@ string Command::write() const {
 }
 
 Command* Command::deserialize(string str) {
+	static bool joinCmd = registerDeserializer(JOIN_CMD,JoinCommand::deserialize) && joinCmd;
+	static bool idCmd = registerDeserializer(ID_CMD,IDCommand::deserialize) && idCmd;
+	static bool moveCmd = registerDeserializer(MOVE_CMD,MoveCommand::deserialize) && moveCmd;
+	static bool stateCmd = registerDeserializer(STATE_CMD,GameStateCommand::deserialize) && stateCmd;
+	static bool blinkCmd = registerDeserializer(BLINK_CMD,BlinkCommand::deserialize) && blinkCmd;
+	
 	size_t colonPos = str.find(':');
 	if(colonPos == string::npos) {
 		return NULL;

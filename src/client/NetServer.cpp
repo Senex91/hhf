@@ -5,7 +5,6 @@
 
 
 NetServer::NetServer() : socket(), serverAddress("localhost",SERVER_PORT), latestState() {
-	initializeCommand();
 	handshaked = false;
 	id = -1;
 	std::vector<Elf> elves;
@@ -23,6 +22,7 @@ NetServer::~NetServer(){
 void NetServer::receiveData() {
 	Packet p = socket.getPacket();
 	while(p.isValid()) { //exhaust the packet buffer
+		DEBUG("Received packet:" << p.getData());
 		Command* c = Command::deserialize(p.getData());
 		if(c == NULL) {
 			DEBUG("Received invalid packet:" << p.getData());

@@ -1,5 +1,5 @@
-#ifndef CLIENT_CONNECTION
-#define CLIENT_CONNECTION
+#ifndef NET_CLIENT_H
+#define NET_CLIENT_H
 
 #include "GameState.h"
 #include "UDPConnection.h"

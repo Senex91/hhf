@@ -1,5 +1,5 @@
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef NET_MANAGER_H
+#define NET_MANAGER_H
 
 #include "UDPConnection.h"
 #include "map"
@@ -12,12 +12,13 @@ public:
 	NetManager();
 	~NetManager();
 	
-	void run();
+	void update();
 	
 private:
 	GameState state;
 	
 	int id;
+	int timer;
 	
 	bool running;
 	

@@ -5,8 +5,6 @@
 class CommandTestSuite : public CxxTest::TestSuite {
 public:
 	void testJoinCommand(void) {
-		initializeCommand();
-		
 		JoinCommand c;
 		std::string out = c.write();
 		TS_ASSERT(out != "");
@@ -16,8 +14,6 @@ public:
 		TS_ASSERT(out == out2);
 	}
 	void testIDCommand() {
-		initializeCommand();
-		
 		IDCommand c(1);
 		std::string out = c.write();
 		TS_ASSERT(out != "");
@@ -27,8 +23,6 @@ public:
 		TS_ASSERT(out == out2);
 	}
 	void testMoveCommand() {
-		initializeCommand();
-		
 		MoveCommand c(1,1);
 		std::string out = c.write();
 		TS_ASSERT(out != "");
@@ -38,8 +32,6 @@ public:
 		TS_ASSERT(out == out2);
 	}
 	void testBlinkCommand() {
-		initializeCommand();
-		
 		BlinkCommand c(1,1);
 		std::string out = c.write();
 		TS_ASSERT(out != "");
@@ -49,8 +41,6 @@ public:
 		TS_ASSERT(out == out2);
 	}
 	void testGameStateCommand() {
-		initializeCommand();
-		
 		std::vector<Elf> elves;
 		elves.push_back((Elf) {1, 0, 0, 0, 0});
 		elves.push_back((Elf) {2, 0, 1, 0, 0});

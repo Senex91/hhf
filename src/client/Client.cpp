@@ -34,11 +34,12 @@ void Client::run(){
 		// Library construct operations
 		ois.update();
 		ogre.update();
+		server.receiveData();
 
 		// Game operations
 		GameState currentState =  server.getGameState();
 		gameRenderer.renderNextState(currentState);
-		// SDL_Delay(1000); // TODO magic number
+		// SDL_Delay(10); // TODO magic number
 	}
 
 }

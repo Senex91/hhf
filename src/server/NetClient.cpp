@@ -22,12 +22,14 @@ void NetClient::sendGameState(const GameState& gamestate){
 }
 
 void NetClient::sendText(const std::string& text) {
+	DEBUG("Sending packet:"<<text);
 	Packet send(text);
 	send.setAddress(address);
 	socket.sendPacket(send);
 }
 
 void NetClient::processCommand(Command* c) {
+	DEBUG("i got a command yo");
 	if(c == NULL) {
 		DEBUG("NetClient::processCommand: unrecognized command");
 	}
@@ -35,7 +37,7 @@ void NetClient::processCommand(Command* c) {
 }
 
 void NetClient::accept(JoinCommand&) {
-	
+	sendText(IDCommand(id).write());
 }
 
 void NetClient::accept(IDCommand&) {
