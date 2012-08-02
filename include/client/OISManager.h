@@ -25,6 +25,9 @@ public:
 	virtual bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 
+	OIS::Mouse* getMouse() { return mouse; }
+	OIS::Keyboard* getKeyboard() { return keyboard; }
+
 
 	// Input Listeners
 	void addInputListener(InputListener*);

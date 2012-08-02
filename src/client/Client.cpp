@@ -24,9 +24,12 @@ void Client::initialize(){
 	// Game objects
 	gameRenderer.initialize();
 
+
+
 }
 
 void Client::run(){
+
 	ois.addInputListener(this);
 	running = true;
 	while(running){
@@ -36,10 +39,10 @@ void Client::run(){
 		ogre.update();
 		server.receiveData();
 
-		// Game operations
+		// Renders newest gamestate
 		GameState currentState =  server.getGameState();
 		gameRenderer.renderNextState(currentState);
-		// SDL_Delay(10); // TODO magic number
+		// SDL_Delay(1000); // TODO magic number
 	}
 
 }

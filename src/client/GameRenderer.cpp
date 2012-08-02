@@ -6,7 +6,9 @@
 #include "Debug.h"
 #include "Client.h"
 
-#include "Elf.h"
+#include "OgreElf.h"
+
+
 
 
 GameRenderer::GameRenderer(){
@@ -18,6 +20,18 @@ GameRenderer::~GameRenderer(){
 }
 
 void GameRenderer::initialize(){
+
+    // Tray manager, hacky fix for intel graphics
+    OgreBites::SdkTrayManager* mTrayMgr;
+    mTrayMgr = new OgreBites::SdkTrayManager(
+        "InterfaceName", 
+        Client::getInstance().getOgreManager().getWindow(), 
+        Client::getInstance().getOISManager().getMouse(), 
+        this);
+    mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+    mTrayMgr->toggleAdvancedFrameStats();
+    //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+    mTrayMgr->hideCursor();
 
 	cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
 	Client::getInstance().getOISManager().addInputListener(this);
@@ -112,33 +126,23 @@ void GameRenderer::initialize(){
     pointLight->setDiffuseColour(1.0, 1.0, 1.0);
     pointLight->setSpecularColour(1.0, 1.0, 1.0);
 
-    // Client::getInstance()
-    // 	.getOgreManager()
-    // 	.getSceneManager()
-    // 	->setAmbientLight(Ogre::ColourValue(0.9, 0.9, 0.9));
+    Client::getInstance()
+    	.getOgreManager()
+    	.getSceneManager()
+    	->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 }
 
 void GameRenderer::renderNextState(GameState const& newState){
 	DEBUG(gameStateToString(newState));
 
-	   //  std::vector<Elf> elfList;
-    // elfList.push_back((Elf) {0, 0, 0});
-    // elfList.push_back((Elf) {1, 0, 10});
-    // elfList.push_back((Elf) {2, 10, 30});
-    // GameState state1;
-    // state1.elves = elfList;
-    // state1.felhound = (Felhound) {2,2};
-
-    // gameState = state1;
-
 	for(int elfID = 0; elfID< newState.elves.size(); elfID++){
         //DEBUG("Current elf:" << elfID);
 
 		OgreElf* current = NULL;
 
-		// If the elf does exist
-		if (elves.count(elfID)){
+		// ALLOCATE OGRE ELF
+		if (elves.count(elfID)){ // if elf exists
 			current = elves[elfID];
 		} else{ // Current elf doesn't exist
 			current = new OgreElf(
@@ -147,7 +151,8 @@ void GameRenderer::renderNextState(GameState const& newState){
 			elves[elfID] = current;
 		}
 
-		//get Elf struct
+
+		// ALLOCATE GAMESTATE ELF
 		Elf currentElfData;
 		for(int i = 0; i<newState.elves.size(); i++){
 			if(newState.elves[i].id == elfID){
@@ -156,9 +161,11 @@ void GameRenderer::renderNextState(GameState const& newState){
 			}
 		}
 
+
 		current->setPosition(currentElfData.x, 0, currentElfData.y);
 		// current->setColour(Ogre::ColourValue(255, 0, 0));
 		current->setColour(Ogre::ColourValue::Red);
+        current->setOrientation(.05);
 	}
 }
 
