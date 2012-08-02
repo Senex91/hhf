@@ -2,39 +2,6 @@
 #include "Client.h"
 #include "Debug.h"
 
-// OgreManager::OgreManager() {
-// 	root = NULL;
-// 	camera = NULL;
-// 	sceneManager = NULL;
-// 	window = NULL;
-	
-// }
-
-// OgreManager::~OgreManager() {
-//     destroyScene();
-	
-// }
-
-void OgreManager::initialize() {
-	go();
-
-}
-
-void OgreManager::destroy() {
-	destroyScene();
-	// delete mRoot;
-}
-
-void OgreManager::update() {
-	Ogre::WindowEventUtilities::messagePump();
-	mRoot->renderOneFrame();
-}
-
-// bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt){
-// 	// Client::getInstance().getCameraMan().frameRenderingQueued(evt);
-// 	return true;
-// }
-
 //-------------------------------------------------------------------------------------
 OgreManager::OgreManager(void)
     : mRoot(0),
@@ -54,45 +21,49 @@ OgreManager::OgreManager(void)
 {
 }
 
-//-------------------------------------------------------------------------------------
-OgreManager::~OgreManager(void)
-{
-    if (mTrayMgr) delete mTrayMgr;
-    if (mCameraMan) delete mCameraMan;
 
-    //Remove ourself as a Window listener
-    Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
-    windowClosed(mWindow);
-    delete mRoot;
-}
+void OgreManager::initialize() {
+	#ifdef _DEBUG
+    mResourcesCfg = "resources_d.cfg";
+    mPluginsCfg = "plugins_d.cfg";
+#else
+    mResourcesCfg = "cfg/resources.cfg";
+    mPluginsCfg = "cfg/plugins.cfg";
+#endif
 
-//-------------------------------------------------------------------------------------
-bool OgreManager::configure(void)
-{
-    // Show the configuration dialog and initialise the system
-    // You can skip this and use root.restoreConfig() to load configuration
-    // settings if you were sure there are valid ones saved in ogre.cfg
-    if(mRoot->showConfigDialog()){
+    mRoot = new Ogre::Root(mPluginsCfg);
+
+       Ogre::ConfigFile cf;
+    cf.load(mResourcesCfg);
+
+    // Go through all sections & settings in the file
+    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+
+    Ogre::String secName, typeName, archName;
+    while (seci.hasMoreElements())
+    {
+        secName = seci.peekNextKey();
+        Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
+        Ogre::ConfigFile::SettingsMultiMap::iterator i;
+        for (i = settings->begin(); i != settings->end(); ++i)
+        {
+            typeName = i->first;
+            archName = i->second;
+            Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+                    archName, typeName, secName);
+        }
+    }
+
+    if(mRoot->restoreConfig()||mRoot->showConfigDialog()){
         // If returned true, user clicked OK so initialise
         // Here we choose to let the system create a default rendering window by passing 'true'
         mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
-
-        return true;
+    } else{ 
+    	return;
     }
-    else{
-        return false;
-    }
-}
-//-------------------------------------------------------------------------------------
-void OgreManager::chooseSceneManager(void)
-{
-    // Get the SceneManager, in this case a generic one
+        // Get the SceneManager, in this case a generic one
     mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
-}
-//-------------------------------------------------------------------------------------
-void OgreManager::createCamera(void)
-{
-    // Create the camera
+        // Create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
 
     // Position it at 500 in Z direction
@@ -103,11 +74,22 @@ void OgreManager::createCamera(void)
 
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
     mCameraMan->setStyle(OgreBites::CS_ORBIT);
-    //mCameraMan->setStyle(OgreBites::CS_FREELOOK);
-}
-//-------------------------------------------------------------------------------------
-void OgreManager::createFrameListener(void)
-{
+    // Create one viewport, entire window
+    Ogre::Viewport* vp = mWindow->addViewport(mCamera);
+    vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
+
+    // Alter the camera aspect ratio to match the viewport
+    mCamera->setAspectRatio(
+            Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+
+    // Set default mipmap level (NB some APIs ignore this)
+    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+
+    // Create any resource listeners (for loading screens)
+    // createResourceListener();
+    // Load resources
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
     Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
     OIS::ParamList pl;
     size_t windowHnd = 0;
@@ -120,7 +102,7 @@ void OgreManager::createFrameListener(void)
     //pl.insert(std::make_pair(std::string("WINDOW"), UserwindowHndStr.str()));
 
     pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-    pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
+    pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
     pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
     pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
 
@@ -142,7 +124,7 @@ void OgreManager::createFrameListener(void)
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mMouse, this);
     mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-    //mTrayMgr->hideCursor();
+    mTrayMgr->hideCursor();
 
     // create a params panel for displaying sample details
     Ogre::StringVector items;
@@ -165,107 +147,30 @@ void OgreManager::createFrameListener(void)
 
     mRoot->addFrameListener(this);
 }
-//-------------------------------------------------------------------------------------
-void OgreManager::destroyScene(void)
-{
+
+void OgreManager::destroy() {
+	// destroyScene();
+	delete mRoot;
 }
-//-------------------------------------------------------------------------------------
-void OgreManager::createViewports(void)
-{
-    // Create one viewport, entire window
-    Ogre::Viewport* vp = mWindow->addViewport(mCamera);
-    vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
 
-    // Alter the camera aspect ratio to match the viewport
-    mCamera->setAspectRatio(
-            Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+void OgreManager::update() {
+	Ogre::WindowEventUtilities::messagePump();
+	mRoot->renderOneFrame();
 }
+
+
 //-------------------------------------------------------------------------------------
-void OgreManager::setupResources(void)
+OgreManager::~OgreManager(void)
 {
-    // Load resource paths from config file
-    Ogre::ConfigFile cf;
-    cf.load(mResourcesCfg);
+    if (mTrayMgr) delete mTrayMgr;
+    if (mCameraMan) delete mCameraMan;
 
-    // Go through all sections & settings in the file
-    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-
-    Ogre::String secName, typeName, archName;
-    while (seci.hasMoreElements())
-    {
-        secName = seci.peekNextKey();
-        Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-        Ogre::ConfigFile::SettingsMultiMap::iterator i;
-        for (i = settings->begin(); i != settings->end(); ++i)
-        {
-            typeName = i->first;
-            archName = i->second;
-            Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                    archName, typeName, secName);
-        }
-    }
+    //Remove ourself as a Window listener
+    Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
+    windowClosed(mWindow);
+    delete mRoot;
 }
-//-------------------------------------------------------------------------------------
-void OgreManager::createResourceListener(void)
-{
 
-}
-//-------------------------------------------------------------------------------------
-void OgreManager::loadResources(void)
-{
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-}
-//-------------------------------------------------------------------------------------
-void OgreManager::go(void)
-{
-#ifdef _DEBUG
-    mResourcesCfg = "resources_d.cfg";
-    mPluginsCfg = "plugins_d.cfg";
-#else
-    mResourcesCfg = "cfg/resources.cfg";
-    mPluginsCfg = "cfg/plugins.cfg";
-#endif
-
-    if (!setup())
-        return;
-
-    // mRoot->startRendering();
-
-    // clean up
-    // destroyScene();
-}
-//-------------------------------------------------------------------------------------
-bool OgreManager::setup(void)
-{
-    mRoot = new Ogre::Root(mPluginsCfg);
-
-    setupResources();
-
-    bool carryOn = configure();
-    if (!carryOn) return false;
-
-    chooseSceneManager();
-    createCamera();
-    createViewports();
-
-    // Set default mipmap level (NB some APIs ignore this)
-    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-
-    // Create any resource listeners (for loading screens)
-    createResourceListener();
-    // Load resources
-    loadResources();
-
-
-    // Create the scene
-    // createScene();
-
-    createFrameListener();
-
-    DEBUG("EXITING OGREMENAGER SETUP_");
-
-    return true;
-};
 //-------------------------------------------------------------------------------------
 bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
