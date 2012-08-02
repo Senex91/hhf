@@ -9,6 +9,8 @@
 #include "OgreElf.h"
 
 
+
+
 GameRenderer::GameRenderer(){
 
 }
@@ -19,8 +21,20 @@ GameRenderer::~GameRenderer(){
 
 void GameRenderer::initialize(){
 
-	// cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
-	// Client::getInstance().getOISManager().addInputListener(this);
+    // Tray manager, hacky fix for intel graphics
+    OgreBites::SdkTrayManager* mTrayMgr;
+    mTrayMgr = new OgreBites::SdkTrayManager(
+        "InterfaceName", 
+        Client::getInstance().getOgreManager().getWindow(), 
+        Client::getInstance().getOISManager().getMouse(), 
+        this);
+    mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+    mTrayMgr->toggleAdvancedFrameStats();
+    //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+    mTrayMgr->hideCursor();
+
+	cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
+	Client::getInstance().getOISManager().addInputListener(this);
 
 
 	int numcols = 100;

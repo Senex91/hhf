@@ -10,10 +10,12 @@
 #include "GameState.h"
 #include "TOCameraMan.h"
 
+#include <SdkTrays.h>
+
 /**
  * @brief GameRenderer renders the game as received by the server.
  */
-class GameRenderer : public InputListener {
+class GameRenderer : public InputListener, OgreBites::SdkTrayListener {
 public:
 	GameRenderer();
 	~GameRenderer();

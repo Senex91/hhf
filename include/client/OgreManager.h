@@ -15,7 +15,6 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
-#include <SdkTrays.h>
 #include <TOCameraMan.h>
 
 #include <OgreRenderSystem.h>
@@ -23,6 +22,8 @@
 #include <OgreManualObject.h>
 
 #include "TOCameraMan.h"
+
+#include <SdkTrays.h>
 
 class OgreManager: 
 	public Ogre::FrameListener, 
@@ -77,9 +78,9 @@ protected:
     Ogre::String mPluginsCfg;
 
     // OgreBites
-    OgreBites::SdkTrayManager* mTrayMgr;
-    OgreBites::SdkCameraMan* mCameraMan;       // basic camera controller
-    OgreBites::ParamsPanel* mDetailsPanel;     // sample details panel
+    // OgreBites::SdkTrayManager* mTrayMgr;
+    // OgreBites::SdkCameraMan* mCameraMan;       // basic camera controller
+    // OgreBites::ParamsPanel* mDetailsPanel;     // sample details panel
     bool mCursorWasVisible;                    // was cursor visible before dialog appeared
     bool mShutDown;
 

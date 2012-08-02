@@ -10,13 +10,13 @@ OgreManager::OgreManager(void)
     mWindow(0),
     mResourcesCfg(Ogre::StringUtil::BLANK),
     mPluginsCfg(Ogre::StringUtil::BLANK),
-    mTrayMgr(0),
-    mCameraMan(0),
+    // mTrayMgr(0),
+    // mCameraMan(0),
     mCursorWasVisible(false),
     mShutDown(false),
-    mInputManager(0),
-    mMouse(0),
-    mKeyboard(0)
+    mInputManager(0)//,
+    // mMouse(0),
+    // mKeyboard(0)
 {
 }
 
@@ -71,8 +71,8 @@ void OgreManager::initialize() {
     mCamera->lookAt(Ogre::Vector3(0,0,-300));
     mCamera->setNearClipDistance(5);
 
-    mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
-    mCameraMan->setStyle(OgreBites::CS_ORBIT);
+    // mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
+    // mCameraMan->setStyle(OgreBites::CS_ORBIT);
     // Create one viewport, entire window
     Ogre::Viewport* vp = mWindow->addViewport(mCamera);
     vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
@@ -89,30 +89,30 @@ void OgreManager::initialize() {
     // Load resources
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-    Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
-    OIS::ParamList pl;
-    size_t windowHnd = 0;
-    std::ostringstream windowHndStr;
+    // Ogre::LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
+    // OIS::ParamList pl;
+    // size_t windowHnd = 0;
+    // std::ostringstream windowHndStr;
 
-    mWindow->getCustomAttribute("WINDOW", &windowHnd);
-    windowHndStr << windowHnd;
-    pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-    // user window parameters
-    //pl.insert(std::make_pair(std::string("WINDOW"), UserwindowHndStr.str()));
+    // mWindow->getCustomAttribute("WINDOW", &windowHnd);
+    // windowHndStr << windowHnd;
+    // pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
+    // // user window parameters
+    // //pl.insert(std::make_pair(std::string("WINDOW"), UserwindowHndStr.str()));
 
-    pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-    pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
-    pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-    pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+    // pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+    // pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+    // pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+    // pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
 
 
-    mInputManager = OIS::InputManager::createInputSystem( pl );
+    // mInputManager = OIS::InputManager::createInputSystem( pl );
 
-    mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
-    mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject( OIS::OISMouse, true ));
+    // mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
+    // mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject( OIS::OISMouse, true ));
 
-    mMouse->setEventCallback(this);
-    mKeyboard->setEventCallback(this);
+    // mMouse->setEventCallback(this);
+    // mKeyboard->setEventCallback(this);
 
     //Set initial mouse clipping size
     windowResized(mWindow);
@@ -120,12 +120,12 @@ void OgreManager::initialize() {
     //Register as a Window listener
     Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
 
-    mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mMouse, this);
-    mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-    mTrayMgr->toggleAdvancedFrameStats();
-    
-    //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-    mTrayMgr->hideCursor();
+    // mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mMouse, this);
+    // mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+    // mTrayMgr->toggleAdvancedFrameStats();
+
+    // //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+    // mTrayMgr->hideCursor();
 
     // create a params panel for displaying sample details
     // Ogre::StringVector items;
@@ -163,15 +163,14 @@ void OgreManager::update() {
 //-------------------------------------------------------------------------------------
 OgreManager::~OgreManager(void)
 {
-    if (mTrayMgr) delete mTrayMgr;
-    if (mCameraMan) delete mCameraMan;
+    // if (mTrayMgr) delete mTrayMgr;
+    // if (mCameraMan) delete mCameraMan;
 
     //Remove ourself as a Window listener
     Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
     windowClosed(mWindow);
     delete mRoot;
 }
-
 //-------------------------------------------------------------------------------------
 bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
@@ -182,11 +181,11 @@ bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt)
         return false;
 
     //Need to capture/update each device
-    mKeyboard->capture();
-    mMouse->capture();
+    // mKeyboard->capture();
+    // mMouse->capture();
 
     // mTrayMgr->frameRenderingQueued(evt);
-    mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
+    // mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
 
     // if (!mTrayMgr->isDialogVisible())
     // {
@@ -294,34 +293,34 @@ bool OgreManager::keyPressed( const OIS::KeyEvent &arg )
         mShutDown = true;
     }
 
-    mCameraMan->injectKeyDown(arg);
+    // mCameraMan->injectKeyDown(arg);
     return true;
 }
 
 bool OgreManager::keyReleased( const OIS::KeyEvent &arg )
 {
-    mCameraMan->injectKeyUp(arg);
+    // mCameraMan->injectKeyUp(arg);
     return true;
 }
 
 bool OgreManager::mouseMoved( const OIS::MouseEvent &arg )
 {
     // if (mTrayMgr->injectMouseMove(arg)) return true;
-    mCameraMan->injectMouseMove(arg);
+    // mCameraMan->injectMouseMove(arg);
     return true;
 }
 
 bool OgreManager::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
     // if (mTrayMgr->injectMouseDown(arg, id)) return true;
-    mCameraMan->injectMouseDown(arg, id);
+    // mCameraMan->injectMouseDown(arg, id);
     return true;
 }
 
 bool OgreManager::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
     // if (mTrayMgr->injectMouseUp(arg, id)) return true;
-    mCameraMan->injectMouseUp(arg, id);
+    // mCameraMan->injectMouseUp(arg, id);
     return true;
 }
 
@@ -331,10 +330,6 @@ void OgreManager::windowResized(Ogre::RenderWindow* rw)
     unsigned int width, height, depth;
     int left, top;
     rw->getMetrics(width, height, depth, left, top);
-
-    const OIS::MouseState &ms = mMouse->getMouseState();
-    ms.width = width;
-    ms.height = height;
 }
 
 //Unattach OIS before window shutdown (very important under Linux)
@@ -345,8 +340,8 @@ void OgreManager::windowClosed(Ogre::RenderWindow* rw)
     {
         if( mInputManager )
         {
-            mInputManager->destroyInputObject( mMouse );
-            mInputManager->destroyInputObject( mKeyboard );
+            // mInputManager->destroyInputObject( mMouse );
+            // mInputManager->destroyInputObject( mKeyboard );
 
             OIS::InputManager::destroyInputSystem(mInputManager);
             mInputManager = 0;
