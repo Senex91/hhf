@@ -18,6 +18,7 @@ public:
 	~OgreElf(void);
 
 	void setPosition(float, float, float);
+	void setOrientation(float);
 	void setColour(Ogre::ColourValue);
 
 

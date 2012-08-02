@@ -15,6 +15,11 @@ OgreManager::~OgreManager() {
 }
 
 void OgreManager::initialize() {
+
+
+
+
+	
 	resourcesCfg = "cfg/resources.cfg";
 	pluginsCfg = "cfg/plugins.cfg";
 	

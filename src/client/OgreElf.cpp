@@ -1,4 +1,5 @@
 #include "OgreElf.h"
+#include "OgreEuler.h" // from our source tree
 
 OgreElf::OgreElf(Ogre::SceneManager* pManager, int pId){
 	manager = pManager;
@@ -16,6 +17,14 @@ OgreElf::~OgreElf(void){
 
 void OgreElf::setPosition(float x, float y, float z){
 	node->setPosition(x,y,z);
+}
+
+void OgreElf::setOrientation(float heading){
+    Ogre::Euler angle(
+            Ogre::Radian(heading), //yaw
+            Ogre::Radian(0), //pitch
+            Ogre::Radian(0));//bank
+    node->setOrientation(angle);
 }
 
 void OgreElf::setColour(Ogre::ColourValue colour){
