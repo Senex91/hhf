@@ -1,5 +1,5 @@
 #include "Debug.h"
-#include "Server.h"
+#include "NetManager.h"
 #include "Command.h"
 
 using std::cout;
@@ -9,7 +9,7 @@ int main() {
 	DEBUG("Launching Server... please stand by...");
 	initializeCommand();
 
-	Server s;
+	NetManager s;
 	s.run();
 	return 0;
 

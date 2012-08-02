@@ -15,6 +15,10 @@ class MoveCommand;
 class BlinkCommand;
 class CommandVisitor;
 
+/**
+ * This has to be called before you use Command::deserialize.
+ * There is no harm in calling it multiple times.
+ */
 void initializeCommand();
 
 class Command {
@@ -24,14 +28,14 @@ public:
 	Command() {}
 	virtual ~Command();
 	
-	virtual std::string write();
+	virtual std::string write() const;
 	virtual void visit(CommandVisitor& cv) = 0;
 	
 	static void registerDeserializer(std::string s, CommandMaker m) { deserializers[s] = m; }
 	static Command* deserialize(std::string str);
 	
 protected:
-	virtual void output(std::stringstream& s) = 0;
+	virtual void output(std::stringstream& s) const = 0;
 private:
 	static std::map<std::string,CommandMaker> deserializers;
 };
@@ -62,7 +66,7 @@ public:
 	
 protected:
 	
-	virtual void output(std::stringstream& s) { s << JOIN_CMD << ":"; }
+	virtual void output(std::stringstream& s) const { s << JOIN_CMD << ":"; }
 	
 };
 
@@ -81,7 +85,7 @@ protected:
 	
 	int id;
 	
-	virtual void output(std::stringstream& s) { s << ID_CMD << ":" << id; }
+	virtual void output(std::stringstream& s) const { s << ID_CMD << ":" << id; }
 };
 
 class GameStateCommand : public Command {
@@ -97,7 +101,7 @@ public:
 	
 protected:
 	
-	virtual void output(std::stringstream& s) { s << STATE_CMD << ":" << serializeGameState(gameState); }
+	virtual void output(std::stringstream& s) const { s << STATE_CMD << ":" << serializeGameState(gameState); }
 	
 private:
 	GameState gameState;
@@ -118,7 +122,7 @@ public:
 	
 protected:
 	
-	virtual void output(std::stringstream& s) { s << MOVE_CMD << ":" << moveX << " " << moveY; }
+	virtual void output(std::stringstream& s) const { s << MOVE_CMD << ":" << moveX << " " << moveY; }
 	
 private:
 	char player;
@@ -140,7 +144,7 @@ public:
 	
 protected:
 	
-	virtual void output(std::stringstream& s) { s << BLINK_CMD << ":" << moveX << " " << moveY; }
+	virtual void output(std::stringstream& s) const { s << BLINK_CMD << ":" << moveX << " " << moveY; }
 	
 private:
 	char player;

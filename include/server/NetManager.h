@@ -3,14 +3,14 @@
 
 #include "UDPConnection.h"
 #include "map"
-#include "ClientConnection.h"
+#include "NetClient.h"
 #include "NetworkConstants.h"
 #include "Command.h"
 
-class Server {
+class NetManager {
 public:
-	Server();
-	~Server();
+	NetManager();
+	~NetManager();
 	
 	void run();
 	
@@ -23,7 +23,7 @@ private:
 	
 	Socket socket;
 	
-	std::map<Address, ClientConnection*> connections;
+	std::map<Address, NetClient*> connections;
 	
 };
 
