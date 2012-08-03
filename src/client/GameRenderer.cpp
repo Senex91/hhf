@@ -166,6 +166,7 @@ void GameRenderer::renderNextState(GameState const& newState){
 		// current->setColour(Ogre::ColourValue(255, 0, 0));
 		current->setColour(Ogre::ColourValue::Red);
         current->setOrientation(.05);
+        // current->setColour(OgreElf::getColour(currentElfData.id));
 	}
 }
 

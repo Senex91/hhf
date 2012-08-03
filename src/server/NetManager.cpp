@@ -43,12 +43,13 @@ void NetManager::update() {
 	if(timer++ % 100 == 0){
 		
 		std::vector<Elf> elves;
-		elves.push_back((Elf) {1, 0, 0, 0, 0});
-		elves.push_back((Elf) {2, 0, 100, 0, 0});
-		elves.push_back((Elf) {3, 100, 0, 0, 0});
+		elves.push_back((Elf) {0, 0, 0, 0, 0});
+		elves.push_back((Elf) {1, 0, 10, 0, 0});
+		elves.push_back((Elf) {2, 10, 0, 0, 0});
+		elves.push_back((Elf) {3, 10, 10, 0, 0});
 		GameState state1;
 		state1.elves = elves;
-		state1.felhound = (Felhound) {200,200, 0, 0};
+		state1.felhound = (Felhound) {-4,-4, 0, 0};
 
 		std::map<Address, NetClient*>::iterator it;
 		for(it = connections.begin(); it != connections.end(); it++){

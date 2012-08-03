@@ -22,7 +22,7 @@ NetServer::~NetServer(){
 void NetServer::receiveData() {
 	Packet p = socket.getPacket();
 	while(p.isValid()) { //exhaust the packet buffer
-		DEBUG("Received packet:" << p.getData());
+		// DEBUG("Received packet:" << p.getData());
 		Command* c = Command::deserialize(p.getData());
 		if(c == NULL) {
 			DEBUG("Received invalid packet:" << p.getData());
@@ -40,7 +40,7 @@ void NetServer::receiveData() {
 }
 
 GameState const& NetServer::getGameState(){
-	latestState.elves[0].y = latestState.elves[0].y + 0.01;
+	// latestState.elves[0].y = latestState.elves[0].y + 0.01;
 	// latestState.elves[0].x = latestState.elves[0].x + 0.01;
 
 	// latestState.felhound.x = latestState.felhound.x + 1;
