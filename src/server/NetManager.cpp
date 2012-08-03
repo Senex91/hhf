@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include "Debug.h"
+#include "Server.h"
 
 NetManager::NetManager(): socket(SERVER_PORT) {
 	id = 0;
@@ -40,20 +41,10 @@ void NetManager::update() {
 		packet = socket.getPacket();
 	}
 	//temporary state sending
-	if(timer++ % 100 == 0){
-		
-		std::vector<Elf> elves;
-		elves.push_back((Elf) {0, 0, 0, 0, 0});
-		elves.push_back((Elf) {1, 0, 10, 0, 0});
-		elves.push_back((Elf) {2, 10, 0, 0, 0});
-		elves.push_back((Elf) {3, 10, 10, 0, 0});
-		GameState state1;
-		state1.elves = elves;
-		state1.felhound = (Felhound) {-4,-4, 0, 0};
-
-		std::map<Address, NetClient*>::iterator it;
-		for(it = connections.begin(); it != connections.end(); it++){
-			((*it).second)->sendGameState(state1);
+	if(timer++ % 25 == 0) {
+		const GameState& state = Server::getInstance().getGamePhysics().getState();
+		for(std::map<Address,NetClient*>::iterator it = connections.begin(); it != connections.end(); it++){
+			(it->second)->sendGameState(state);
 		}
 	}
 

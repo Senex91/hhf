@@ -107,8 +107,8 @@ public:
 	virtual ~MoveCommand();
 	
 	// inline const char& getPlayer() { return player; }
-	inline const float& getMoveX() { return moveX; }
-	inline const float& getMoveY() { return moveY; }
+	inline const float& getMoveX() const { return moveX; }
+	inline const float& getMoveY() const { return moveY; }
 	
 	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
 	

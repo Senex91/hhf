@@ -19,6 +19,6 @@ void Server::run() {
 	while(running) {
 		phys.tick();
 		net.update();
-		//SDL_Delay(10);
+		SDL_Delay(1);
 	}
 }
