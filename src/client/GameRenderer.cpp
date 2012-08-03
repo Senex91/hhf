@@ -136,7 +136,7 @@ void GameRenderer::initialize(){
 void GameRenderer::renderNextState(GameState const& newState){
 	DEBUG(gameStateToString(newState));
 
-	for(int elfID = 0; elfID< newState.elves.size(); elfID++){
+	for(unsigned int elfID = 0; elfID < newState.elves.size(); elfID++){
         //DEBUG("Current elf:" << elfID);
 
 		OgreElf* current = NULL;
@@ -154,8 +154,10 @@ void GameRenderer::renderNextState(GameState const& newState){
 
 		// ALLOCATE GAMESTATE ELF
 		Elf currentElfData;
-		for(int i = 0; i<newState.elves.size(); i++){
-			if(newState.elves[i].id == elfID){
+        currentElfData.x = -999;//TODO magic number
+        currentElfData.y = -999;
+		for(unsigned int i = 0; i<newState.elves.size(); i++){
+			if((unsigned int) newState.elves[i].id == elfID){
 				currentElfData = newState.elves[i];
 				break;
 			}

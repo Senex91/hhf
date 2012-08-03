@@ -53,7 +53,7 @@ void OgreElf::setColour(Ogre::ColourValue colour){
     entity->setMaterialName(mat->getName());
 }
 
-Ogre::ColourValue OgreElf::getColour(int id){
+Ogre::ColourValue OgreElf::getColour(unsigned int id){
     static std::vector<Ogre::ColourValue> colors = initialColors();
     if(id >= colors.size()){ //if the colour does not exist
         colors.push_back(

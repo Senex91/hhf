@@ -23,7 +23,7 @@ public:
 	void setOrientation(float);
 	void setColour(Ogre::ColourValue);
 
-	static Ogre::ColourValue getColour(int);
+	static Ogre::ColourValue getColour(unsigned int);
 
 
 private:

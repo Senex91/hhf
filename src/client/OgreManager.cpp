@@ -226,9 +226,9 @@ bool OgreManager::keyPressed( const OIS::KeyEvent &arg )
     }
     else if (arg.key == OIS::KC_T)   // cycle polygon rendering mode
     {
-        Ogre::String newVal;
-        Ogre::TextureFilterOptions tfo;
-        unsigned int aniso;
+        // Ogre::String newVal;
+        // Ogre::TextureFilterOptions tfo;
+        // unsigned int aniso;
 
         // switch (mDetailsPanel->getParamValue(9).asUTF8()[0])
         // {
@@ -253,8 +253,8 @@ bool OgreManager::keyPressed( const OIS::KeyEvent &arg )
         //         aniso = 1;
         // }
 
-        Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
-        Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
+        // Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(tfo);
+        // Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
         // mDetailsPanel->setParamValue(9, newVal);
     }
     else if (arg.key == OIS::KC_R)   // cycle polygon rendering mode
