@@ -1,5 +1,6 @@
 #include "UDPConnection.h"
 #include <string.h>
+#include "Debug.h"
 
 using std::string;
 
@@ -107,7 +108,7 @@ const Packet& Packet::operator=(const Packet& other) {
 
 void Packet::setBlank() {
 	deleteWrapped();
-	wrapped = SDLNet_AllocPacket(MAX_LENGTH);
+	wrapped = acquireUDPpacket();
 	if(wrapped) {
 		wrapped->maxlen = MAX_LENGTH;
 		wrapped->channel = -1;
@@ -125,7 +126,7 @@ bool Packet::isValid() const {
 void Packet::setWrapped(UDPpacket* other) {
 	deleteWrapped();
 	if(other) {
-		wrapped = SDLNet_AllocPacket(other->maxlen);
+		wrapped = acquireUDPpacket();
 		if(wrapped) {
 			wrapped->channel = other->channel;
 			//We can strncpy immediately to our wrapped->data, as it is allocated by SDLNet_AllocPacket
@@ -140,7 +141,7 @@ void Packet::setWrapped(UDPpacket* other) {
 
 void Packet::deleteWrapped() {
 	if(wrapped) {
-		SDLNet_FreePacket(wrapped);
+		freeUDPpacket(wrapped);
 		wrapped = NULL;
 	}
 }
@@ -199,6 +200,23 @@ void Packet::setDataRaw(const char* data,unsigned int length) {
 		strncpy((char*)wrapped->data,data,length);
 		wrapped->len = length;
 	}
+}
+
+std::vector<UDPpacket*> Packet::unusedPacketStack;
+
+UDPpacket* Packet::acquireUDPpacket() {
+	if(unusedPacketStack.size()>0) {
+		UDPpacket* end = unusedPacketStack.back();
+		unusedPacketStack.pop_back();
+		return end;
+	} else {
+		DEBUG("Allocating new packet");
+		return SDLNet_AllocPacket(MAX_LENGTH);
+	}
+}
+
+void Packet::freeUDPpacket(UDPpacket* packet) {
+	unusedPacketStack.push_back(packet);
 }
 
 //---------------------//

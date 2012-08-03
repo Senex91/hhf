@@ -2,9 +2,14 @@
 #include "Client.h"
 #include "Debug.h"
 
+#include <SDL.h>
+#include <SDL_net.h>
 #include <string>
 
 int main(){
+	//SDL_Init(SDL_INIT_EVERYTHING);
+	//SDLNet_Init();
+	
     // Create application object
     //PlaneWorld app;
     //ITutorial01 app;

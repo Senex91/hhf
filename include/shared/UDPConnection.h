@@ -8,6 +8,7 @@
 #include <SDL.h>
 #include <SDL_net.h>
 #include <string>
+#include <vector>
 
 class Address {
 public:
@@ -69,6 +70,10 @@ private:
 	void deleteWrapped();
 	
 	UDPpacket* wrapped;
+	
+	static std::vector<UDPpacket*> unusedPacketStack;
+	static UDPpacket* acquireUDPpacket();
+	static void freeUDPpacket(UDPpacket* packet);
 	
 	friend class Socket;
 };

@@ -45,12 +45,12 @@ void OgreElf::setOrientation(float heading){
 }
 
 void OgreElf::setColour(Ogre::ColourValue colour){
-	std::string matName = OgreElf_MATERIAL_NAME;
-    matName+=id;
-    Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial()->clone(matName);
+	//std::string matName = OgreElf_MATERIAL_NAME;
+    //matName+=id;
+    Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial();
     mat->getTechnique(0)->getPass(0)->setAmbient(colour);
     mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
-    entity->setMaterialName(mat->getName());
+    //entity->setMaterialName(mat->getName());
 }
 
 Ogre::ColourValue OgreElf::getColour(unsigned int id){

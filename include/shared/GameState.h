@@ -25,10 +25,11 @@ struct Felhound{
 };
 
 struct GameState{
+	std::vector<Elf> elves;
+	Felhound felhound;
+	
     GameState(void);
     GameState(const GameState&);
-    std::vector<Elf> elves;
-    Felhound felhound;
     const GameState& operator=(const GameState&);
 };
 
