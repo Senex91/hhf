@@ -1,13 +1,17 @@
 #ifndef OIS_MANAGER_H
 #define OIS_MANAGER_H
 
+#include <OgreWindowEventUtilities.h>
 #include <OIS.h>
 
 // listeners
 #include "InputListener.h"
 #include <set>
 
-class OISManager : public OIS::KeyListener, public OIS::MouseListener {
+class OISManager : 
+	public OIS::KeyListener, 
+	public OIS::MouseListener,
+	public Ogre::WindowEventListener {
 public:
 	OISManager();
 	~OISManager();
@@ -34,6 +38,11 @@ public:
 	void addKeyListener(OIS::KeyListener*);
 	void removeMouseListener(OIS::MouseListener*);
 	void removeKeyListener(OIS::KeyListener*);
+
+protected:
+	// Ogre::WindowEventListener
+    //Adjust mouse clipping area
+    virtual void windowResized(Ogre::RenderWindow* rw);
 	
 private:
 	

@@ -19,6 +19,12 @@ NetServer::~NetServer(){
 
 }
 
+void NetServer::sendCommand(const Command& toSend){
+	Packet send(toSend.write());
+	send.setAddress(serverAddress);
+	socket.sendPacket(send);
+}
+
 void NetServer::receiveData() {
 	Packet p = socket.getPacket();
 	while(p.isValid()) { //exhaust the packet buffer

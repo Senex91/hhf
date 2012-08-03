@@ -133,7 +133,7 @@ void GameRenderer::initialize(){
 }
 
 void GameRenderer::renderNextState(GameState const& newState){
-	DEBUG(gameStateToString(newState));
+	// DEBUG(gameStateToString(newState));
 
 	for(unsigned int elfID = 0; elfID < newState.elves.size(); elfID++){
         //DEBUG("Current elf:" << elfID);

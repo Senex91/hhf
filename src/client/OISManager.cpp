@@ -36,13 +36,15 @@ void OISManager::initialize() {
 	mouse->setEventCallback(this);
 	keyboard->setEventCallback(this);
 	
-	unsigned int width, height, depth;
-    int left, top;
-    Client::getInstance().getOgreManager().getWindow()->getMetrics(width, height, depth, left, top);
+	// unsigned int width, height, depth;
+ //    int left, top;
+ //    Client::getInstance().getOgreManager().getWindow()->getMetrics(width, height, depth, left, top);
+	windowResized(
+		Client::getInstance().getOgreManager().getWindow());
+    Ogre::WindowEventUtilities::addWindowEventListener(
+    	Client::getInstance().getOgreManager().getWindow(), this);
  
-    const OIS::MouseState &ms = mouse->getMouseState();
-    ms.width = width;
-    ms.height = height;
+    
     DEBUG("!!!!!!!!!!! OIS INITIATE DONE !!!!!!!!!!!");
 }
 
@@ -57,6 +59,16 @@ void OISManager::destroy() {
 void OISManager::update() {
 	keyboard->capture();
 	mouse->capture();
+}
+//Adjust mouse clipping area
+void OISManager::windowResized(Ogre::RenderWindow* rw)
+{
+    unsigned int width, height, depth;
+    int left, top;
+    rw->getMetrics(width, height, depth, left, top);
+    const OIS::MouseState &ms = mouse->getMouseState();
+    ms.width = width;
+    ms.height = height;
 }
 
 void OISManager::addMouseListener(OIS::MouseListener* listener){

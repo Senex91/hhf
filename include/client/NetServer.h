@@ -13,7 +13,7 @@ public:
 	NetServer();
 	~NetServer();
 
-	void sendCommand();
+	void sendCommand(const Command&);
 	void receiveData();
 
 	GameState const& getGameState();

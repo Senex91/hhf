@@ -13,6 +13,8 @@
 // Game entities
 #include "GameRenderer.h"
 #include "NetServer.h"
+#include "ElfCommander.h"
+
 
 /**
  * @brief Client runs a Client instance of a game.
@@ -49,6 +51,7 @@ private:
 	Client& operator=(Client const&);
 	// static Client* instance;
 
+
 	// Library constructs
 	OgreManager ogre;
 	OISManager ois; 
@@ -57,6 +60,8 @@ private:
 	// Game entities
 	GameRenderer gameRenderer;
 	NetServer server;
+	ElfCommander commander;
+	
 
 	// Client state
 	bool running;

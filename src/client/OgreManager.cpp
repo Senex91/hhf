@@ -348,3 +348,16 @@ void OgreManager::windowClosed(Ogre::RenderWindow* rw)
         }
     }
 }
+
+Ogre::Vector3 OgreManager::rayCast(const float& x,const float& y) {
+    Ogre::Ray r = mCamera->getCameraToViewportRay(x,y);
+    Ogre::Plane p(Ogre::Vector3(0,1,0),0);
+    std::pair<bool,float> pt = Ogre::Math::intersects(r,p);
+    if(pt.first) {
+        return r.getPoint(pt.second);
+    } else {
+        return Ogre::Vector3(0,0,0);
+    }
+    // return Ogre::Vector3(0,0,0);
+}
+

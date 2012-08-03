@@ -9,7 +9,7 @@ Client& Client::getInstance() {
 	return client;
 }
 
-Client::Client(): ogre(), ois(), gameRenderer(), server(), running(false){
+Client::Client(): ogre(), ois(), gameRenderer(), server(), commander(server), running(false){
 }
 
 Client::~Client(){
@@ -32,6 +32,7 @@ void Client::run(){
 
 	ois.addMouseListener(this);
 	ois.addKeyListener(this);
+	ois.addMouseListener(&commander);
 	running = true;
 	while(running){
 

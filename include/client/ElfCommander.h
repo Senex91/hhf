@@ -1,12 +1,14 @@
 #ifndef ElfCommander_H
 #define ElfCommander_H
 
+#include "NetServer.h"
+#include "OISManager.h"
+#include "OgreVector3.h"
 
-class ElfCommander {
+class ElfCommander : public OIS::KeyListener, public OIS::MouseListener {
 public:
-	ElfCommander(NetServer);
+	ElfCommander(NetServer&);
 	~ElfCommander();
-
 
 protected:
 
@@ -21,7 +23,7 @@ protected:
 
 private:
 
-	NetServer* server = NULL;
+	NetServer& server;
 };
 
 #endif
