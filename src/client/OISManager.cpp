@@ -3,7 +3,7 @@
 
 #include "Debug.h"
 
-OISManager::OISManager(): listeners(){
+OISManager::OISManager(): mouseListeners(), keyListeners(){
 	inputManager = NULL;
 	mouse = NULL;
 	keyboard = NULL;
@@ -59,46 +59,53 @@ void OISManager::update() {
 	mouse->capture();
 }
 
-void OISManager::addInputListener(InputListener* listener){
-	listeners.insert(listener);
+void OISManager::addMouseListener(OIS::MouseListener* listener){
+	mouseListeners.insert(listener);
+}
+void OISManager::addKeyListener(OIS::KeyListener* listener){
+	keyListeners.insert(listener);
 }
 
-void OISManager::removeInputListener(InputListener* listener){
-	listeners.erase(listener);
+void OISManager::removeMouseListener(OIS::MouseListener* listener){
+	mouseListeners.erase(listener);
+}
+
+void OISManager::removeKeyListener(OIS::KeyListener* listener){
+	keyListeners.erase(listener);
 }
 // OIS::KeyListener
 bool OISManager::keyPressed( const OIS::KeyEvent &arg ) {
-	for(std::set<InputListener*>::iterator it = listeners.begin(); 
-		it !=listeners.end(); it++){
+	for(std::set<OIS::KeyListener*>::iterator it = keyListeners.begin(); 
+		it !=keyListeners.end(); it++){
 		(*it)->keyPressed(arg);
 	}
 	return true;
 }
 bool OISManager::keyReleased( const OIS::KeyEvent &arg ) {
-	for(std::set<InputListener*>::iterator it = listeners.begin(); 
-		it !=listeners.end(); it++){
+	for(std::set<OIS::KeyListener*>::iterator it = keyListeners.begin(); 
+		it !=keyListeners.end(); it++){
 		(*it)->keyReleased(arg);
 	}
 	return true;
 }
 // OIS::MouseListener
 bool OISManager::mouseMoved( const OIS::MouseEvent &arg ) {
-	for(std::set<InputListener*>::iterator it = listeners.begin(); 
-		it !=listeners.end(); it++){
+	for(std::set<OIS::MouseListener*>::iterator it = mouseListeners.begin(); 
+		it !=mouseListeners.end(); it++){
 		(*it)->mouseMoved(arg);
 	}
 	return true;
 }
 bool OISManager::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
-	for(std::set<InputListener*>::iterator it = listeners.begin(); 
-		it !=listeners.end(); it++){
+	for(std::set<OIS::MouseListener*>::iterator it = mouseListeners.begin(); 
+		it !=mouseListeners.end(); it++){
 		(*it)->mousePressed(arg,id);
 	}
 	return true;
 }
 bool OISManager::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
-	for(std::set<InputListener*>::iterator it = listeners.begin(); 
-		it !=listeners.end(); it++){
+	for(std::set<OIS::MouseListener*>::iterator it = mouseListeners.begin(); 
+		it !=mouseListeners.end(); it++){
 		(*it)->mouseReleased(arg,id);
 	}
 	return true;

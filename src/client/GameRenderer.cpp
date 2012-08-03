@@ -9,8 +9,6 @@
 #include "OgreElf.h"
 
 
-
-
 GameRenderer::GameRenderer(){
 
 }
@@ -34,7 +32,8 @@ void GameRenderer::initialize(){
     mTrayMgr->hideCursor();
 
 	cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
-	Client::getInstance().getOISManager().addInputListener(this);
+    Client::getInstance().getOISManager().addMouseListener(this);
+    Client::getInstance().getOISManager().addKeyListener(this);
 
 
 	int numcols = 100;

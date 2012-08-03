@@ -106,7 +106,7 @@ public:
 	MoveCommand(float moveX,float moveY) : moveX(moveX), moveY(moveY) {}
 	virtual ~MoveCommand();
 	
-	inline const char& getPlayer() { return player; }
+	// inline const char& getPlayer() { return player; }
 	inline const float& getMoveX() { return moveX; }
 	inline const float& getMoveY() { return moveY; }
 	
@@ -119,7 +119,7 @@ protected:
 	virtual void output(std::stringstream& s) const { s << MOVE_CMD << ":" << moveX << " " << moveY; }
 	
 private:
-	char player;
+	// char player;
 	float moveX, moveY;
 };
 

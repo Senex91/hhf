@@ -9,13 +9,13 @@
 #include <string>
 #include "GameState.h"
 #include "TOCameraMan.h"
-
+#include <OIS.h>
 #include <SdkTrays.h>
 
 /**
  * @brief GameRenderer renders the game as received by the server.
  */
-class GameRenderer : public InputListener, OgreBites::SdkTrayListener {
+class GameRenderer : public OIS::KeyListener, public OIS::MouseListener, OgreBites::SdkTrayListener {
 public:
 	GameRenderer();
 	~GameRenderer();
