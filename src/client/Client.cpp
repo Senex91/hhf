@@ -30,7 +30,8 @@ void Client::initialize(){
 
 void Client::run(){
 
-	ois.addInputListener(this);
+	ois.addMouseListener(this);
+	ois.addKeyListener(this);
 	running = true;
 	while(running){
 

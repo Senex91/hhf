@@ -12,6 +12,8 @@
 #include <OgreEntity.h>
 #include <string>
 
+
+
 class OgreElf {
 public:
 	OgreElf(Ogre::SceneManager*, int);
@@ -21,8 +23,13 @@ public:
 	void setOrientation(float);
 	void setColour(Ogre::ColourValue);
 
+	static Ogre::ColourValue getColour(unsigned int);
+
 
 private:
+
+	// static Ogre::ColourValue[] generateColors();
+
 	int id;
 	std::string name;
 	
@@ -30,6 +37,10 @@ private:
 	Ogre::SceneManager* manager;
 	Ogre::SceneNode* node;
 	Ogre::Entity* entity;
+
+	// static Ogre::ColourValue colors[];
+
+
 
 
 };

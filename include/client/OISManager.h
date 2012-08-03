@@ -30,8 +30,10 @@ public:
 
 
 	// Input Listeners
-	void addInputListener(InputListener*);
-	void removeInputListener(InputListener*);
+	void addMouseListener(OIS::MouseListener*);
+	void addKeyListener(OIS::KeyListener*);
+	void removeMouseListener(OIS::MouseListener*);
+	void removeKeyListener(OIS::KeyListener*);
 	
 private:
 	
@@ -40,7 +42,8 @@ private:
 	OIS::Keyboard* keyboard;
 
 	// Input Listeners
-	std::set<InputListener*> listeners;
+	std::set<OIS::MouseListener*> mouseListeners;
+	std::set<OIS::KeyListener*> keyListeners;
 };
 
 

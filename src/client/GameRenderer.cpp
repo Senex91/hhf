@@ -9,8 +9,6 @@
 #include "OgreElf.h"
 
 
-
-
 GameRenderer::GameRenderer(){
 
 }
@@ -34,7 +32,8 @@ void GameRenderer::initialize(){
     mTrayMgr->hideCursor();
 
 	cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
-	Client::getInstance().getOISManager().addInputListener(this);
+    Client::getInstance().getOISManager().addMouseListener(this);
+    Client::getInstance().getOISManager().addKeyListener(this);
 
 
 	int numcols = 100;
@@ -136,7 +135,7 @@ void GameRenderer::initialize(){
 void GameRenderer::renderNextState(GameState const& newState){
 	DEBUG(gameStateToString(newState));
 
-	for(int elfID = 0; elfID< newState.elves.size(); elfID++){
+	for(unsigned int elfID = 0; elfID < newState.elves.size(); elfID++){
         //DEBUG("Current elf:" << elfID);
 
 		OgreElf* current = NULL;
@@ -154,8 +153,10 @@ void GameRenderer::renderNextState(GameState const& newState){
 
 		// ALLOCATE GAMESTATE ELF
 		Elf currentElfData;
-		for(int i = 0; i<newState.elves.size(); i++){
-			if(newState.elves[i].id == elfID){
+        currentElfData.x = -999;//TODO magic number
+        currentElfData.y = -999;
+		for(unsigned int i = 0; i<newState.elves.size(); i++){
+			if((unsigned int) newState.elves[i].id == elfID){
 				currentElfData = newState.elves[i];
 				break;
 			}
@@ -166,6 +167,7 @@ void GameRenderer::renderNextState(GameState const& newState){
 		// current->setColour(Ogre::ColourValue(255, 0, 0));
 		current->setColour(Ogre::ColourValue::Red);
         current->setOrientation(.05);
+        // current->setColour(OgreElf::getColour(currentElfData.id));
 	}
 }
 

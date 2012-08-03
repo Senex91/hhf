@@ -19,7 +19,7 @@
  * The Client is a singleton that enables all subcomponents 
  * to access each other.
  */
-class Client : public InputListener {
+class Client : public OIS::KeyListener, public OIS::MouseListener {
 public:
 	static Client& getInstance();
 
