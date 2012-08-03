@@ -11,6 +11,9 @@ struct Elf{
 	
 	double xvel;
 	double yvel;
+	
+	double xgoal;
+	double ygoal;
 };
 
 struct Felhound{
