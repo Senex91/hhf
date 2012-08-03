@@ -6,10 +6,12 @@
 #include <stdio.h>
 #include "NetworkConstants.h"
 #include "Debug.h"
+#include "Server.h"
 
 NetClient::NetClient(Address ad,int id,Socket& sd) : address(ad), socket(sd) {
 	this->id = id;
 	sendText(IDCommand(id).write());
+	Server::getInstance().getGamePhysics().addPlayer(id);
 }
 
 NetClient::~NetClient() {
@@ -48,8 +50,8 @@ void NetClient::accept(GameStateCommand&) {
 	
 }
 
-void NetClient::accept(MoveCommand&) {
-	
+void NetClient::accept(MoveCommand& move) {
+	Server::getInstance().getGamePhysics().playerSetGoal(id,move.getMoveX(),move.getMoveY());
 }
 
 void NetClient::accept(BlinkCommand&) {

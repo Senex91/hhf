@@ -13,6 +13,9 @@ public:
 	
 	void setRunning(const bool& b) { running = b; }
 	
+	NetManager& getNetManager() { return net; }
+	GamePhysics& getGamePhysics() { return phys; }
+	
 private:
 	bool running;
 	NetManager net;
