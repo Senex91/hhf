@@ -36,13 +36,16 @@ bool ElfCommander::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID 
 }
 bool ElfCommander::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
 		// Client::getInstance().getCameraMan().injectMouseMove(arg);
-	float x = (float)arg.state.X.abs / (float)arg.state.width;
-	float y = (float)arg.state.Y.abs / (float)arg.state.height;
-	
-	Ogre::Vector3 pt = Client::getInstance().getOgreManager().rayCast(x,y);
+	if(id == OIS::MB_Right){
+		float x = (float)arg.state.X.abs / (float)arg.state.width;
+		float y = (float)arg.state.Y.abs / (float)arg.state.height;
+		
+		Ogre::Vector3 pt = Client::getInstance().getOgreManager().rayCast(x,y);
 
-	DEBUG("MOVE!: " << pt.x <<" \t" << pt.z);
-	server.sendCommand(MoveCommand(pt.x, pt.z));
+		DEBUG("MOVE!: " << pt.x <<" \t" << pt.z);
+		server.sendCommand(MoveCommand(pt.x, pt.z));
+
+	}
 
 
 	// ElfCommander::getInstance().getCameraMan().injectMouseUp(arg, id);

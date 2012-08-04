@@ -3,6 +3,7 @@
 #include "Debug.h"
 #include <stdlib.h>
 #include <time.h>
+#include <OgreMaterialManager.h>
 
 std::vector<Ogre::ColourValue> initialColors(){
     // initiates random seed for additional colors
@@ -45,12 +46,19 @@ void OgreElf::setOrientation(float heading){
 }
 
 void OgreElf::setColour(Ogre::ColourValue colour){
-	//std::string matName = OgreElf_MATERIAL_NAME;
-    //matName+=id;
-    Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial();
-    mat->getTechnique(0)->getPass(0)->setAmbient(colour);
-    mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
-    //entity->setMaterialName(mat->getName());
+	std::string matName = OgreElf_MATERIAL_NAME;
+    matName+=id;
+
+    if(Ogre::MaterialManager::getSingleton().resourceExists(matName)){
+        Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial();
+        mat->getTechnique(0)->getPass(0)->setAmbient(colour);
+        mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
+    } else{
+        Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial()->clone(matName);
+        mat->getTechnique(0)->getPass(0)->setAmbient(colour);
+        mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
+        entity->setMaterialName(mat->getName());
+    }
 }
 
 Ogre::ColourValue OgreElf::getColour(unsigned int id){

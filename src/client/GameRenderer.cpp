@@ -8,6 +8,7 @@
 
 #include "OgreElf.h"
 
+#include <math.h>
 
 GameRenderer::GameRenderer(){
 
@@ -164,9 +165,10 @@ void GameRenderer::renderNextState(GameState const& newState){
 
 
 		current->setPosition(currentElfData.x, 0, currentElfData.y);
-		// current->setColour(Ogre::ColourValue(255, 0, 0));
-		current->setColour(Ogre::ColourValue::Red);
-        current->setOrientation(.05);
+        current->setOrientation(
+            atan2(
+                currentElfData.xvel,
+                currentElfData.yvel));
         // current->setColour(OgreElf::getColour(currentElfData.id));
 	}
 }
