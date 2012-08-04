@@ -48,6 +48,14 @@ public:
 		GameState state1;
 		state1.elves = elves;
 		state1.felhound = (Felhound) {2,2, 0, 0};
+		state1.orb.x = 0;
+		state1.orb.y = 0;
+		state1.orb.id = -1;
+		
+		TS_WARN(state1.orb.x);
+		TS_WARN(state1.orb.y);
+		TS_WARN(state1.orb.id);
+		TS_WARN(gameStateToString(state1));
 		
 		GameStateCommand c(state1);
 		std::string out = c.write();
@@ -55,6 +63,8 @@ public:
 		Command* deser = Command::deserialize(out);
 		TS_ASSERT(deser != NULL);
 		std::string out2 = deser->write();
+		TS_WARN(out);
+		TS_WARN(out2);
 		TS_ASSERT(out == out2);
 	}
 };

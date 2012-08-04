@@ -12,6 +12,7 @@ GameState::GameState(void):elves(){
 
 GameState::GameState(const GameState& other):elves(other.elves){
 	felhound = other.felhound;
+	orb = other.orb;
 }
 
 const GameState& GameState::operator=(const GameState& other){
@@ -21,6 +22,7 @@ const GameState& GameState::operator=(const GameState& other){
 	// 	elves.push_back(other.elves[i]);
 	// }
 	felhound = other.felhound;
+	orb = other.orb;
 	return *this;
 }
 
@@ -55,7 +57,7 @@ std::string gameStateToString(const GameState& gs) {
 	ret << "{GameState:\n";
 	ret << "{FH: pos=";
 	ret << "(" << gs.felhound.x << "," << gs.felhound.y << "), vel=(" << gs.felhound.xvel << "," << gs.felhound.yvel << ")}\n";
-	ret << "{Orb: pos=(" << gs.orb.x << ", " << gs.orb.y << "), id=" << gs.orb.id <<")}\n";
+	ret << "{Orb: pos=(" << gs.orb.x << ", " << gs.orb.y << "), id=" << gs.orb.id <<"}\n";
 	ret << gs.elves.size() << "Elves:\n";
 	for(unsigned int i=0;i<gs.elves.size();i++) {
 		ret << "[";

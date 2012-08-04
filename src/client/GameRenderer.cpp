@@ -171,6 +171,7 @@ void GameRenderer::renderNextState(GameState const& newState){
         current->setOrientation(currentElfData.orientation);
         // current->setColour(OgreElf::getColour(currentElfData.id));
 	}
+	orb->setPosition(newState.orb.x,2,newState.orb.y);
 }
 
 
