@@ -131,6 +131,9 @@ void GameRenderer::initialize(){
     	.getSceneManager()
     	->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
+
+    orb = new OgreOrb(Client::getInstance().getOgreManager().getSceneManager());
+
 }
 
 void GameRenderer::renderNextState(GameState const& newState){

@@ -5,6 +5,7 @@
 
 #include <map>
 #include "OgreElf.h"
+#include "OgreOrb.h"
 
 #include <string>
 #include "GameState.h"
@@ -38,6 +39,8 @@ private:
 	OgreBites::SdkCameraMan* cameraMan; // basic camera controller
 
     std::map<int, OgreElf*> elves;
+    OgreOrb* orb;
+
 
 };
 #endif

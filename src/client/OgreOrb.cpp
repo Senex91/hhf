@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <OgreMaterialManager.h>
+#include <OgrePrefabFactory.h>
+#include <OgreSceneManager.h>
+
 
 std::vector<Ogre::ColourValue> initialOrbColors(){
     // initiates random seed for additional colors
@@ -17,16 +20,15 @@ std::vector<Ogre::ColourValue> initialOrbColors(){
 
     return colors;
 }
-
-OgreOrb::OgreOrb(Ogre::SceneManager* pManager, int pId){
+OgreOrb::OgreOrb(Ogre::SceneManager* pManager){
 	manager = pManager;
-	id = pId;
 
-	name = OgreOrb_ENTITY_NAME + id;
-	entity = manager->createEntity(name, OgreOrb_MESHNAME);
+	name = OgreOrb_ENTITY_NAME;
+	entity = manager->createEntity(name, Ogre::SceneManager::PT_SPHERE);
 	node = manager->getRootSceneNode()->createChildSceneNode(name);
 	node->attachObject(entity);
-    setColour(getColour(id));
+    node->setScale(.01, .01, .01);
+    setColour(Ogre::ColourValue::Red);
 }
 
 OgreOrb::~OgreOrb(void){
@@ -39,7 +41,7 @@ void OgreOrb::setPosition(float x, float y, float z){
 
 void OgreOrb::setColour(Ogre::ColourValue colour){
 	std::string matName = OgreOrb_MATERIAL_NAME;
-    matName+=id;
+    matName;
 
     if(Ogre::MaterialManager::getSingleton().resourceExists(matName)){
         Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial();

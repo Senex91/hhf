@@ -14,7 +14,7 @@
 
 class OgreOrb {
 public:
-    OgreOrb(Ogre::SceneManager*, int);
+    OgreOrb(Ogre::SceneManager*);
     ~OgreOrb(void);
 
     void setPosition(float, float, float);
