@@ -5,10 +5,11 @@
 using std::vector;
 using std::pow;
 using std::sqrt;
+using std::atan2;
 
 GamePhysics::GamePhysics() {
 	state.felhound = (Felhound){0, 0, 0, 0};
-	
+	state.orb = (Orb){0,0,-1};
 }
 
 GamePhysics::~GamePhysics() {
@@ -18,8 +19,11 @@ GamePhysics::~GamePhysics() {
 void GamePhysics::tick() {
 	double dt = 0.001; //TODO: timers
 	
+	bool orbOwnerValid = false;
+	
 	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
 		Elf& elf = *it;
+		
 		if(sqrt(pow(elf.xgoal-elf.x,2)+pow(elf.ygoal-elf.y,2))<dt*PLAYER_VELOCITY) {
 			elf.x = elf.xgoal;
 			elf.y = elf.ygoal;
@@ -29,6 +33,14 @@ void GamePhysics::tick() {
 			elf.x += elf.xvel * dt;
 			elf.y += elf.yvel * dt;
 		}
+		if(state.orb.id == elf.id) {
+			//TODO: fly towards player
+			state.orb.x = elf.x;
+			state.orb.y = elf.y;
+		}
+	}
+	if(!orbOwnerValid && state.elves.size()>0) { //Need at least one elf 
+		state.orb.id = state.elves[0].id;
 	}
 }
 
@@ -49,6 +61,7 @@ void GamePhysics::playerSetGoal(int id,double x,double y) {
 			elf.yvel = ydir * PLAYER_VELOCITY;
 			elf.xgoal = x;
 			elf.ygoal = y;
+			elf.orientation = atan2(elf.xvel,elf.yvel);
 			return;
 		}
 	}
