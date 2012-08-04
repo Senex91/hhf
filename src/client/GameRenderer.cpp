@@ -165,10 +165,7 @@ void GameRenderer::renderNextState(GameState const& newState){
 
 
 		current->setPosition(currentElfData.x, 0, currentElfData.y);
-        current->setOrientation(
-            atan2(
-                currentElfData.xvel,
-                currentElfData.yvel));
+        current->setOrientation(currentElfData.orientation);
         // current->setColour(OgreElf::getColour(currentElfData.id));
 	}
 }

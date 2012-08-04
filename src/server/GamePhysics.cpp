@@ -5,6 +5,7 @@
 using std::vector;
 using std::pow;
 using std::sqrt;
+using std::atan2;
 
 GamePhysics::GamePhysics() {
 	state.felhound = (Felhound){0, 0, 0, 0};
@@ -49,6 +50,7 @@ void GamePhysics::playerSetGoal(int id,double x,double y) {
 			elf.yvel = ydir * PLAYER_VELOCITY;
 			elf.xgoal = x;
 			elf.ygoal = y;
+			elf.orientation = atan2(elf.xvel,elf.yvel);
 			return;
 		}
 	}

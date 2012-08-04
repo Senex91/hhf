@@ -12,6 +12,8 @@ struct Elf{
 	double xvel;
 	double yvel;
 	
+	double orientation;
+	
 	double xgoal;
 	double ygoal;
 };
