@@ -7,12 +7,6 @@
 NetServer::NetServer() : socket(), serverAddress("localhost",SERVER_PORT), latestState() {
 	handshaked = false;
 	id = -1;
-	std::vector<Elf> elves;
-    elves.push_back((Elf) {0, 0, 0, 0, 0});
-    elves.push_back((Elf) {1, 4, 4, 0, 0});
-    latestState.elves = elves;
-    latestState.felhound = (Felhound) {2, 2, 0, 0};
-	
 }
 
 NetServer::~NetServer(){

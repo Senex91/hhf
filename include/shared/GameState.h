@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-struct Elf{
+struct Elf {
     int id;		//must start at 0
     double x;
     double y;
@@ -18,7 +18,7 @@ struct Elf{
 	double ygoal;
 };
 
-struct Felhound{
+struct Felhound {
     double x;
     double y;
 	
@@ -26,9 +26,17 @@ struct Felhound{
 	double yvel;
 };
 
+struct Orb {
+	double x;
+	double y;
+	
+	int id;
+};
+
 struct GameState{
 	std::vector<Elf> elves;
 	Felhound felhound;
+	Orb orb;
 	
     GameState(void);
     GameState(const GameState&);

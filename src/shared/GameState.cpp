@@ -27,6 +27,9 @@ const GameState& GameState::operator=(const GameState& other){
 std::string serializeGameState(const GameState& gs) {
 	static string delim = " ";
 	stringstream ret;
+	ret << gs.orb.x << delim;
+	ret << gs.orb.y << delim;
+	ret << gs.orb.id << delim;
 	ret << gs.felhound.x << delim;
 	ret << gs.felhound.y << delim;
 	ret << gs.felhound.xvel << delim;
@@ -52,6 +55,7 @@ std::string gameStateToString(const GameState& gs) {
 	ret << "{GameState:\n";
 	ret << "{FH: pos=";
 	ret << "(" << gs.felhound.x << "," << gs.felhound.y << "), vel=(" << gs.felhound.xvel << "," << gs.felhound.yvel << ")}\n";
+	ret << "{Orb: pos=(" << gs.orb.x << ", " << gs.orb.y << "), id=" << gs.orb.id <<")}\n";
 	ret << gs.elves.size() << "Elves:\n";
 	for(unsigned int i=0;i<gs.elves.size();i++) {
 		ret << "[";
@@ -69,6 +73,9 @@ std::string gameStateToString(const GameState& gs) {
 GameState deserializeGameState(const std::string& str) {
 	GameState ret;
 	stringstream read(str);
+	read >> ret.orb.x;
+	read >> ret.orb.y;
+	read >> ret.orb.id;
 	read >> ret.felhound.x;
 	read >> ret.felhound.y;
 	read >> ret.felhound.xvel;
