@@ -58,6 +58,6 @@ void NetClient::accept(BlinkCommand&) {
 	
 }
 
-void NetClient::accept(ThrowCommand&) {
-	
+void NetClient::accept(ThrowCommand& t) {
+	Server::getInstance().getGamePhysics().playerThrow(id,t.getID());
 }

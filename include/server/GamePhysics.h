@@ -16,6 +16,7 @@ public:
 	void tick();
 	
 	void playerSetGoal(int id,double x,double y);
+	void playerThrow(int id,int id2);
 	
 private:
 	GamePhysics(const GamePhysics&) {}

@@ -66,3 +66,21 @@ void GamePhysics::playerSetGoal(int id,double x,double y) {
 		}
 	}
 }
+
+void GamePhysics::playerThrow(int id,int id2) {
+	//Iterate through all our elves to make sure id is the current holder, and id2 exists.
+	Elf* thrower = NULL;
+	Elf* catcher = NULL;
+	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
+		Elf& elf = *it;
+		if(elf.id == id) {
+			thrower = &elf;
+		}
+		if(elf.id == id2) {
+			catcher = &elf;
+		}
+	}
+	if(thrower && thrower->id == state.orb.id && catcher) {
+		state.orb.id = id2;
+	}
+}

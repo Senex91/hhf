@@ -71,7 +71,7 @@ public:
 	IDCommand(int id) : id(id) {}
 	virtual ~IDCommand();
 	
-	int getID() { return id; }
+	const int& getID() const { return id; }
 	
 	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
 	
@@ -89,7 +89,7 @@ public:
 	GameStateCommand(const GameState& g) : gameState(g) {}
 	virtual ~GameStateCommand();
 	
-	inline const GameState& getGameState() { return gameState; }
+	inline const GameState& getGameState() const { return gameState; }
 	
 	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
 	
@@ -130,9 +130,8 @@ public:
 	BlinkCommand(float moveX,float moveY) : moveX(moveX), moveY(moveY) {}
 	virtual ~BlinkCommand();
 	
-	inline const char& getPlayer() { return player; }
-	inline const float& getMoveX() { return moveX; }
-	inline const float& getMoveY() { return moveY; }
+	inline const float& getMoveX() const { return moveX; }
+	inline const float& getMoveY() const { return moveY; }
 	
 	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
 	
@@ -143,7 +142,6 @@ protected:
 	virtual void output(std::stringstream& s) const { s << BLINK_CMD << ":" << moveX << " " << moveY; }
 	
 private:
-	char player;
 	float moveX, moveY;
 };
 

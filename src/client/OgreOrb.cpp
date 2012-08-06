@@ -41,7 +41,6 @@ void OgreOrb::setPosition(float x, float y, float z){
 
 void OgreOrb::setColour(Ogre::ColourValue colour){
 	std::string matName = OgreOrb_MATERIAL_NAME;
-    matName;
 
     if(Ogre::MaterialManager::getSingleton().resourceExists(matName)){
         Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial();

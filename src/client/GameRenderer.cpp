@@ -159,6 +159,7 @@ void GameRenderer::renderNextState(GameState const& newState){
 		Elf currentElfData;
         currentElfData.x = -999;//TODO magic number
         currentElfData.y = -999;
+		currentElfData.orientation = 0;
 		for(unsigned int i = 0; i<newState.elves.size(); i++){
 			if((unsigned int) newState.elves[i].id == elfID){
 				currentElfData = newState.elves[i];
