@@ -57,3 +57,7 @@ void NetClient::accept(MoveCommand& move) {
 void NetClient::accept(BlinkCommand&) {
 	
 }
+
+void NetClient::accept(ThrowCommand&) {
+	
+}

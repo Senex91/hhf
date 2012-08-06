@@ -69,3 +69,7 @@ void NetServer::accept(MoveCommand&) {
 void NetServer::accept(BlinkCommand&) {
 	DEBUG("NetServer::accept: Did not expect a BlinkCommand from the server.");
 }
+
+void NetServer::accept(ThrowCommand&) {
+	DEBUG("NetServer::accept: Did not expect a ThrowCommand from the server.");
+}

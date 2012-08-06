@@ -24,6 +24,7 @@ Command* Command::deserialize(string str) {
 	static bool moveCmd = registerDeserializer(MOVE_CMD,MoveCommand::deserialize) && moveCmd;
 	static bool stateCmd = registerDeserializer(STATE_CMD,GameStateCommand::deserialize) && stateCmd;
 	static bool blinkCmd = registerDeserializer(BLINK_CMD,BlinkCommand::deserialize) && blinkCmd;
+	static bool throwCmd = registerDeserializer(THROW_CMD,ThrowCommand::deserialize) && throwCmd;
 	
 	size_t colonPos = str.find(':');
 	if(colonPos == string::npos) {
@@ -72,4 +73,15 @@ Command* BlinkCommand::deserialize(string s) {
 	float moveX, moveY;
 	stream >> moveX >> moveY;
 	return new BlinkCommand(moveX,moveY);
+}
+
+ThrowCommand::~ThrowCommand() {
+	
+}
+
+Command* ThrowCommand::deserialize(string s) {
+	stringstream stream(s);
+	int id;
+	stream >> id;
+	return new ThrowCommand(id);
 }

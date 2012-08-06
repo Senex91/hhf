@@ -19,6 +19,7 @@ public:
 	virtual void accept(GameStateCommand&);
 	virtual void accept(MoveCommand&);
 	virtual void accept(BlinkCommand&);
+	virtual void accept(ThrowCommand&);
 	
 private:
 	void sendText(const std::string&);

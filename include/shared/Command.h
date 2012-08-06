@@ -14,6 +14,7 @@ class IDCommand;
 class MoveCommand;
 class BlinkCommand;
 class CommandVisitor;
+class ThrowCommand;
 
 class Command {
 private:
@@ -44,6 +45,7 @@ public:
 	virtual void accept(GameStateCommand&) {}
 	virtual void accept(MoveCommand&) {}
 	virtual void accept(BlinkCommand&) {}
+	virtual void accept(ThrowCommand&) {}
 	
 private:
 	
@@ -143,6 +145,25 @@ protected:
 private:
 	char player;
 	float moveX, moveY;
+};
+
+class ThrowCommand : public Command {
+public:
+	ThrowCommand(const int& id) : id(id) {}
+	virtual ~ThrowCommand();
+	
+	inline const int& getID() const { return id; }
+	
+	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
+	
+	static Command* deserialize(std::string str);
+	
+protected:
+	
+	virtual void output(std::stringstream& s) const { s << THROW_CMD << ":" << id; }
+	
+private:
+	int id;
 };
 
 #endif

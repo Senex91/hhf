@@ -52,19 +52,21 @@ public:
 		state1.orb.y = 0;
 		state1.orb.id = -1;
 		
-		TS_WARN(state1.orb.x);
-		TS_WARN(state1.orb.y);
-		TS_WARN(state1.orb.id);
-		TS_WARN(gameStateToString(state1));
-		
 		GameStateCommand c(state1);
 		std::string out = c.write();
 		TS_ASSERT(out != "");
 		Command* deser = Command::deserialize(out);
 		TS_ASSERT(deser != NULL);
 		std::string out2 = deser->write();
-		TS_WARN(out);
-		TS_WARN(out2);
+		TS_ASSERT(out == out2);
+	}
+	void testThrowCommand() {
+		ThrowCommand c(1);
+		std::string out = c.write();
+		TS_ASSERT(out != "");
+		Command* deser = Command::deserialize(out);
+		TS_ASSERT(deser != NULL);
+		std::string out2 = deser->write();
 		TS_ASSERT(out == out2);
 	}
 };
