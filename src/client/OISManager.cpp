@@ -49,6 +49,8 @@ void OISManager::initialize() {
 }
 
 void OISManager::destroy() {
+	Ogre::WindowEventUtilities::removeWindowEventListener(
+		Client::getInstance().getOgreManager().getWindow(), this);
 	inputManager->destroyInputObject( mouse );
 	inputManager->destroyInputObject( keyboard );
 

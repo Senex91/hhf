@@ -30,7 +30,10 @@ OgreElf::OgreElf(Ogre::SceneManager* pManager, int pId){
 }
 
 OgreElf::~OgreElf(void){
-
+	node->detachObject(entity);
+	manager->destroyEntity(entity);
+	manager->getRootSceneNode()->removeChild(node);
+	manager->destroySceneNode(node);
 }
 
 void OgreElf::setPosition(float x, float y, float z){

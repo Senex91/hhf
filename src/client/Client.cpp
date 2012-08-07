@@ -28,6 +28,12 @@ void Client::initialize(){
 
 }
 
+void Client::destroy() {
+	gameRenderer.destroy();
+	ois.destroy();
+	ogre.destroy();
+}
+
 void Client::run(){
 
 	ois.addMouseListener(this);
@@ -45,6 +51,7 @@ void Client::run(){
 		GameState currentState =  server.getGameState();
 		gameRenderer.renderNextState(currentState);
 		// SDL_Delay(1000); // TODO magic number
+		SDL_Delay(1);
 	}
 
 }

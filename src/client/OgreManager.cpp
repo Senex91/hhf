@@ -13,10 +13,7 @@ OgreManager::OgreManager(void)
     // mTrayMgr(0),
     // mCameraMan(0),
     mCursorWasVisible(false),
-    mShutDown(false),
-    mInputManager(0)//,
-    // mMouse(0),
-    // mKeyboard(0)
+    mShutDown(false)
 {
 }
 
@@ -151,6 +148,7 @@ void OgreManager::initialize() {
 
 void OgreManager::destroy() {
 	// destroyScene();
+	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	delete mRoot;
 }
 
@@ -167,9 +165,7 @@ OgreManager::~OgreManager(void)
     // if (mCameraMan) delete mCameraMan;
 
     //Remove ourself as a Window listener
-    Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
-    windowClosed(mWindow);
-    delete mRoot;
+    
 }
 //-------------------------------------------------------------------------------------
 bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt)
@@ -335,6 +331,7 @@ void OgreManager::windowResized(Ogre::RenderWindow* rw)
 //Unattach OIS before window shutdown (very important under Linux)
 void OgreManager::windowClosed(Ogre::RenderWindow* rw)
 {
+	/*
     //Only close for window that created OIS (the main window in these demos)
     if( rw == mWindow )
     {
@@ -346,7 +343,7 @@ void OgreManager::windowClosed(Ogre::RenderWindow* rw)
             OIS::InputManager::destroyInputSystem(mInputManager);
             mInputManager = 0;
         }
-    }
+    }*/
 }
 
 Ogre::Vector3 OgreManager::rayCast(const float& x,const float& y) {

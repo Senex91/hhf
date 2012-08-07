@@ -19,9 +19,12 @@ GameRenderer::~GameRenderer(){
 }
 
 void GameRenderer::initialize(){
-
+	
+	DEBUG("GameRenderer::initialize");
+	
+	Client::getInstance().getOgreManager().getRoot()->addFrameListener(this);
+	
     // Tray manager, hacky fix for intel graphics
-    OgreBites::SdkTrayManager* mTrayMgr;
     mTrayMgr = new OgreBites::SdkTrayManager(
         "InterfaceName", 
         Client::getInstance().getOgreManager().getWindow(), 
@@ -29,7 +32,7 @@ void GameRenderer::initialize(){
         this);
     mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     mTrayMgr->toggleAdvancedFrameStats();
-    //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+    mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
     mTrayMgr->hideCursor();
 
 	cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
@@ -133,7 +136,20 @@ void GameRenderer::initialize(){
 
 
     orb = new OgreOrb(Client::getInstance().getOgreManager().getSceneManager());
+	
+	DEBUG("GameRenderer::initialize done");
 
+}
+
+void GameRenderer::destroy() {
+	Client::getInstance().getOISManager().removeMouseListener(this);
+	Client::getInstance().getOISManager().removeKeyListener(this);
+	for(std::map<int,OgreElf*>::iterator it = elves.begin(); it != elves.end(); it++) {
+		delete it->second;
+	}
+	elves.clear();
+	delete orb;
+	delete cameraMan;
 }
 
 void GameRenderer::renderNextState(GameState const& newState){
@@ -205,5 +221,11 @@ bool GameRenderer::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID 
 }
 bool GameRenderer::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
 	cameraMan->injectMouseUp(arg, id);
+	return true;
+}
+
+bool GameRenderer::frameRenderingQueued(const Ogre::FrameEvent& evt) {
+	mTrayMgr->frameRenderingQueued(evt);
+	cameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
 	return true;
 }

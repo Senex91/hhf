@@ -53,7 +53,7 @@ int main(){
     //         e.getFullDescription().c_str() << std::endl;
     // }
 
-
+	client.destroy();
 
     return 0;
 }

@@ -32,6 +32,8 @@ public:
 	inline void setRunning(const bool& r) { running = r; }
 
 	void initialize();
+	void destroy();
+	
 	void run();
 
 // OIS::KeyListener

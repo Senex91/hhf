@@ -85,9 +85,9 @@ protected:
     bool mShutDown;
 
     //OIS Input devices
-    OIS::InputManager* mInputManager;
-    OIS::Mouse*    mMouse;
-    OIS::Keyboard* mKeyboard;
+    //OIS::InputManager* mInputManager;
+    //OIS::Mouse*    mMouse;
+    //OIS::Keyboard* mKeyboard;
 	// Ogre::Root *root;
 	// Ogre::Camera* camera;
 	// Ogre::SceneManager* sceneManager;

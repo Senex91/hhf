@@ -32,7 +32,10 @@ OgreOrb::OgreOrb(Ogre::SceneManager* pManager){
 }
 
 OgreOrb::~OgreOrb(void){
-
+	node->detachObject(entity);
+	manager->destroyEntity(entity);
+	manager->getRootSceneNode()->removeChild(node);
+	manager->destroySceneNode(node);
 }
 
 void OgreOrb::setPosition(float x, float y, float z){
