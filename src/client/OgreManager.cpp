@@ -361,9 +361,10 @@ Ogre::Vector3 OgreManager::rayCast(const float& x,const float& y) {
     // return Ogre::Vector3(0,0,0);
 }
 
-Ogre::MovableObject* OgreManager::rayCastEntity(const float& x,const float& y) {
+Ogre::MovableObject* OgreManager::rayCastEntity(const float& x,const float& y,const Ogre::uint32& mask) {
 	Ogre::Ray r = mCamera->getCameraToViewportRay(x,y);
 	rayQuery->setRay(r);
+	rayQuery->setQueryMask(mask);
 	rayQuery->setSortByDistance(true,1); //1 result
 	Ogre::RaySceneQueryResult results = rayQuery->execute();
 	if(results.size()) { // != 0

@@ -24,6 +24,7 @@ OgreElf::OgreElf(Ogre::SceneManager* pManager, int pId){
 
 	name = OgreElf_ENTITY_NAME + id;
 	entity = manager->createEntity(name, OgreElf_MESHNAME);
+	entity->setUserAny(Ogre::Any(this));
 	node = manager->getRootSceneNode()->createChildSceneNode(name);
 	node->attachObject(entity);
     setColour(getColour(id));
