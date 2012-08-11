@@ -169,29 +169,17 @@ void GameRenderer::renderNextState(GameState const& newState){
 		// ALLOCATE OGRE ELF
 		if (elves.count(elfID)){ // if elf exists
 			current = elves[elfID];
-		} else{ // Current elf doesn't exist
+		} else{ // Current elf doesn't exists
 			current = new OgreElf(
-				Client::getInstance().getOgreManager().getSceneManager(), 
+				Client::getInstance().getOgreManager().getSceneManager(),
+                Ogre::ColourValue(elfState.color.r, elfState.color.g, elfState.color.b),
 				elfID);
 			elves[elfID] = current;
 		}
 
-
-		// ALLOCATE GAMESTATE ELF
-		Elf currentElfData;
-        currentElfData.x = -999;//TODO magic number
-        currentElfData.y = -999;
-		currentElfData.orientation = 0;
-		for(unsigned int i = 0; i<newState.elves.size(); i++){
-			if((unsigned int) newState.elves[i].id == elfID){
-				currentElfData = newState.elves[i];
-				break;
-			}
-		}
-
-
-		current->setPosition(currentElfData.x, 0, currentElfData.y);
-        current->setOrientation(currentElfData.orientation);
+		current->setPosition(elfState.x, 0, elfState.y);
+        current->setOrientation(elfState.orientation);
+        // current->setColour(Ogre::ColourValue(elfState.color.r, elfState.color.g, elfState.color.b));
         // current->setColour(OgreElf::getColour(currentElfData.id));
 	}
 	orb->setPosition(newState.orb.x,2,newState.orb.y);

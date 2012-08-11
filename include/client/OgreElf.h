@@ -16,15 +16,13 @@
 
 class OgreElf {
 public:
-	OgreElf(Ogre::SceneManager*, int);
+	OgreElf(Ogre::SceneManager*,Ogre::ColourValue,  int);
 	~OgreElf(void);
 
 	void setPosition(float, float, float);
 	void setOrientation(float);
 	void setColour(Ogre::ColourValue);
 
-	static Ogre::ColourValue getColour(unsigned int);
-	
 	inline const int& getID() { return id; }
 
 private:
