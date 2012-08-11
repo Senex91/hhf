@@ -184,7 +184,7 @@ void GameRenderer::renderNextState(GameState const& newState){
 	}
 	orb->setPosition(newState.orb.x,2,newState.orb.y);
     felhound->setPosition(newState.felhound.x, 0, newState.felhound.y);
-    felhound->setOrientation(atan2(newState.felhound.xvel, newState.felhound.yvel));
+    felhound->setOrientation(newState.felhound.orientation);
 
 }
 

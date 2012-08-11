@@ -77,6 +77,11 @@ void GamePhysics::tick() {
 
 			state.felhound.xvel = xdir * PLAYER_VELOCITY/2;
 			state.felhound.yvel = ydir * PLAYER_VELOCITY/2;
+			state.felhound.orientation = atan2(state.felhound.xvel,state.felhound.yvel);
+
+		} else{
+			state.felhound.xvel = 0;
+			state.felhound.yvel = 0;
 		}
 		
 		state.felhound.x += state.felhound.xvel * dt;

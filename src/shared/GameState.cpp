@@ -36,6 +36,7 @@ std::string serializeGameState(const GameState& gs) {
 	ret << gs.felhound.y << delim;
 	ret << gs.felhound.xvel << delim;
 	ret << gs.felhound.yvel << delim;
+	ret << gs.felhound.orientation << delim;
 	ret << gs.elves.size() << delim;
 	for(unsigned int i=0;i<gs.elves.size();i++) {
 		ret << gs.elves[i].x << delim;
@@ -59,7 +60,7 @@ std::string gameStateToString(const GameState& gs) {
 	stringstream ret;
 	ret << "{GameState:\n";
 	ret << "{FH: pos=";
-	ret << "(" << gs.felhound.x << "," << gs.felhound.y << "), vel=(" << gs.felhound.xvel << "," << gs.felhound.yvel << ")}\n";
+	ret << "(" << gs.felhound.x << "," << gs.felhound.y << "), vel=(" << gs.felhound.xvel << "," << gs.felhound.yvel << "), orientation=" << gs.felhound.orientation << " }\n";
 	ret << "{Orb: pos=(" << gs.orb.x << ", " << gs.orb.y << "), id=" << gs.orb.id <<"}\n";
 	ret << gs.elves.size() << "Elves:\n";
 	for(unsigned int i=0;i<gs.elves.size();i++) {
@@ -86,6 +87,7 @@ GameState deserializeGameState(const std::string& str) {
 	read >> ret.felhound.y;
 	read >> ret.felhound.xvel;
 	read >> ret.felhound.yvel;
+	read >> ret.felhound.orientation;
 	int n; read >> n;
 	
 	for(int i=0;i<n;i++) {

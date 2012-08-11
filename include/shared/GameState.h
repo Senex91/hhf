@@ -34,6 +34,8 @@ struct Felhound {
 	
 	double xvel;
 	double yvel;
+
+	double orientation;
 };
 
 struct Orb {
