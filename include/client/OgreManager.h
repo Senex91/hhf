@@ -41,7 +41,7 @@ public:
 	void update();
 	
 	Ogre::Vector3 rayCast(const float& x,const float& y);
-	Ogre::MovableObject* rayCastEntity(const float& x,const float& y);
+	Ogre::MovableObject* rayCastEntity(const float& x,const float& y,const Ogre::uint32& mask = -1);
 	
 	// Ogre::Root* getRoot() { return root; }
 	// Ogre::Camera* getCamera() { return camera; }

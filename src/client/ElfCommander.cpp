@@ -39,11 +39,20 @@ bool ElfCommander::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID
 	if(id == OIS::MB_Right){
 		float x = (float)arg.state.X.abs / (float)arg.state.width;
 		float y = (float)arg.state.Y.abs / (float)arg.state.height;
-		
-		Ogre::Vector3 pt = Client::getInstance().getOgreManager().rayCast(x,y);
+		Ogre::MovableObject* entityClicked = NULL;
+		if((entityClicked = Client::getInstance().getOgreManager().rayCastEntity(x,y))) {
+			DEBUG("I clicked on " << entityClicked->getName());
+			if(entityClicked->getUserAny().getType() == typeid(OgreElf*)) {
+				OgreElf* clickedElf = Ogre::any_cast<OgreElf*>(entityClicked->getUserAny());
+				server.sendCommand(ThrowCommand(clickedElf->getID()));
+			}
+		} else {
+			Ogre::Vector3 pt = Client::getInstance().getOgreManager().rayCast(x,y);
 
-		DEBUG("MOVE!: " << pt.x <<" \t" << pt.z);
-		server.sendCommand(MoveCommand(pt.x, pt.z));
+			DEBUG("MOVE!: " << pt.x <<" \t" << pt.z);
+			server.sendCommand(MoveCommand(pt.x, pt.z));
+			
+		}
 
 	}
 

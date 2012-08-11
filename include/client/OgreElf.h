@@ -24,7 +24,8 @@ public:
 	void setColour(Ogre::ColourValue);
 
 	static Ogre::ColourValue getColour(unsigned int);
-
+	
+	inline const int& getID() { return id; }
 
 private:
 

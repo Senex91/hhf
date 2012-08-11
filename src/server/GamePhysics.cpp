@@ -1,6 +1,7 @@
 #include "GamePhysics.h"
 #include "GameState.h"
 #include <cmath>
+#include "Debug.h"
 
 using std::vector;
 using std::pow;
@@ -34,6 +35,7 @@ void GamePhysics::tick() {
 			elf.y += elf.yvel * dt;
 		}
 		if(state.orb.id == elf.id) {
+			orbOwnerValid = true;
 			//TODO: fly towards player
 			state.orb.x = elf.x;
 			state.orb.y = elf.y;
@@ -68,6 +70,7 @@ void GamePhysics::playerSetGoal(int id,double x,double y) {
 }
 
 void GamePhysics::playerThrow(int id,int id2) {
+	DEBUG("attempting throw between " << id << " and " << id2);
 	//Iterate through all our elves to make sure id is the current holder, and id2 exists.
 	Elf* thrower = NULL;
 	Elf* catcher = NULL;
@@ -80,6 +83,8 @@ void GamePhysics::playerThrow(int id,int id2) {
 			catcher = &elf;
 		}
 	}
+	DEBUG("thrower: " << thrower);
+	DEBUG("catcher: " << catcher);
 	if(thrower && thrower->id == state.orb.id && catcher) {
 		state.orb.id = id2;
 	}

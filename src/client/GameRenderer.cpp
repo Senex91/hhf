@@ -103,12 +103,14 @@ void GameRenderer::initialize(){
     grid->index(count++);
     grid->index(count++);
     grid->end();
+	grid->setQueryFlags(0);
 
     Ogre::String meshName= "Grid";
     Ogre::String lResourceGroup = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
     grid->convertToMesh(meshName); 
 	
     Ogre::Entity* gridEntity = Client::getInstance().getOgreManager().getSceneManager()->createEntity("Grid");
+	gridEntity->setQueryFlags(0);
     Ogre::SceneNode* gridNode = Client::getInstance().getOgreManager().getSceneManager()->getRootSceneNode()->createChildSceneNode("GridNode");
     gridNode->attachObject(gridEntity);
 
@@ -155,8 +157,11 @@ void GameRenderer::destroy() {
 void GameRenderer::renderNextState(GameState const& newState){
 	// DEBUG(gameStateToString(newState));
 
-	for(unsigned int elfID = 0; elfID < newState.elves.size(); elfID++){
+	for(unsigned int i = 0; i < newState.elves.size(); i++){
         //DEBUG("Current elf:" << elfID);
+        
+        const Elf& elfState = newState.elves[i];
+        int elfID = elfState.id;
 
 		OgreElf* current = NULL;
 
