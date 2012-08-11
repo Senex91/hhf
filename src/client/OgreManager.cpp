@@ -12,6 +12,7 @@ OgreManager::OgreManager(void)
     mPluginsCfg(Ogre::StringUtil::BLANK),
     // mTrayMgr(0),
     // mCameraMan(0),
+    rayQuery(NULL),
     mCursorWasVisible(false),
     mShutDown(false)
 {
@@ -144,6 +145,8 @@ void OgreManager::initialize() {
     // mDetailsPanel->hide();
 
     mRoot->addFrameListener(this);
+	
+	rayQuery = mSceneMgr->createRayQuery(Ogre::Ray());
 }
 
 void OgreManager::destroy() {
@@ -356,5 +359,18 @@ Ogre::Vector3 OgreManager::rayCast(const float& x,const float& y) {
         return Ogre::Vector3(0,0,0);
     }
     // return Ogre::Vector3(0,0,0);
+}
+
+Ogre::MovableObject* OgreManager::rayCastEntity(const float& x,const float& y) {
+	Ogre::Ray r = mCamera->getCameraToViewportRay(x,y);
+	rayQuery->setRay(r);
+	rayQuery->setSortByDistance(true,1); //1 result
+	Ogre::RaySceneQueryResult results = rayQuery->execute();
+	if(results.size()) { // != 0
+		return results[0].movable;
+	} else {
+		return NULL;
+	}
+	// return Ogre::Vector3(0,0,0);
 }
 

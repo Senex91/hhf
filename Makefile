@@ -9,19 +9,12 @@ SERVER := courtIchiroServer
 
 .PHONY: main
 main: executables tests
-	
 
-.PHONY: buildsrc
-buildsrc:
-	cd src && $(MAKE)
 
 .PHONY: executables
-executables: buildsrc $(CLIENT) $(SERVER)
-
-$(CLIENT):
+executables:
+	cd src && $(MAKE)
 	$(CXX) -Wall obj/shared/*.o obj/client/*.o -o $(CLIENT) $(LINK_FILES)
-
-$(SERVER):
 	$(CXX) -Wall obj/shared/*.o obj/server/*.o -o $(SERVER) $(LINK_FILES)
 
 .PHONY: tests

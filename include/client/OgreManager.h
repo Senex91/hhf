@@ -41,6 +41,7 @@ public:
 	void update();
 	
 	Ogre::Vector3 rayCast(const float& x,const float& y);
+	Ogre::MovableObject* rayCastEntity(const float& x,const float& y);
 	
 	// Ogre::Root* getRoot() { return root; }
 	// Ogre::Camera* getCamera() { return camera; }
@@ -76,6 +77,8 @@ protected:
     Ogre::RenderWindow* mWindow;
     Ogre::String mResourcesCfg;
     Ogre::String mPluginsCfg;
+	
+	Ogre::RaySceneQuery* rayQuery;
 
     // OgreBites
     // OgreBites::SdkTrayManager* mTrayMgr;
