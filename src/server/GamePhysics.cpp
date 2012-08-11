@@ -52,11 +52,9 @@ void GamePhysics::tick() {
 				double ydir = (elf.y-state.orb.y)/ds;
 				
 				if(ds < dt*ORB_VELOCITY) {
-					DEBUG("close enough");
 					state.orb.x = elf.x;
 					state.orb.y = elf.y;
 				} else {
-					DEBUG("moving away");
 					state.orb.x += xdir * dt * ORB_VELOCITY;
 					state.orb.y += ydir * dt * ORB_VELOCITY;
 				}
@@ -64,20 +62,21 @@ void GamePhysics::tick() {
 		}
 	}
 	if(!orbOwnerValid && state.elves.size()>0) { //Need at least one elf 
-		DEBUG("setting initial x,y");
 		state.orb.id = state.elves[0].id;
 		state.orb.x = state.elves[0].x;
 		state.orb.y = state.elves[0].y;
 	}
 
 	if(orbOwnerValid){
-		if(dist(state.orb.x,state.orb.y,state.felhound.x,state.felhound.y) > .1) {
-			double xdir = (state.orb.x-state.felhound.x)/sqrt(pow(state.orb.x-state.felhound.x,2)+pow(state.orb.y-state.felhound.y,2));
-			double ydir = (state.orb.y-state.felhound.y)/sqrt(pow(state.orb.x-state.felhound.x,2)+pow(state.orb.y-state.felhound.y,2));
-
-			state.felhound.xvel = xdir * PLAYER_VELOCITY/2;
-			state.felhound.yvel = ydir * PLAYER_VELOCITY/2;
+		double ds = dist(state.orb.x,state.orb.y,state.felhound.x,state.felhound.y);
+		if(ds > 0) {
+			double ds2 = pow(ds,1.5);
+			double xdir = (state.orb.x-state.felhound.x)/ds2;
+			double ydir = (state.orb.y-state.felhound.y)/ds2;
 			state.felhound.orientation = atan2(state.felhound.xvel,state.felhound.yvel);
+
+			state.felhound.xvel += xdir;
+			state.felhound.yvel += ydir;
 
 		} else{
 			state.felhound.xvel = 0;
@@ -99,6 +98,9 @@ void GamePhysics::addPlayer(int id) {
 		(float)rand()/(float)RAND_MAX };
 	Elf e = { id, 0, 0, 0, 0, 0, 0};
 	e.color = c;
+	double ang = 2.0 * 3.1415926 * (double)rand()/(double)RAND_MAX;
+	e.x = START_RADIUS * sin(ang);
+	e.y = START_RADIUS * cos(ang);
 	state.elves.push_back(e);
 	
 }
@@ -138,6 +140,8 @@ void GamePhysics::playerThrow(int id,int id2) {
 	DEBUG("thrower: " << thrower);
 	DEBUG("catcher: " << catcher);
 	if(thrower && thrower->id == state.orb.id && catcher) {
-		state.orb.id = id2;
+		if(dist(state.orb.x,state.orb.y,thrower->x,thrower->y) < 0.05) { //Orb has to be near you
+			state.orb.id = id2;
+		}
 	}
 }

@@ -3,6 +3,7 @@
 
 #define PLAYER_VELOCITY 20.0
 #define ORB_VELOCITY 40.0
+#define START_RADIUS 25
 
 #include "GameState.h"
 
