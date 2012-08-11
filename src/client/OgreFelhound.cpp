@@ -26,7 +26,8 @@ OgreFelhound::OgreFelhound(Ogre::SceneManager* pManager, int pId){
 	entity = manager->createEntity(name, OgreFelhound_MESHNAME);
 	node = manager->getRootSceneNode()->createChildSceneNode(name);
 	node->attachObject(entity);
-    setColour(getColour(id));
+    node->setScale(2, 2, 2);
+    setColour(Ogre::ColourValue::White);
 }
 
 OgreFelhound::~OgreFelhound(void){

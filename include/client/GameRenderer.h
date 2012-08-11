@@ -6,6 +6,7 @@
 #include <map>
 #include "OgreElf.h"
 #include "OgreOrb.h"
+#include "OgreFelhound.h"
 
 #include <string>
 #include "GameState.h"
@@ -47,6 +48,7 @@ private:
 	
 	std::map<int, OgreElf*> elves;
 	OgreOrb* orb;
+	OgreFelhound* felhound;
 	
 	
 };

@@ -35,6 +35,7 @@ void GamePhysics::tick() {
 		}
 		if(state.orb.id == elf.id) {
 			//TODO: fly towards player
+			orbOwnerValid = true;
 			state.orb.x = elf.x;
 			state.orb.y = elf.y;
 		}
@@ -42,6 +43,29 @@ void GamePhysics::tick() {
 	if(!orbOwnerValid && state.elves.size()>0) { //Need at least one elf 
 		state.orb.id = state.elves[0].id;
 	}
+
+	if(orbOwnerValid){
+		if(
+			(sqrt
+				(pow(state.orb.x-state.felhound.x,2)+
+				 pow(state.orb.y-state.felhound.y,2))) > .1){
+			double xdir = (state.orb.x-state.felhound.x)/sqrt(pow(state.orb.x-state.felhound.x,2)+pow(state.orb.y-state.felhound.y,2));
+			double ydir = (state.orb.y-state.felhound.y)/sqrt(pow(state.orb.x-state.felhound.x,2)+pow(state.orb.y-state.felhound.y,2));
+
+			state.felhound.xvel = xdir * PLAYER_VELOCITY/2;
+			state.felhound.yvel = ydir * PLAYER_VELOCITY/2;
+		}
+		
+		state.felhound.x += state.felhound.xvel * dt;
+		state.felhound.y += state.felhound.yvel * dt;
+	}
+	
+
+
+
+
+
+
 }
 
 void GamePhysics::addPlayer(int id) {

@@ -136,6 +136,7 @@ void GameRenderer::initialize(){
 
 
     orb = new OgreOrb(Client::getInstance().getOgreManager().getSceneManager());
+    felhound = new OgreFelhound(Client::getInstance().getOgreManager().getSceneManager(),0);
 	
 	DEBUG("GameRenderer::initialize done");
 
@@ -189,6 +190,8 @@ void GameRenderer::renderNextState(GameState const& newState){
         // current->setColour(OgreElf::getColour(currentElfData.id));
 	}
 	orb->setPosition(newState.orb.x,2,newState.orb.y);
+    felhound->setPosition(newState.felhound.x, 0, newState.felhound.y);
+
 }
 
 
