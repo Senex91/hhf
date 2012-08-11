@@ -2,6 +2,7 @@
 #define GAME_PHYSICS_H
 
 #define PLAYER_VELOCITY 20.0
+#define ORB_VELOCITY 40.0
 
 #include "GameState.h"
 

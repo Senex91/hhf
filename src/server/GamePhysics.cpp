@@ -8,6 +8,10 @@ using std::pow;
 using std::sqrt;
 using std::atan2;
 
+inline double dist(double x1,double y1,double x2,double y2) {
+	return sqrt(pow(x1-x2,2)+pow(y1-y2,2));
+}
+
 GamePhysics::GamePhysics() {
 	state.felhound = (Felhound){0, 0, 0, 0};
 	state.orb = (Orb){0,0,-1};
@@ -25,7 +29,7 @@ void GamePhysics::tick() {
 	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
 		Elf& elf = *it;
 		
-		if(sqrt(pow(elf.xgoal-elf.x,2)+pow(elf.ygoal-elf.y,2))<dt*PLAYER_VELOCITY) {
+		if(dist(elf.xgoal,elf.ygoal,elf.x,elf.y)<dt*PLAYER_VELOCITY) {
 			elf.x = elf.xgoal;
 			elf.y = elf.ygoal;
 			elf.xvel = 0;
@@ -37,20 +41,35 @@ void GamePhysics::tick() {
 		if(state.orb.id == elf.id) {
 			orbOwnerValid = true;
 			//TODO: fly towards player
-			orbOwnerValid = true;
-			state.orb.x = elf.x;
-			state.orb.y = elf.y;
+			//state.orb.x = elf.x;
+			//state.orb.y = elf.y;
+			
+			double ds = dist(state.orb.x,state.orb.y,elf.x,elf.y);
+			if(ds > 0) {
+				double xdir = (elf.x-state.orb.x)/ds;
+				double ydir = (elf.y-state.orb.y)/ds;
+				
+				if(ds < dt*ORB_VELOCITY) {
+					DEBUG("close enough");
+					state.orb.x = elf.x;
+					state.orb.y = elf.y;
+				} else {
+					DEBUG("moving away");
+					state.orb.x += xdir * dt * ORB_VELOCITY;
+					state.orb.y += ydir * dt * ORB_VELOCITY;
+				}
+			}
 		}
 	}
 	if(!orbOwnerValid && state.elves.size()>0) { //Need at least one elf 
+		DEBUG("setting initial x,y");
 		state.orb.id = state.elves[0].id;
+		state.orb.x = state.elves[0].x;
+		state.orb.y = state.elves[0].y;
 	}
 
 	if(orbOwnerValid){
-		if(
-			(sqrt
-				(pow(state.orb.x-state.felhound.x,2)+
-				 pow(state.orb.y-state.felhound.y,2))) > .1){
+		if(dist(state.orb.x,state.orb.y,state.felhound.x,state.felhound.y) > .1) {
 			double xdir = (state.orb.x-state.felhound.x)/sqrt(pow(state.orb.x-state.felhound.x,2)+pow(state.orb.y-state.felhound.y,2));
 			double ydir = (state.orb.y-state.felhound.y)/sqrt(pow(state.orb.x-state.felhound.x,2)+pow(state.orb.y-state.felhound.y,2));
 
@@ -80,8 +99,9 @@ void GamePhysics::playerSetGoal(int id,double x,double y) {
 	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
 		Elf& elf = *it;
 		if(elf.id == id) {
-			double xdir = (x-elf.x)/sqrt(pow(x-elf.x,2)+pow(y-elf.y,2));
-			double ydir = (y-elf.y)/sqrt(pow(x-elf.x,2)+pow(y-elf.y,2));
+			double ds = dist(x,y,elf.x,elf.y);
+			double xdir = (x-elf.x)/ds;
+			double ydir = (y-elf.y)/ds;
 			//TODO: gradual turning
 			elf.xvel = xdir * PLAYER_VELOCITY;
 			elf.yvel = ydir * PLAYER_VELOCITY;
