@@ -4,6 +4,13 @@
 #include <vector>
 #include <string>
 
+
+struct ElfColor {
+	float r;
+	float g;
+	float b;
+};
+
 struct Elf {
     int id;		//must start at 0
     double x;
@@ -16,7 +23,10 @@ struct Elf {
 	
 	double xgoal;
 	double ygoal;
+
+	ElfColor color;
 };
+
 
 struct Felhound {
     double x;

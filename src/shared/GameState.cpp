@@ -46,6 +46,9 @@ std::string serializeGameState(const GameState& gs) {
 		ret << gs.elves[i].xgoal << delim;
 		ret << gs.elves[i].ygoal << delim;
 		ret << gs.elves[i].id << delim;
+		ret << gs.elves[i].color.r << delim;
+		ret << gs.elves[i].color.g << delim;
+		ret << gs.elves[i].color.b << delim;
 	}
 	
 	return ret.str();
@@ -66,6 +69,7 @@ std::string gameStateToString(const GameState& gs) {
 		ret << "vel=(" << gs.elves[i].xvel << ", " << gs.elves[i].yvel << ")";
 		ret << "orientation=(" << gs.elves[i].orientation << ")";
 		ret << "goal=(" << gs.elves[i].xgoal << ", " << gs.elves[i].ygoal << ")";
+		ret << "color=(" << gs.elves[i].color.r << ", " << gs.elves[i].color.g << ", " << gs.elves[i].color.b << ")";
 		ret << "]\n";
 	}
 	ret << "}";
@@ -94,6 +98,9 @@ GameState deserializeGameState(const std::string& str) {
 		read >> e.xgoal;
 		read >> e.ygoal;
 		read >> e.id;
+		read >> e.color.r;
+		read >> e.color.g;
+		read >> e.color.b;
 		ret.elves.push_back(e);
 	}
 	

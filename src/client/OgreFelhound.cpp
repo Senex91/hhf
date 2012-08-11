@@ -38,6 +38,14 @@ void OgreFelhound::setPosition(float x, float y, float z){
 	node->setPosition(x,y,z);
 }
 
+void OgreFelhound::setOrientation(float heading){
+    Ogre::Euler angle(
+            Ogre::Radian(heading), //yaw
+            Ogre::Radian(0), //pitch
+            Ogre::Radian(0));//bank
+    node->setOrientation(angle);
+}
+
 void OgreFelhound::setColour(Ogre::ColourValue colour){
 	std::string matName = OgreFelhound_MATERIAL_NAME;
     matName+=id;

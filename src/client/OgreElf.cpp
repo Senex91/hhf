@@ -5,20 +5,7 @@
 #include <time.h>
 #include <OgreMaterialManager.h>
 
-std::vector<Ogre::ColourValue> initialColors(){
-    // initiates random seed for additional colors
-    srand((unsigned)time(0));
-    std::vector<Ogre::ColourValue> colors;
-    colors.push_back(Ogre::ColourValue::Red);
-    colors.push_back(Ogre::ColourValue::Green);
-    colors.push_back(Ogre::ColourValue::Blue);
-    colors.push_back(Ogre::ColourValue(1, 1, 0, 1));
-    colors.push_back(Ogre::ColourValue::White);
-
-    return colors;
-}
-
-OgreElf::OgreElf(Ogre::SceneManager* pManager, int pId){
+OgreElf::OgreElf(Ogre::SceneManager* pManager, Ogre::ColourValue color,  int pId){
 	manager = pManager;
 	id = pId;
 
@@ -27,7 +14,7 @@ OgreElf::OgreElf(Ogre::SceneManager* pManager, int pId){
 	entity->setUserAny(Ogre::Any(this));
 	node = manager->getRootSceneNode()->createChildSceneNode(name);
 	node->attachObject(entity);
-    setColour(getColour(id));
+    setColour(color);
 }
 
 OgreElf::~OgreElf(void){
@@ -63,19 +50,4 @@ void OgreElf::setColour(Ogre::ColourValue colour){
         mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
         entity->setMaterialName(mat->getName());
     }
-}
-
-Ogre::ColourValue OgreElf::getColour(unsigned int id){
-    static std::vector<Ogre::ColourValue> colors = initialColors();
-    if(id >= colors.size()){ //if the colour does not exist
-        colors.push_back(
-            Ogre::ColourValue(
-                (float)rand()/(float)RAND_MAX,
-                (float)rand()/(float)RAND_MAX,
-                (float)rand()/(float)RAND_MAX, 1)
-                        );
-
-    }
-
-    return colors[id];
 }

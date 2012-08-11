@@ -2,6 +2,8 @@
 #include "GameState.h"
 #include <cmath>
 #include "Debug.h"
+#include <stdlib.h>
+#include <time.h>
 
 using std::vector;
 using std::pow;
@@ -81,16 +83,17 @@ void GamePhysics::tick() {
 		state.felhound.y += state.felhound.yvel * dt;
 	}
 	
-
-
-
-
-
-
 }
 
 void GamePhysics::addPlayer(int id) {
+	srand(unsigned(time(0)));
+
+	ElfColor c = {
+		(float)rand()/(float)RAND_MAX, 
+		(float)rand()/(float)RAND_MAX,
+		(float)rand()/(float)RAND_MAX };
 	Elf e = { id, 0, 0, 0, 0, 0, 0};
+	e.color = c;
 	state.elves.push_back(e);
 	
 }
