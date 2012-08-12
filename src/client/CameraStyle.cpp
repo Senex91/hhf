@@ -139,9 +139,9 @@ bool WC3CameraStyle::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	} else if(state.Y.abs > state.height - scrollThreshold) {
 		positionMod += Vector3(0,0,scrollSpeed);
 	}
-	double dt = 1E-6 * (double)timer.getMicroseconds();
-	timer.reset();
-	dt = std::max(dt,0.1);
+	double dt = evt.timeSinceLastFrame;
+	// timer.reset();
+	// dt = std::max(dt,0.1);
 	camera->setPosition(camPos + (positionMod * dt));
 	
 	return true;

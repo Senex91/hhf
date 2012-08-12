@@ -35,7 +35,7 @@ OgreFelhound::~OgreFelhound(void){
 }
 
 void OgreFelhound::setPosition(float x, float y, float z){
-	node->setPosition(x,y,z);
+	node->setPosition(x,y+2,z);
 }
 
 void OgreFelhound::setOrientation(float heading){

@@ -40,87 +40,105 @@ void GameRenderer::initialize(){
     Client::getInstance().getOISManager().addKeyListener(this);
 
 
-	int numcols = 100;
-    int numrows = 100;
-    float unitsize = 6.0;
+	// int numcols = 100;
+ //    int numrows = 100;
+ //    float unitsize = 6.0;
 
-    Ogre::ManualObject* grid = Client::getInstance().getOgreManager().getSceneManager()->createManualObject("grid");    
+ //    Ogre::ManualObject* grid = Client::getInstance().getOgreManager().getSceneManager()->createManualObject("grid");    
 
-    grid->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+ //    grid->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
 
-    float width = (float)numcols * unitsize;
-    float depth = (float)numrows * unitsize;
-    Ogre::Vector3 center = Ogre::Vector3((-width / 2.0f), 0 ,( -depth / 2.0f));
+ //    float width = (float)numcols * unitsize;
+ //    float depth = (float)numrows * unitsize;
+ //    Ogre::Vector3 center = Ogre::Vector3((-width / 2.0f), 0 ,( -depth / 2.0f));
 
-    Ogre::ColourValue white = Ogre::ColourValue(1.0f, 1.0f, 1.0f, 0.5f); 
-    int count = 0;
-    for (int i = 0; i < numrows; ++i)
-    {   
-        Ogre::Vector3 s, e;
-        s.x = 0.0f;
-        s.z = i * unitsize; s.y = 0.0f;
+ //    Ogre::ColourValue white = Ogre::ColourValue(1.0f, 1.0f, 1.0f, 0.5f); 
+ //    int count = 0;
+ //    for (int i = 0; i < numrows; ++i)
+ //    {   
+ //        Ogre::Vector3 s, e;
+ //        s.x = 0.0f;
+ //        s.z = i * unitsize; s.y = 0.0f;
 
-        e.x = width;
-        e.z = i * unitsize;
-        e.y = 0.0f;
+ //        e.x = width;
+ //        e.z = i * unitsize;
+ //        e.y = 0.0f;
 
-        grid->position(s + center);
-        grid->colour(white);
-        grid->position(e + center);
-        grid->colour(white);
-        grid->index(count++);
-        grid->index(count++);
-    }   
-    grid->position(Ogre::Vector3(0.0f, 0.0f, numrows * unitsize) + center);
-    grid->colour(white);
-    grid->position(Ogre::Vector3(width, 0.0f, numrows * unitsize) + center);
-    grid->colour(white);
-    grid->index(count++);
-    grid->index(count++);
+ //        grid->position(s + center);
+ //        grid->colour(white);
+ //        grid->position(e + center);
+ //        grid->colour(white);
+ //        grid->index(count++);
+ //        grid->index(count++);
+ //    }   
+ //    grid->position(Ogre::Vector3(0.0f, 0.0f, numrows * unitsize) + center);
+ //    grid->colour(white);
+ //    grid->position(Ogre::Vector3(width, 0.0f, numrows * unitsize) + center);
+ //    grid->colour(white);
+ //    grid->index(count++);
+ //    grid->index(count++);
 
-    for (int i = 0; i < numcols; ++i)
-    {   
-        Ogre::Vector3 s, e;
-        s.x = i * unitsize;
-        s.z = depth;
-        s.y = 0.0f;
+ //    for (int i = 0; i < numcols; ++i)
+ //    {   
+ //        Ogre::Vector3 s, e;
+ //        s.x = i * unitsize;
+ //        s.z = depth;
+ //        s.y = 0.0f;
 
-        e.x = i * unitsize;
-        e.z = 0.0f;
-        e.y = 0.0f;
+ //        e.x = i * unitsize;
+ //        e.z = 0.0f;
+ //        e.y = 0.0f;
 
-        grid->position(s + center);
-        grid->colour(white);
-        grid->position(e + center);
-        grid->colour(white);
-        grid->index(count++);
-        grid->index(count++);
-    }   
-    grid->position(Ogre::Vector3(numcols * unitsize, 0.0f, 0.0f) + center);
-    grid->colour(white);
-    grid->position(Ogre::Vector3(numcols * unitsize, 0.0f, depth) + center);
-    grid->colour(white);
-    grid->index(count++);
-    grid->index(count++);
-    grid->end();
-	grid->setQueryFlags(0);
+ //        grid->position(s + center);
+ //        grid->colour(white);
+ //        grid->position(e + center);
+ //        grid->colour(white);
+ //        grid->index(count++);
+ //        grid->index(count++);
+ //    }   
+ //    grid->position(Ogre::Vector3(numcols * unitsize, 0.0f, 0.0f) + center);
+ //    grid->colour(white);
+ //    grid->position(Ogre::Vector3(numcols * unitsize, 0.0f, depth) + center);
+ //    grid->colour(white);
+ //    grid->index(count++);
+ //    grid->index(count++);
+ //    grid->end();
+	// grid->setQueryFlags(0);
 
-    Ogre::String meshName= "Grid";
-    Ogre::String lResourceGroup = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
-    grid->convertToMesh(meshName); 
+ //    Ogre::String meshName= "Grid";
+ //    Ogre::String lResourceGroup = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
+ //    grid->convertToMesh(meshName); 
 	
-    Ogre::Entity* gridEntity = Client::getInstance().getOgreManager().getSceneManager()->createEntity("Grid");
-	gridEntity->setQueryFlags(0);
-    Ogre::SceneNode* gridNode = Client::getInstance().getOgreManager().getSceneManager()->getRootSceneNode()->createChildSceneNode("GridNode");
-    gridNode->attachObject(gridEntity);
+ //    Ogre::Entity* gridEntity = Client::getInstance().getOgreManager().getSceneManager()->createEntity("Grid");
+	// gridEntity->setQueryFlags(0);
+ //    Ogre::SceneNode* gridNode = Client::getInstance().getOgreManager().getSceneManager()->getRootSceneNode()->createChildSceneNode("GridNode");
+ //    gridNode->attachObject(gridEntity);
 
-    Ogre::MaterialPtr gridMat = gridEntity->getSubEntity(0)->getMaterial();
-    gridMat->getTechnique(0)->getPass(0)->setAmbient(Ogre::ColourValue(.5, .5, .5, 0));
-    gridMat->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(.5, .5, .5, 0));
-    gridEntity->setMaterialName(gridMat->getName());
+ //    Ogre::MaterialPtr gridMat = gridEntity->getSubEntity(0)->getMaterial();
+ //    gridMat->getTechnique(0)->getPass(0)->setAmbient(Ogre::ColourValue(.5, .5, .5, 0));
+ //    gridMat->getTechnique(0)->getPass(0)->setDiffuse(Ogre::ColourValue(.5, .5, .5, 0));
+ //    gridEntity->setMaterialName(gridMat->getName());
+    Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+
+    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+        plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+
+
+    Ogre::Entity* entGround = 
+        Client::getInstance()
+            .getOgreManager()
+            .getSceneManager()
+            ->createEntity("GroundEntity", "ground");
+
+    Ogre::SceneNode* groundNode = Client::getInstance().getOgreManager().getSceneManager()->getRootSceneNode()->createChildSceneNode();
+    groundNode->attachObject(entGround);
+    groundNode->scale(.1, .1, .1);
 
 
 
+    entGround->setMaterialName("Examples/Rockwall");
+    entGround->setCastShadows(false);
+    entGround->setQueryFlags(0);
 
 
 
@@ -143,6 +161,7 @@ void GameRenderer::initialize(){
 	cameraStyles["TOCameraMan"] = new TOCameraManStyle();
 	cameraStyles["WC3Style"] = new WC3CameraStyle();
 	cameraStyles["WC3Style"]->load();
+	// cameraStyles["TOCameraMan"]->load();
 	
 	DEBUG("GameRenderer::initialize done");
 
