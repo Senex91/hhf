@@ -70,7 +70,7 @@ public:
 	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	
 	static const int scrollThreshold = 10;
-	static const float scrollSpeed = 1;
+	static const float scrollSpeed = 100;
 	
 protected:
 	virtual void innerLoad();

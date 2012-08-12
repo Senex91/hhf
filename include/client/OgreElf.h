@@ -1,7 +1,8 @@
 #ifndef OgreElf_H
 #define OgreElf_H
 
-#define OgreElf_MESHNAME "plane727.mesh"
+#define OgreElf_MESHNAME "ogrehead.mesh"
+// #define OgreElf_MESHNAME "plane727.mesh"
 #define OgreElf_ENTITY_NAME "OgreElf"
 #define OgreElf_MATERIAL_NAME "planeMaterial"
 

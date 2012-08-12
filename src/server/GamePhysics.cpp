@@ -86,7 +86,7 @@ void GamePhysics::tick() {
 		} else { //Felhound is at orb
 			//Kill the player if the orb is at a player
 			if(dist(state.orb.x,state.orb.y,orbOwner->x,orbOwner->y)<0.1) {
-				removePlayer(orbOwner->id);
+				// removePlayer(orbOwner->id);
 			}
 		}
 		
@@ -97,7 +97,6 @@ void GamePhysics::tick() {
 }
 
 void GamePhysics::addPlayer(int id) {
-	srand(unsigned(time(0)));
 
 	ElfColor c = {
 		(float)rand()/(float)RAND_MAX, 

@@ -14,6 +14,7 @@ OgreElf::OgreElf(Ogre::SceneManager* pManager, Ogre::ColourValue color,  int pId
 	entity->setUserAny(Ogre::Any(this));
 	node = manager->getRootSceneNode()->createChildSceneNode(name);
 	node->attachObject(entity);
+    node->scale(.1, .1, .1);
     setColour(color);
 }
 
@@ -25,7 +26,7 @@ OgreElf::~OgreElf(void){
 }
 
 void OgreElf::setPosition(float x, float y, float z){
-	node->setPosition(x,y,z);
+	node->setPosition(x,y+2,z);
 }
 
 void OgreElf::setOrientation(float heading){
@@ -41,11 +42,11 @@ void OgreElf::setColour(Ogre::ColourValue colour){
     matName+=id;
 
     if(Ogre::MaterialManager::getSingleton().resourceExists(matName)){
-        Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial();
+        Ogre::MaterialPtr mat = entity->getSubEntity(1)->getMaterial();
         mat->getTechnique(0)->getPass(0)->setAmbient(colour);
         mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
     } else{
-        Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial()->clone(matName);
+        Ogre::MaterialPtr mat = entity->getSubEntity(1)->getMaterial()->clone(matName);
         mat->getTechnique(0)->getPass(0)->setAmbient(colour);
         mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
         entity->setMaterialName(mat->getName());
