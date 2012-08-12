@@ -17,6 +17,7 @@ inline double dist(double x1,double y1,double x2,double y2) {
 GamePhysics::GamePhysics() {
 	state.felhound = (Felhound){0, 0, 0, 0};
 	state.orb = (Orb){0,0,-1};
+	felhoundVelocity = 15;
 }
 
 GamePhysics::~GamePhysics() {
@@ -75,8 +76,10 @@ void GamePhysics::tick() {
 			double ydir = (state.orb.y-state.felhound.y)/ds2;
 			state.felhound.orientation = atan2(state.felhound.xvel,state.felhound.yvel);
 
-			state.felhound.xvel += xdir;
-			state.felhound.yvel += ydir;
+			state.felhound.xvel = xdir * felhoundVelocity;
+			state.felhound.yvel = ydir * felhoundVelocity;
+
+			felhoundVelocity+= FELHOUND_ACCEL * dt;
 
 		} else{
 			state.felhound.xvel = 0;

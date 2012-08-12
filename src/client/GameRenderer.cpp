@@ -42,7 +42,7 @@ void GameRenderer::initialize(){
 
 	int numcols = 100;
     int numrows = 100;
-    float unitsize = 3.0;
+    float unitsize = 6.0;
 
     Ogre::ManualObject* grid = Client::getInstance().getOgreManager().getSceneManager()->createManualObject("grid");    
 

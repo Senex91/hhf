@@ -4,6 +4,7 @@
 #define PLAYER_VELOCITY 20.0
 #define ORB_VELOCITY 40.0
 #define START_RADIUS 25
+#define FELHOUND_ACCEL 2
 
 #include "GameState.h"
 
@@ -24,6 +25,10 @@ private:
 	GamePhysics(const GamePhysics&) {}
 	const GamePhysics& operator=(const GamePhysics& other) { return *this; }
 	GameState state;
+
+	double felhoundVelocity;
+
+
 };
 
 
