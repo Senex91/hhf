@@ -22,14 +22,14 @@ void NetClient::sendGameState(const GameState& gamestate){
 }
 
 void NetClient::sendText(const std::string& text) {
-	DEBUG("Sending packet:"<<text);
+	//DEBUG("Sending packet:"<<text);
 	Packet send(text);
 	send.setAddress(address);
 	socket.sendPacket(send);
 }
 
 void NetClient::processCommand(Command* c) {
-	DEBUG("i got a command yo");
+	//DEBUG("i got a command yo");
 	if(c == NULL) {
 		DEBUG("NetClient::processCommand: unrecognized command");
 	}
@@ -66,6 +66,7 @@ void NetClient::accept(SpectateCommand&) {
 }
 
 void NetClient::accept(QuitCommand&) {
+	DEBUG("Received quit command");
 	Server::getInstance().getGamePhysics().removePlayer(id);
 	Server::getInstance().getNetManager().removeClient(id);
 }

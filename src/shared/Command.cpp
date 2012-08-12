@@ -25,6 +25,8 @@ Command* Command::deserialize(string str) {
 	static bool stateCmd = registerDeserializer(STATE_CMD,GameStateCommand::deserialize) && stateCmd;
 	static bool blinkCmd = registerDeserializer(BLINK_CMD,BlinkCommand::deserialize) && blinkCmd;
 	static bool throwCmd = registerDeserializer(THROW_CMD,ThrowCommand::deserialize) && throwCmd;
+	static bool spectateCmd = registerDeserializer(SPECTATE_CMD,SpectateCommand::deserialize) && spectateCmd;
+	static bool quitCmd = registerDeserializer(QUIT_CMD,QuitCommand::deserialize) && quitCmd;
 	
 	size_t colonPos = str.find(':');
 	if(colonPos == string::npos) {
