@@ -12,6 +12,8 @@ class NetServer : public CommandVisitor {
 public:
 	NetServer();
 	~NetServer();
+	
+	void quitServer();
 
 	void sendCommand(const Command&);
 	void receiveData();
@@ -24,6 +26,8 @@ public:
 	virtual void accept(MoveCommand&);
 	virtual void accept(BlinkCommand&);
 	virtual void accept(ThrowCommand&);
+	virtual void accept(SpectateCommand&);
+	virtual void accept(QuitCommand&);
 	
 private:
 	bool handshaked;

@@ -5,7 +5,7 @@ HEADERS := $(wildcard $(INCL_HOME)/$(FOLDER)/*.h) $(wildcard $(INCL_HOME)/shared
 INCLUDES := -I/usr/local/include/CEGUI/ -I/usr/include/OGRE/ -I/usr/include/OIS/ -I/usr/include/SDL/ -I$(INCL_HOME)/$(FOLDER)/ -I$(INCL_HOME)/shared/
 CFLAGS := -Wall -c $(INCLUDES) -O3 -g
 SOURCES := $(wildcard *.cpp)
-SHARED_SOURCES := ../shared/$(wildcard *.cpp)
+SHARED_SOURCES := $(wildcard ../shared/*.cpp)
 OBJECT_NAMES := $(SOURCES:.cpp=.o)
 OBJ_PREFIX := $(OBJ_HOME)/$(FOLDER)
 OBJECTS := $(addprefix $(OBJ_PREFIX),$(OBJECT_NAMES))

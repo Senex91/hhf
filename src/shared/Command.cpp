@@ -45,6 +45,10 @@ JoinCommand::~JoinCommand() {
 	
 }
 
+SpectateCommand::~SpectateCommand() {
+	
+}
+
 IDCommand::~IDCommand() {
 	
 }
@@ -84,4 +88,8 @@ Command* ThrowCommand::deserialize(string s) {
 	int id;
 	stream >> id;
 	return new ThrowCommand(id);
+}
+
+QuitCommand::~QuitCommand() {
+	
 }

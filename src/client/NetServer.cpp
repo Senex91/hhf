@@ -10,7 +10,11 @@ NetServer::NetServer() : socket(), serverAddress("localhost",SERVER_PORT), lates
 }
 
 NetServer::~NetServer(){
+	
+}
 
+void NetServer::quitServer() {
+	sendCommand(QuitCommand());
 }
 
 void NetServer::sendCommand(const Command& toSend){
@@ -72,4 +76,12 @@ void NetServer::accept(BlinkCommand&) {
 
 void NetServer::accept(ThrowCommand&) {
 	DEBUG("NetServer::accept: Did not expect a ThrowCommand from the server.");
+}
+
+void NetServer::accept(SpectateCommand&) {
+	DEBUG("NetServer::accept: Did not expect a SpectateCommand from the server.");
+}
+
+void NetServer::accept(QuitCommand&) {
+	DEBUG("NetServer::acept: Did not expect a QuitCommand from the server.");
 }

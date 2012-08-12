@@ -10,12 +10,13 @@
 class Command;
 class GameStateCommand;
 class JoinCommand;
+class SpectateCommand;
 class IDCommand;
 class MoveCommand;
 class BlinkCommand;
 class CommandVisitor;
 class ThrowCommand;
-class JoinSpectatorCommand;
+class QuitCommand;
 
 class Command {
 private:
@@ -47,6 +48,8 @@ public:
 	virtual void accept(MoveCommand&) {}
 	virtual void accept(BlinkCommand&) {}
 	virtual void accept(ThrowCommand&) {}
+	virtual void accept(SpectateCommand&) {}
+	virtual void accept(QuitCommand&) {}
 	
 private:
 	
@@ -64,6 +67,21 @@ public:
 protected:
 	
 	virtual void output(std::stringstream& s) const { s << JOIN_CMD << ":"; }
+	
+};
+
+class SpectateCommand : public Command {
+public:
+	SpectateCommand() {}
+	virtual ~SpectateCommand ();
+	
+	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
+	
+	static Command* deserialize(std::string) { return new SpectateCommand(); }
+	
+protected:
+	
+	virtual void output(std::stringstream& s) const { s << SPECTATE_CMD << ":"; }
 	
 };
 
@@ -163,6 +181,19 @@ protected:
 	
 private:
 	int id;
+};
+
+class QuitCommand : public Command {
+public:
+	QuitCommand() {}
+	virtual ~QuitCommand();
+	
+	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
+	
+	static Command* deserialize(std::string str) { return new QuitCommand(); }
+	
+protected:
+	virtual void output(std::stringstream& s) const { s << QUIT_CMD << ":"; }
 };
 
 #endif

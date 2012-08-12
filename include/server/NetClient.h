@@ -20,6 +20,8 @@ public:
 	virtual void accept(MoveCommand&);
 	virtual void accept(BlinkCommand&);
 	virtual void accept(ThrowCommand&);
+	virtual void accept(SpectateCommand&);
+	virtual void accept(QuitCommand&);
 	
 	inline const int& getID() const { return id; }
 	inline const Address& getAddress() const { return address; }

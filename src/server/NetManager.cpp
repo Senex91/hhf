@@ -72,3 +72,13 @@ NetClient* NetManager::getClient(int id) {
 	}
 	return NULL;
 }
+
+void NetManager::removeClient(int id) {
+	for(std::map<Address,NetClient*>::iterator it = connections.begin(); it != connections.end(); it++){
+		if((it->second)->getID() == id) {
+			delete (it->second);
+			connections.erase(it);
+			return;
+		}
+	}
+}

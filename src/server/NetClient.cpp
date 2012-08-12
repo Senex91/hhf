@@ -10,8 +10,6 @@
 
 NetClient::NetClient(Address ad,int id,Socket& sd) : address(ad), socket(sd) {
 	this->id = id;
-	sendText(IDCommand(id).write());
-	Server::getInstance().getGamePhysics().addPlayer(id);
 }
 
 NetClient::~NetClient() {
@@ -40,6 +38,7 @@ void NetClient::processCommand(Command* c) {
 
 void NetClient::accept(JoinCommand&) {
 	sendText(IDCommand(id).write());
+	Server::getInstance().getGamePhysics().addPlayer(id);
 }
 
 void NetClient::accept(IDCommand&) {
@@ -60,4 +59,13 @@ void NetClient::accept(BlinkCommand&) {
 
 void NetClient::accept(ThrowCommand& t) {
 	Server::getInstance().getGamePhysics().playerThrow(id,t.getID());
+}
+
+void NetClient::accept(SpectateCommand&) {
+	sendText(IDCommand(id).write());
+}
+
+void NetClient::accept(QuitCommand&) {
+	Server::getInstance().getGamePhysics().removePlayer(id);
+	Server::getInstance().getNetManager().removeClient(id);
 }

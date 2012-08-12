@@ -10,5 +10,7 @@
 #define BLINK_CMD "blink"
 #define ID_CMD "id"
 #define THROW_CMD "throw"
+#define SPECTATE_CMD "spectate"
+#define QUIT_CMD "quit"
 
 #endif

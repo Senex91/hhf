@@ -29,6 +29,7 @@ void Client::initialize(){
 }
 
 void Client::destroy() {
+	server.quitServer();
 	gameRenderer.destroy();
 	ois.destroy();
 	ogre.destroy();

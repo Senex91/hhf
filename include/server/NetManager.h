@@ -15,6 +15,7 @@ public:
 	void update();
 	
 	NetClient* getClient(int id);
+	void removeClient(int id);
 	
 private:
 	GameState state;
