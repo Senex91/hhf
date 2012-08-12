@@ -35,7 +35,7 @@ void GameRenderer::initialize(){
     mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
     mTrayMgr->hideCursor();
 
-	cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
+	//cameraMan = new OgreBites::SdkCameraMan(Client::getInstance().getOgreManager().getCamera());
     Client::getInstance().getOISManager().addMouseListener(this);
     Client::getInstance().getOISManager().addKeyListener(this);
 
@@ -140,6 +140,9 @@ void GameRenderer::initialize(){
     orb = new OgreOrb(Client::getInstance().getOgreManager().getSceneManager());
     felhound = new OgreFelhound(Client::getInstance().getOgreManager().getSceneManager(),0);
 	
+	cameraStyles["TOCameraMan"] = new TOCameraManStyle();
+	cameraStyles["TOCameraMan"]->load();
+	
 	DEBUG("GameRenderer::initialize done");
 
 }
@@ -152,7 +155,7 @@ void GameRenderer::destroy() {
 	}
 	elves.clear();
 	delete orb;
-	delete cameraMan;
+	//delete cameraMan;
 }
 
 void GameRenderer::renderNextState(GameState const& newState){
@@ -192,18 +195,18 @@ void GameRenderer::renderNextState(GameState const& newState){
 
 // OIS::KeyListener
 bool GameRenderer::keyPressed( const OIS::KeyEvent &arg ) {
-	cameraMan->injectKeyDown(arg);
+	//cameraMan->injectKeyDown(arg);
 	// DEBUG("keypressed! " << arg.key);
 	return true;
 }
 bool GameRenderer::keyReleased( const OIS::KeyEvent &arg ) {
 	// if(arg.key == OIS::KC_F12) {
-	cameraMan->injectKeyUp(arg);
+	//cameraMan->injectKeyUp(arg);
 	return true;
 }
 // OIS::MouseListener
 bool GameRenderer::mouseMoved( const OIS::MouseEvent &arg ) {
-	cameraMan->injectMouseMove(arg);
+	//cameraMan->injectMouseMove(arg);
 	// float x = (float)arg.state.X.abs / (float)arg.state.width;
 	// float y = (float)arg.state.Y.abs / (float)arg.state.height;
 	
@@ -213,16 +216,16 @@ bool GameRenderer::mouseMoved( const OIS::MouseEvent &arg ) {
 	return true;
 }
 bool GameRenderer::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
-	cameraMan->injectMouseDown(arg,id);
+	//cameraMan->injectMouseDown(arg,id);
 	return true;
 }
 bool GameRenderer::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
-	cameraMan->injectMouseUp(arg, id);
+	//cameraMan->injectMouseUp(arg, id);
 	return true;
 }
 
 bool GameRenderer::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	mTrayMgr->frameRenderingQueued(evt);
-	cameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
+	//cameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
 	return true;
 }

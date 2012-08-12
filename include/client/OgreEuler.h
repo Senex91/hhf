@@ -5,6 +5,8 @@
  
 #ifndef OGREEULER_H
 #define OGREEULER_H
+
+#include <OgreMath.h>
  
 namespace Ogre
 {
