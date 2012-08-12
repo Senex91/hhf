@@ -141,7 +141,8 @@ void GameRenderer::initialize(){
     felhound = new OgreFelhound(Client::getInstance().getOgreManager().getSceneManager(),0);
 	
 	cameraStyles["TOCameraMan"] = new TOCameraManStyle();
-	cameraStyles["TOCameraMan"]->load();
+	cameraStyles["WC3Style"] = new WC3CameraStyle();
+	cameraStyles["WC3Style"]->load();
 	
 	DEBUG("GameRenderer::initialize done");
 

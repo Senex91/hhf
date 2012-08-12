@@ -24,6 +24,9 @@ protected:
 	// Ogre::FrameListener
 	bool frameRenderingQueued(const Ogre::FrameEvent& evt) = 0;
 	
+	virtual void innerLoad() {}
+	virtual void innerUnload() {}
+	
 	Ogre::Camera* camera;
 	OIS::Mouse* mouse;
 	OIS::Keyboard* keyboard;
@@ -43,11 +46,37 @@ public:
 	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	
 protected:
+	virtual void innerLoad();
+	virtual void innerUnload();
 	// Ogre::FrameListener
 	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	
 private:
 	OgreBites::SdkCameraMan* cameraMan;
+};
+
+class WC3CameraStyle : public CameraStyle {
+public:
+	WC3CameraStyle();
+	virtual ~WC3CameraStyle();
+	
+	// OIS::KeyListener
+	virtual bool keyPressed( const OIS::KeyEvent &arg );
+	virtual bool keyReleased( const OIS::KeyEvent &arg );
+	// OIS::MouseListener
+	virtual bool mouseMoved( const OIS::MouseEvent &arg );
+	virtual bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+	
+	static const int scrollThreshold = 10;
+	static const float scrollSpeed = 0.1;
+	
+protected:
+	virtual void innerLoad();
+	virtual void innerUnload();
+	
+	// Ogre::FrameListener
+	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 };
 
 #endif
