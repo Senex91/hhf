@@ -63,3 +63,12 @@ void NetManager::update() {
 	// 	}
 	// }
 }
+
+NetClient* NetManager::getClient(int id) {
+	for(std::map<Address,NetClient*>::iterator it = connections.begin(); it != connections.end(); it++){
+		if((it->second)->getID() == id) {
+			return it->second;
+		}
+	}
+	return NULL;
+}

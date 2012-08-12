@@ -28,6 +28,7 @@ void GamePhysics::tick() {
 	double dt = 0.001; //TODO: timers
 	
 	bool orbOwnerValid = false;
+	Elf* orbOwner = NULL;
 	
 	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
 		Elf& elf = *it;
@@ -43,6 +44,7 @@ void GamePhysics::tick() {
 		}
 		if(state.orb.id == elf.id) {
 			orbOwnerValid = true;
+			orbOwner = &elf;
 			//TODO: fly towards player
 			//state.orb.x = elf.x;
 			//state.orb.y = elf.y;
@@ -70,20 +72,22 @@ void GamePhysics::tick() {
 
 	if(orbOwnerValid){
 		double ds = dist(state.orb.x,state.orb.y,state.felhound.x,state.felhound.y);
-		if(ds > 0) {
+		if(ds > 0.1) {
 			double ds2 = pow(ds,1.5);
 			double xdir = (state.orb.x-state.felhound.x)/ds2;
 			double ydir = (state.orb.y-state.felhound.y)/ds2;
 			state.felhound.orientation = atan2(state.felhound.xvel,state.felhound.yvel);
 
-			state.felhound.xvel = xdir * felhoundVelocity;
-			state.felhound.yvel = ydir * felhoundVelocity;
+			state.felhound.xvel += xdir * felhoundVelocity;
+			state.felhound.yvel += ydir * felhoundVelocity;
 
 			felhoundVelocity+= FELHOUND_ACCEL * dt;
 
-		} else{
-			state.felhound.xvel = 0;
-			state.felhound.yvel = 0;
+		} else { //Felhound is at orb
+			//Kill the player if the orb is at a player
+			if(dist(state.orb.x,state.orb.y,orbOwner->x,orbOwner->y)<0.1) {
+				removePlayer(orbOwner->id);
+			}
 		}
 		
 		state.felhound.x += state.felhound.xvel * dt;
@@ -145,6 +149,15 @@ void GamePhysics::playerThrow(int id,int id2) {
 	if(thrower && thrower->id == state.orb.id && catcher) {
 		if(dist(state.orb.x,state.orb.y,thrower->x,thrower->y) < 0.05) { //Orb has to be near you
 			state.orb.id = id2;
+		}
+	}
+}
+
+void GamePhysics::removePlayer(int id) {
+	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
+		if((*it).id == id) {
+			state.elves.erase(it);
+			return;
 		}
 	}
 }

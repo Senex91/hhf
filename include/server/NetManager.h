@@ -14,6 +14,8 @@ public:
 	
 	void update();
 	
+	NetClient* getClient(int id);
+	
 private:
 	GameState state;
 	

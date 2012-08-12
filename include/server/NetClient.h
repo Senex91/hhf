@@ -21,6 +21,9 @@ public:
 	virtual void accept(BlinkCommand&);
 	virtual void accept(ThrowCommand&);
 	
+	inline const int& getID() const { return id; }
+	inline const Address& getAddress() const { return address; }
+	
 private:
 	void sendText(const std::string&);
 	

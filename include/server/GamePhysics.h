@@ -3,8 +3,8 @@
 
 #define PLAYER_VELOCITY 20.0
 #define ORB_VELOCITY 40.0
-#define START_RADIUS 25
-#define FELHOUND_ACCEL 2
+#define START_RADIUS 25.0
+#define FELHOUND_ACCEL 0.02
 
 #include "GameState.h"
 
@@ -20,6 +20,7 @@ public:
 	
 	void playerSetGoal(int id,double x,double y);
 	void playerThrow(int id,int id2);
+	void removePlayer(int id);
 	
 private:
 	GamePhysics(const GamePhysics&) {}

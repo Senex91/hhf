@@ -15,6 +15,7 @@ class MoveCommand;
 class BlinkCommand;
 class CommandVisitor;
 class ThrowCommand;
+class JoinSpectatorCommand;
 
 class Command {
 private:
