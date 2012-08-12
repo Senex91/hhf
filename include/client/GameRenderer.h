@@ -13,6 +13,7 @@
 #include "TOCameraMan.h"
 #include <OIS.h>
 #include <SdkTrays.h>
+#include "CameraStyle.h"
 
 /**
  * @brief GameRenderer renders the game as received by the server.
@@ -44,9 +45,10 @@ protected:
 private:
 	
 	OgreBites::SdkTrayManager* mTrayMgr;
-	OgreBites::SdkCameraMan* cameraMan; // basic camera controller
+	//OgreBites::SdkCameraMan* cameraMan; // basic camera controller
 	
 	std::map<int, OgreElf*> elves;
+	std::map<std::string,CameraStyle*> cameraStyles;
 	OgreOrb* orb;
 	OgreFelhound* felhound;
 	
