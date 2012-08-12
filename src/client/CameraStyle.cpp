@@ -1,5 +1,6 @@
 #include "CameraStyle.h"
 #include "Client.h"
+#include <cmath>
 
 CameraStyle::CameraStyle() {
 	camera = Client::getInstance().getOgreManager().getCamera();
@@ -88,6 +89,7 @@ WC3CameraStyle::~WC3CameraStyle() {
 void WC3CameraStyle::innerLoad() {
 	camera->setPosition(Ogre::Vector3(0,100,0));
 	camera->lookAt(Ogre::Vector3(0,0,0));
+	timer.reset();
 }
 
 void WC3CameraStyle::innerUnload() {
@@ -121,23 +123,26 @@ bool WC3CameraStyle::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButton
 
 bool WC3CameraStyle::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	using Ogre::Vector3;
-	//TODO: timers
+	
 	Vector3 camPos = camera->getPosition();
 	const OIS::MouseState& state = mouse->getMouseState();
+	Vector3 positionMod(0,0,0);
 	
 	if(state.X.abs < scrollThreshold) {
-		camPos -= Vector3(scrollSpeed,0,0);
+		positionMod -= Vector3(scrollSpeed,0,0);
 	} else if(state.X.abs > state.width - scrollThreshold) {
-		camPos += Vector3(scrollSpeed,0,0);
+		positionMod += Vector3(scrollSpeed,0,0);
 	}
 	
 	if(state.Y.abs < scrollThreshold) {
-		camPos -= Vector3(0,0,scrollSpeed);
+		positionMod -= Vector3(0,0,scrollSpeed);
 	} else if(state.Y.abs > state.height - scrollThreshold) {
-		camPos += Vector3(0,0,scrollSpeed);
+		positionMod += Vector3(0,0,scrollSpeed);
 	}
-	
-	camera->setPosition(camPos);
+	double dt = 1E-6 * (double)timer.getMicroseconds();
+	timer.reset();
+	dt = std::max(dt,0.1);
+	camera->setPosition(camPos + (positionMod * dt));
 	
 	return true;
 }

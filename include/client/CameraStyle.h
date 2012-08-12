@@ -2,6 +2,7 @@
 #define CAMERA_STYLE_H
 
 #include <OgreCamera.h>
+#include <GLX/OgreTimerImp.h>
 #include <TOCameraMan.h>
 
 class CameraStyle : public OIS::KeyListener, public OIS::MouseListener, public Ogre::FrameListener {
@@ -69,7 +70,7 @@ public:
 	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	
 	static const int scrollThreshold = 10;
-	static const float scrollSpeed = 0.1;
+	static const float scrollSpeed = 1;
 	
 protected:
 	virtual void innerLoad();
@@ -77,6 +78,7 @@ protected:
 	
 	// Ogre::FrameListener
 	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+	Ogre::Timer timer;
 };
 
 #endif
