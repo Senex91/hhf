@@ -40,7 +40,7 @@ void OgreFelhound::setPosition(float x, float y, float z){
 
 void OgreFelhound::setOrientation(float heading){
     Ogre::Euler angle(
-            Ogre::Radian(heading), //yaw
+            Ogre::Radian(3.1415926 / 2.0 - heading), //yaw
             Ogre::Radian(0), //pitch
             Ogre::Radian(0));//bank
     node->setOrientation(angle);

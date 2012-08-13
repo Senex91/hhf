@@ -27,7 +27,7 @@ private:
 	const GamePhysics& operator=(const GamePhysics& other) { return *this; }
 	GameState state;
 
-	double felhoundVelocity;
+	double felhoundAcceleration;
 
 
 };
