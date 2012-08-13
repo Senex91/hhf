@@ -1,9 +1,12 @@
 *.o
 courtIchiroServer
 courtIchiroClient
+courtIchiroSampleAI
 *.dat
 screenshot*
 *.log
 stats
 .dropbox
 *.test
+ogre.cfg
+*kate-swp*
