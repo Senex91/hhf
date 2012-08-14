@@ -13,5 +13,5 @@ main:
 
 .PHONY: clean
 clean:
-	rm obj/*.o
-	rm $(EXECUTABLE)
+	rm -f obj/*.o
+	rm -f $(EXECUTABLE)
