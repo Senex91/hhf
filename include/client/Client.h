@@ -8,6 +8,7 @@
 // Library constructs
 #include "OgreManager.h"
 #include "OISManager.h"
+#include "CEGUIManager.h"
 #include "TOCameraMan.h"
 
 // Game entities
@@ -27,6 +28,7 @@ public:
 
 	inline OgreManager& getOgreManager() { return ogre; }
 	inline OISManager& getOISManager() { return ois; }
+	inline CEGUIManager& getCEGUIManager() { return cegui; }
 	// inline OgreBites::SdkCameraMan& getCameraMan() { return *cameraMan; }
 
 	inline void setRunning(const bool& r) { running = r; }
@@ -56,7 +58,8 @@ private:
 
 	// Library constructs
 	OgreManager ogre;
-	OISManager ois; 
+	OISManager ois;
+	CEGUIManager cegui;
 	// OgreBites::SdkCameraMan* cameraMan;
 
 	// Game entities

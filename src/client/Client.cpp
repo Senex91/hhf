@@ -20,10 +20,11 @@ void Client::initialize(){
 	// Library construct operations
 	ogre.initialize();
 	ois.initialize();
+	cegui.initialize();
 
 	// Game objects
 	gameRenderer.initialize();
-
+	
 
 
 }

@@ -23,7 +23,7 @@ tests: executables
 	cd tests && $(MAKE)
 
 .PHONY: ai
-ai:
+ai: executables
 	cd ai && $(MAKE)
 
 .PHONY: clean
