@@ -27,22 +27,12 @@ public:
 
 
 private:
-
-	// static Ogre::ColourValue[] generateColors();
-
 	int id;
 	std::string name;
 	
-
 	Ogre::SceneManager* manager;
 	Ogre::SceneNode* node;
 	Ogre::Entity* entity;
-
-	// static Ogre::ColourValue colors[];
-
-
-
-
 };
 
 #endif

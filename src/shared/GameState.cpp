@@ -17,10 +17,6 @@ GameState::GameState(const GameState& other):elves(other.elves){
 
 const GameState& GameState::operator=(const GameState& other){
 	elves = other.elves;
-	//elves.clear();
-	// for(int i = 0; i<other.elves.size(); i++){
-	// 	elves.push_back(other.elves[i]);
-	// }
 	felhound = other.felhound;
 	orb = other.orb;
 	return *this;

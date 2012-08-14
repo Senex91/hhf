@@ -40,28 +40,13 @@ void NetManager::update() {
 		//Pull the next out of the buffer
 		packet = socket.getPacket();
 	}
-	//temporary state sending
+	//send state only every 25 ticks (one tick per millisecond at the moment) to avoid spamming packets
 	if(timer++ % 25 == 0) {
 		const GameState& state = Server::getInstance().getGamePhysics().getState();
 		for(std::map<Address,NetClient*>::iterator it = connections.begin(); it != connections.end(); it++){
 			(it->second)->sendGameState(state);
 		}
 	}
-
-	// if(timer++ % 51 == 0){
-	// 	std::vector<Elf> elves;
-	// 	elves.push_back((Elf) {1, 9, 9});
-	// 	elves.push_back((Elf) {2, 9, 9});
-	// 	elves.push_back((Elf) {3, 9, 9});
-	// 	GameState state1;
-	// 	state1.elves = elves;
-	// 	state1.felhound = (Felhound) {2,2};
-
-	// 	std::map<IPaddress, NetClient*>::iterator it;
-	// 	for(it = connections.begin(); it != connections.end(); it++){
-	// 		((*it).second)->sendGameState(state1);
-	// 	}
-	// }
 }
 
 NetClient* NetManager::getClient(int id) {

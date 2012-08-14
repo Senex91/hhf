@@ -14,8 +14,8 @@ OgreElf::OgreElf(Ogre::SceneManager* pManager, Ogre::ColourValue color,  int pId
 	entity->setUserAny(Ogre::Any(this));
 	node = manager->getRootSceneNode()->createChildSceneNode(name);
 	node->attachObject(entity);
-    node->scale(.1, .1, .1);
-    setColour(color);
+	node->scale(.1, .1, .1);
+	setColour(color);
 }
 
 OgreElf::~OgreElf(void){
@@ -30,25 +30,25 @@ void OgreElf::setPosition(float x, float y, float z){
 }
 
 void OgreElf::setOrientation(float heading){
-    Ogre::Euler angle(
-            Ogre::Radian(heading), //yaw
-            Ogre::Radian(0), //pitch
-            Ogre::Radian(0));//bank
-    node->setOrientation(angle);
+	Ogre::Euler angle(
+			Ogre::Radian(heading), //yaw
+			Ogre::Radian(0), //pitch
+			Ogre::Radian(0));//bank
+	node->setOrientation(angle);
 }
 
 void OgreElf::setColour(Ogre::ColourValue colour){
 	std::string matName = OgreElf_MATERIAL_NAME;
-    matName+=id;
+	matName+=id;
 
-    if(Ogre::MaterialManager::getSingleton().resourceExists(matName)){
-        Ogre::MaterialPtr mat = entity->getSubEntity(1)->getMaterial();
-        mat->getTechnique(0)->getPass(0)->setAmbient(colour);
-        mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
-    } else{
-        Ogre::MaterialPtr mat = entity->getSubEntity(1)->getMaterial()->clone(matName);
-        mat->getTechnique(0)->getPass(0)->setAmbient(colour);
-        mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
-        entity->setMaterialName(mat->getName());
-    }
+	if(Ogre::MaterialManager::getSingleton().resourceExists(matName)){
+		Ogre::MaterialPtr mat = entity->getSubEntity(1)->getMaterial();
+		mat->getTechnique(0)->getPass(0)->setAmbient(colour);
+		mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
+	} else{
+		Ogre::MaterialPtr mat = entity->getSubEntity(1)->getMaterial()->clone(matName);
+		mat->getTechnique(0)->getPass(0)->setAmbient(colour);
+		mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
+		entity->setMaterialName(mat->getName());
+	}
 }

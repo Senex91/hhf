@@ -45,7 +45,6 @@ protected:
 private:
 	
 	OgreBites::SdkTrayManager* mTrayMgr;
-	//OgreBites::SdkCameraMan* cameraMan; // basic camera controller
 	
 	std::map<int, OgreElf*> elves;
 	std::map<std::string,CameraStyle*> cameraStyles;

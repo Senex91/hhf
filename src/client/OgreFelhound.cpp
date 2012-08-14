@@ -26,12 +26,12 @@ OgreFelhound::OgreFelhound(Ogre::SceneManager* pManager, int pId){
 	entity = manager->createEntity(name, OgreFelhound_MESHNAME);
 	node = manager->getRootSceneNode()->createChildSceneNode(name);
 	node->attachObject(entity);
-    node->setScale(2, 2, 2);
-    setColour(Ogre::ColourValue::White);
+	node->setScale(2, 2, 2);
+	setColour(Ogre::ColourValue::White);
 }
 
-OgreFelhound::~OgreFelhound(void){
-
+OgreFelhound::~OgreFelhound(void) {
+	
 }
 
 void OgreFelhound::setPosition(float x, float y, float z){
@@ -39,40 +39,40 @@ void OgreFelhound::setPosition(float x, float y, float z){
 }
 
 void OgreFelhound::setOrientation(float heading){
-    Ogre::Euler angle(
-            Ogre::Radian(3.1415926 / 2.0 - heading), //yaw
-            Ogre::Radian(0), //pitch
-            Ogre::Radian(0));//bank
-    node->setOrientation(angle);
+	Ogre::Euler angle(
+			Ogre::Radian(3.1415926 / 2.0 - heading), //yaw
+			Ogre::Radian(0), //pitch
+			Ogre::Radian(0));//bank
+	node->setOrientation(angle);
 }
 
 void OgreFelhound::setColour(Ogre::ColourValue colour){
 	std::string matName = OgreFelhound_MATERIAL_NAME;
-    matName+=id;
+	matName+=id;
 
-    if(Ogre::MaterialManager::getSingleton().resourceExists(matName)){
-        Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial();
-        mat->getTechnique(0)->getPass(0)->setAmbient(colour);
-        mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
-    } else{
-        Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial()->clone(matName);
-        mat->getTechnique(0)->getPass(0)->setAmbient(colour);
-        mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
-        entity->setMaterialName(mat->getName());
-    }
+	if(Ogre::MaterialManager::getSingleton().resourceExists(matName)){
+		Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial();
+		mat->getTechnique(0)->getPass(0)->setAmbient(colour);
+		mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
+	} else{
+		Ogre::MaterialPtr mat = entity->getSubEntity(0)->getMaterial()->clone(matName);
+		mat->getTechnique(0)->getPass(0)->setAmbient(colour);
+		mat->getTechnique(0)->getPass(0)->setDiffuse(colour);
+		entity->setMaterialName(mat->getName());
+	}
 }
 
 Ogre::ColourValue OgreFelhound::getColour(unsigned int id){
-    static std::vector<Ogre::ColourValue> colors = initialFelhoundColors();
-    if(id >= colors.size()){ //if the colour does not exist
-        colors.push_back(
-            Ogre::ColourValue(
-                (float)rand()/(float)RAND_MAX,
-                (float)rand()/(float)RAND_MAX,
-                (float)rand()/(float)RAND_MAX, 1)
-                        );
+	static std::vector<Ogre::ColourValue> colors = initialFelhoundColors();
+	if(id >= colors.size()){ //if the colour does not exist
+		colors.push_back(
+			Ogre::ColourValue(
+				(float)rand()/(float)RAND_MAX,
+				(float)rand()/(float)RAND_MAX,
+				(float)rand()/(float)RAND_MAX, 1)
+						);
 
-    }
+	}
 
-    return colors[id];
+	return colors[id];
 }

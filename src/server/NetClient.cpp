@@ -29,7 +29,6 @@ void NetClient::sendText(const std::string& text) {
 }
 
 void NetClient::processCommand(Command* c) {
-	//DEBUG("i got a command yo");
 	if(c == NULL) {
 		DEBUG("NetClient::processCommand: unrecognized command");
 	}

@@ -54,9 +54,6 @@ void GamePhysics::tick() {
 		if(state.orb.id == elf.id) {
 			orbOwnerValid = true;
 			orbOwner = &elf;
-			//TODO: fly towards player
-			//state.orb.x = elf.x;
-			//state.orb.y = elf.y;
 			
 			double ds = dist(state.orb.x,state.orb.y,elf.x,elf.y);
 			if(ds > 0) {

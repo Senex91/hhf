@@ -43,13 +43,8 @@ void NetServer::receiveData() {
 	}
 }
 
-GameState const& NetServer::getGameState(){
-	// latestState.elves[0].y = latestState.elves[0].y + 0.01;
-	// latestState.elves[0].x = latestState.elves[0].x + 0.01;
-
-	// latestState.felhound.x = latestState.felhound.x + 1;
-	// latestState.felhound.y = latestState.felhound.y + 1;
-
+GameState const& NetServer::getGameState() {
+	
 	return latestState;
 }
 

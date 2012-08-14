@@ -14,33 +14,22 @@
 
 class OgreOrb {
 public:
-    OgreOrb(Ogre::SceneManager*);
-    ~OgreOrb(void);
-
-    void setPosition(float, float, float);
-    // void setOrientation(float);
-    void setColour(Ogre::ColourValue);
-
-    static Ogre::ColourValue getColour(unsigned int);
-
-
+	OgreOrb(Ogre::SceneManager*);
+	~OgreOrb(void);
+	
+	void setPosition(float, float, float);
+	// void setOrientation(float);
+	void setColour(Ogre::ColourValue);
+	
+	static Ogre::ColourValue getColour(unsigned int);
+	
 private:
-
-    // static Ogre::ColourValue[] generateColors();
-
-    int id;
-    std::string name;
-    
-
-    Ogre::SceneManager* manager;
-    Ogre::SceneNode* node;
-    Ogre::Entity* entity;
-
-    // static Ogre::ColourValue colors[];
-
-
-
-
+	int id;
+	std::string name;
+	
+	Ogre::SceneManager* manager;
+	Ogre::SceneNode* node;
+	Ogre::Entity* entity;
 };
 
 #endif
