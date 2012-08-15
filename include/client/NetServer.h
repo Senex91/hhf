@@ -13,6 +13,7 @@ public:
 	NetServer();
 	~NetServer();
 	
+	void joinServer(const Address&);
 	void quitServer();
 
 	void sendCommand(const Command&);

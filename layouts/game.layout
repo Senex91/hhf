@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="DefaultWindow" Name="game">
+		
+	</Window>
+</GUILayout>

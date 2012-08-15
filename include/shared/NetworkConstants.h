@@ -2,7 +2,6 @@
 #define NETWORK_CONSTANTS_H
 
 #define SERVER_PORT 50133
-#define CLIENT_PORT 41341
 
 #define JOIN_CMD "join"
 #define STATE_CMD "state"
