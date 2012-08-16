@@ -4,13 +4,20 @@
 // #include "GameState.h"
 
 
-NetServer::NetServer() : socket(), serverAddress("localhost",SERVER_PORT), latestState() {
+NetServer::NetServer() : socket(), serverAddress(0,0), latestState() {
 	handshaked = false;
 	id = -1;
 }
 
 NetServer::~NetServer(){
 	
+}
+
+void NetServer::joinServer(const Address& newAddress) {
+	serverAddress = newAddress;
+	handshaked = false;
+	id = -1;
+	sendCommand(JoinCommand());
 }
 
 void NetServer::quitServer() {
@@ -36,10 +43,8 @@ void NetServer::receiveData() {
 		}
 		p = socket.getPacket(); //pull up the next one
 	}
-	if(!handshaked) {
-		Packet send(JoinCommand().write());
-		send.setAddress(serverAddress);
-		socket.sendPacket(send);
+	if(!handshaked) { //TODO: make this not spam packets in an accidental DOS attack
+		sendCommand(JoinCommand());
 	}
 }
 

@@ -1,8 +1,16 @@
 #include "CEGUIManager.h"
 #include "Client.h"
+#include "Util.h"
+#include <string>
+#include "UDPConnection.h"
+#include "Debug.h"
+
+using std::string;
 
 CEGUIManager::CEGUIManager() {
-	
+	renderer = NULL;
+	menuSheet = NULL;
+	gameSheet = NULL;
 }
 
 CEGUIManager::~CEGUIManager() {
@@ -15,6 +23,25 @@ void CEGUIManager::initialize() {
 	OISManager& ois = Client::getInstance().getOISManager();
 	ois.addKeyListener(this);
 	ois.addMouseListener(this);
+	
+	CEGUI::Imageset::setDefaultResourceGroup("Imagesets");
+	CEGUI::Font::setDefaultResourceGroup("Fonts");
+	CEGUI::Scheme::setDefaultResourceGroup("ASchemes");
+	CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
+	CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+	
+	CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
+	
+	initializeMenuLayout();
+	initializeGameLayout();
+	CEGUI::System::getSingleton().setGUISheet(menuSheet);
+	
+	OgreManager& oi = Client::getInstance().getOgreManager();
+	unsigned int width, height, depth;
+	int left, top;
+	oi.getWindow()->getMetrics(width, height, depth, left, top);
+	
+	CEGUI::System::getSingleton().notifyDisplaySizeChanged(CEGUI::Size(width, height));
 }
 
 void CEGUIManager::destroy() {
@@ -23,6 +50,43 @@ void CEGUIManager::destroy() {
 	ois.removeMouseListener(this);
 	CEGUI::System::destroy();
 	CEGUI::OgreRenderer::destroy(*renderer);
+}
+
+void CEGUIManager::initializeMenuLayout() {
+	menuSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("mainMenu.layout");
+	try {
+		CEGUI::Window* joinButton = CEGUI::WindowManager::getSingleton().getWindow("joinServerButton");
+		if(joinButton) {
+			joinButton->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&CEGUIManager::joinServer,this));
+		}
+	} catch(const CEGUI::Exception& e) {
+		DEBUG("CEGUI Exception:");
+		DEBUG(e.what());
+	}
+	menuSheet->setMousePassThroughEnabled(true);
+}
+
+void CEGUIManager::initializeGameLayout() {
+	gameSheet = CEGUI::WindowManager::getSingleton().loadWindowLayout("game.layout");
+	gameSheet->setMousePassThroughEnabled(true);
+}
+
+bool CEGUIManager::joinServer(const CEGUI::EventArgs&) {
+	CEGUI::System::getSingleton().setGUISheet(menuSheet);
+	try {
+		CEGUI::Window* serverBox = CEGUI::WindowManager::getSingleton().getWindow("ServerBox");
+		CEGUI::Window* portBox = CEGUI::WindowManager::getSingleton().getWindow("PortBox");
+		if(!serverBox || !portBox) { return false; }
+		string hostname = string(serverBox->getText().c_str());
+		unsigned int port = fromString<unsigned int>(string(portBox->getText().c_str()));
+		Client::getInstance().getNetServer().joinServer(Address(hostname,port));
+		CEGUI::System::getSingleton().setGUISheet(gameSheet);
+		return true;
+	} catch(const CEGUI::Exception& e) {
+		DEBUG("CEGUI Exception:");
+		DEBUG(e.what());
+	}
+	return false;
 }
 
 // OIS::KeyListener

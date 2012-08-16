@@ -11,5 +11,13 @@ std::string toString(const T& t) {
 	return s.str();
 }
 
+template<class T>
+T fromString(const std::string& s) {
+	std::stringstream strm(s);
+	T ret;
+	strm >> ret;
+	return ret;
+}
+
 
 #endif

@@ -28,6 +28,7 @@ OgreFelhound::OgreFelhound(Ogre::SceneManager* pManager, int pId){
 	node->attachObject(entity);
 	node->setScale(2, 2, 2);
 	setColour(Ogre::ColourValue::White);
+	entity->setQueryFlags(0);
 }
 
 OgreFelhound::~OgreFelhound(void) {

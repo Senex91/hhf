@@ -23,7 +23,13 @@ public:
 	
 	
 private:
+	void initializeMenuLayout();
+	void initializeGameLayout();
+	bool joinServer(const CEGUI::EventArgs&);
+	
 	CEGUI::OgreRenderer* renderer;
+	CEGUI::Window* menuSheet;
+	CEGUI::Window* gameSheet;
 };
 
 

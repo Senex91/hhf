@@ -28,6 +28,7 @@ public:
 	inline OgreManager& getOgreManager() { return ogre; }
 	inline OISManager& getOISManager() { return ois; }
 	inline CEGUIManager& getCEGUIManager() { return cegui; }
+	inline NetServer& getNetServer() { return server; }
 
 	inline void setRunning(const bool& r) { running = r; }
 
