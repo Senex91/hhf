@@ -3,6 +3,7 @@
 
 #include "NetManager.h"
 #include "GamePhysics.h"
+#include "TimerManager.h"
 
 class Server {
 public:
@@ -15,11 +16,13 @@ public:
 	
 	NetManager& getNetManager() { return net; }
 	GamePhysics& getGamePhysics() { return phys; }
+	TimerManager& getTimerManager() { return tm; }
 	
 private:
 	bool running;
 	NetManager net;
 	GamePhysics phys;
+	TimerManager tm;
 	
 	Server();
 	Server(const Server&) {}

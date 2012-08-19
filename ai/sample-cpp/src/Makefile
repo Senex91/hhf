@@ -5,7 +5,7 @@ HEADERS := $(wildcard $(INCL_DIR)*.h)
 
 .PHONY: main
 main: $(OBJECTS)
-	echo $(OBJECTS)
+	
 
 $(OBJ_DIR)/%.o : %.cpp $(HEADERS)
 	$(CXX) $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
