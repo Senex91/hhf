@@ -29,6 +29,7 @@ public:
 	virtual void accept(ThrowCommand&);
 	virtual void accept(SpectateCommand&);
 	virtual void accept(QuitCommand&);
+	virtual void accept(PlayCommand&);
 	
 private:
 	bool handshaked;

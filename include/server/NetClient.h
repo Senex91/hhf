@@ -22,6 +22,7 @@ public:
 	virtual void accept(ThrowCommand&);
 	virtual void accept(SpectateCommand&);
 	virtual void accept(QuitCommand&);
+	virtual void accept(PlayCommand&);
 	
 	inline const int& getID() const { return id; }
 	inline const Address& getAddress() const { return address; }

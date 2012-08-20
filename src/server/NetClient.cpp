@@ -69,3 +69,7 @@ void NetClient::accept(QuitCommand&) {
 	Server::getInstance().getGamePhysics().removePlayer(id);
 	Server::getInstance().getNetManager().removeClient(id);
 }
+
+void NetClient::accept(PlayCommand&) {
+	
+}

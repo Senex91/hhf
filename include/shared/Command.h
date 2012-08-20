@@ -17,6 +17,7 @@ class BlinkCommand;
 class CommandVisitor;
 class ThrowCommand;
 class QuitCommand;
+class PlayCommand;
 
 class Command {
 private:
@@ -50,6 +51,7 @@ public:
 	virtual void accept(ThrowCommand&) {}
 	virtual void accept(SpectateCommand&) {}
 	virtual void accept(QuitCommand&) {}
+	virtual void accept(PlayCommand&) {}
 	
 private:
 	
@@ -194,6 +196,18 @@ public:
 	
 protected:
 	virtual void output(std::stringstream& s) const { s << QUIT_CMD << ":"; }
+};
+
+class PlayCommand : public Command {
+public:
+	PlayCommand() {}
+	virtual ~PlayCommand();
+	
+	virtual void visit(CommandVisitor& cv) { cv.accept(*this); }
+	
+	static Command* deserialize(std::string str) { return new PlayCommand(); }
+private:
+	virtual void output(std::stringstream& s) const { s << PLAY_CMD << ":"; }
 };
 
 #endif

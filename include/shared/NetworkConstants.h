@@ -11,5 +11,6 @@
 #define THROW_CMD "throw"
 #define SPECTATE_CMD "spectate"
 #define QUIT_CMD "quit"
+#define PLAY_CMD "play"
 
 #endif

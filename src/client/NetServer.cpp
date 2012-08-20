@@ -83,5 +83,9 @@ void NetServer::accept(SpectateCommand&) {
 }
 
 void NetServer::accept(QuitCommand&) {
-	DEBUG("NetServer::acept: Did not expect a QuitCommand from the server.");
+	DEBUG("NetServer::accept: Did not expect a QuitCommand from the server.");
+}
+
+void NetServer::accept(PlayCommand&) {
+	DEBUG("NetServer::acccept: Did not expect a JoinCommand from the server.");
 }

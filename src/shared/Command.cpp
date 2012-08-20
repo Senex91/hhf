@@ -27,6 +27,7 @@ Command* Command::deserialize(string str) {
 	static bool throwCmd = registerDeserializer(THROW_CMD,ThrowCommand::deserialize) && throwCmd;
 	static bool spectateCmd = registerDeserializer(SPECTATE_CMD,SpectateCommand::deserialize) && spectateCmd;
 	static bool quitCmd = registerDeserializer(QUIT_CMD,QuitCommand::deserialize) && quitCmd;
+	static bool playCmd = registerDeserializer(PLAY_CMD,PlayCommand::deserialize) && playCmd;
 	
 	size_t colonPos = str.find(':');
 	if(colonPos == string::npos) {
@@ -93,5 +94,9 @@ Command* ThrowCommand::deserialize(string s) {
 }
 
 QuitCommand::~QuitCommand() {
+	
+}
+
+PlayCommand::~PlayCommand() {
 	
 }
