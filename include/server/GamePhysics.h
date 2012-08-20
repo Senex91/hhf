@@ -21,6 +21,13 @@ public:
 	void playerSetGoal(int id,double x,double y);
 	void playerThrow(int id,int id2);
 	void removePlayer(int id);
+
+	// accessors for game master
+	// TODO consider placing these somewhere else
+	int numAlivePlayers();
+	bool isOrbAlive();
+	bool isFelhoundAlive();
+
 	
 private:
 	GamePhysics(const GamePhysics&) {}

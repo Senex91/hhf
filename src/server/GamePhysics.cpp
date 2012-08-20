@@ -177,3 +177,15 @@ void GamePhysics::removePlayer(int id) {
 		}
 	}
 }
+
+int GamePhysics::numAlivePlayers(){
+	return 1; //TODO implement
+}
+
+bool GamePhysics::isOrbAlive(){
+	return true;//TODO implement
+}
+
+bool GamePhysics::isFelhoundAlive(){
+	return true;//TODO implement
+}

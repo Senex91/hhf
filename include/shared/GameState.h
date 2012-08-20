@@ -25,6 +25,8 @@ struct Elf {
 	double ygoal;
 
 	ElfColor color;
+
+	bool alive;
 };
 
 
@@ -36,6 +38,8 @@ struct Felhound {
 	double yvel;
 
 	double orientation;
+
+	bool alive;
 };
 
 struct Orb {
@@ -43,6 +47,8 @@ struct Orb {
 	double y;
 	
 	int id;
+
+	bool alive;
 };
 
 struct GameState{
