@@ -189,3 +189,12 @@ bool GamePhysics::isOrbAlive(){
 bool GamePhysics::isFelhoundAlive(){
 	return true;//TODO implement
 }
+
+void GamePhysics::spawnOrb(){
+	
+}
+
+
+void GamePhysics::spawnFelhound(){
+
+}

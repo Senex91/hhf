@@ -10,14 +10,18 @@
  */
 class GameMaster {
 public:
+
 	GameMaster();
 	~GameMaster();
 
 	void playStep();
+
+	bool isEnded();
 	
 private:
 
 	Point* getCurrentPoint();
+	Point* current;
 	
 };
 

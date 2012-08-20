@@ -22,10 +22,13 @@ public:
 	~Point();
 
 	void playStep();
+
+	bool isEnded();
 	
 private:
 
 	Round* getCurrentRound();
+	Round* current;
 
 	void spawnPlayers();
 	bool playersSpawned;

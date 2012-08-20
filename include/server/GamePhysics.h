@@ -28,6 +28,10 @@ public:
 	bool isOrbAlive();
 	bool isFelhoundAlive();
 
+	// spawners
+	void spawnOrb();
+	void spawnFelhound();
+
 	
 private:
 	GamePhysics(const GamePhysics&) {}

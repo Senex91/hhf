@@ -16,10 +16,14 @@ public:
 	~Round();
 
 	void playStep();
+
+	bool isEnded();
 	
 private:
 
 	GamePhysics* physics; //TODO how this gets here
+
+	int initialNumPlayers;
 	
 };
 

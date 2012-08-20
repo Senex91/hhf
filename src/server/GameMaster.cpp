@@ -1,33 +1,39 @@
 #include "GameMaster.h"
 
 GameMaster::GameMaster(){
-
+	current = NULL;
 }
 
 GameMaster::~GameMaster(){
-	
+	delete current;
 }
 
 void GameMaster::playStep(){
 	//TODO if maxNumPoints < LIMIT
-	if (true){  // Game in progress
+	if (!this->isEnded()){  // Game in progress
 
 		// get current Point
-		Point* current = getCurrentPoint(); 
+		Point* toPlay = getCurrentPoint(); 
 
 		// play current point
-		current->playStep();
+		toPlay->playStep();
 
 	} else { // Game over
-		// signal end
 
+		// GameMaster::isEnded() = true, 
+		// this game will be deconstructed by the server.
 	}
 	
 }
 
 Point* GameMaster::getCurrentPoint(){
+	if(current->isEnded()){
+		delete current;
+		current = new Point();
+	}
+	return current;
+}
 
-	Point p;
-	return &p;
-
+bool GameMaster::isEnded(){
+	return false // TODO implement
 }

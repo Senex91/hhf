@@ -1,11 +1,12 @@
 #include "Point.h"
 
-Point::Point(): playersSpawned(false) {
-
+Point::Point() {
+	current = NULL;
+	playersSpawned = false;
 }
 
 Point::~Point(){
-	
+	delete current;
 }
 
 void Point::playStep(){
@@ -15,14 +16,15 @@ void Point::playStep(){
 	// Spawn players if not spawned yet
 	if (!playersSpawned){
 		spawnPlayers();
-	} else if (physics->numAlivePlayers() > 1){ //Normal mode, play game
+	} else if (!this->isEnded()){ //Normal mode, play game
 
-		Round* current = getCurrentRound();
-		current->playStep();
+		Round* toPlay = getCurrentRound();
+		toPlay->playStep();
 
 	} else { // 1 player left:
 
-		// point end sequence
+		// Point::isEnded() = true, 
+		// this point will be deconstructed by the GM
 	}
 
 
@@ -30,8 +32,12 @@ void Point::playStep(){
 
 Round* Point::getCurrentRound(){
 
-	Round r;
-	return &r;
+	if(current->isEnded()){
+		delete current;
+		current = new Round();
+	}
+
+	return current;
 }
 
 void Point::spawnPlayers(){
@@ -39,4 +45,8 @@ void Point::spawnPlayers(){
 	//called once playerSpawn is complete
 	playersSpawned = true;
 
+}
+
+bool Point::isEnded(){
+	return !(physics->numAlivePlayers() > 1); 
 }
