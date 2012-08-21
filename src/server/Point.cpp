@@ -2,6 +2,7 @@
 
 Point::Point() {
 	current = NULL;
+	physics = NULL;
 	playersSpawned = false;
 }
 
@@ -32,7 +33,7 @@ void Point::playStep(){
 
 Round* Point::getCurrentRound(){
 
-	if(current->isEnded()){
+	if(current == NULL || current->isEnded()){
 		delete current;
 		current = new Round();
 	}

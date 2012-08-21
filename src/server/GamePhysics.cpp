@@ -198,3 +198,7 @@ void GamePhysics::spawnOrb(){
 void GamePhysics::spawnFelhound(){
 
 }
+
+GameState GamePhysics::getGameState(){
+	return state;
+}

@@ -22,6 +22,8 @@ private:
 
 	Point* getCurrentPoint();
 	Point* current;
+
+	GamePhysics* physics;
 	
 };
 

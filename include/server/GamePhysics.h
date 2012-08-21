@@ -8,6 +8,8 @@
 
 #include "GameState.h"
 
+#include <vector>
+
 class GamePhysics {
 public:
 	GamePhysics();
@@ -25,6 +27,7 @@ public:
 	// accessors for game master
 	// TODO consider placing these somewhere else
 	int numAlivePlayers();
+	GameState getGameState();
 	bool isOrbAlive();
 	bool isFelhoundAlive();
 

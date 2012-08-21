@@ -1,6 +1,7 @@
 #include "Round.h"
 
 Round::Round(){
+	physics = NULL;
 	initialNumPlayers = physics->numAlivePlayers();
 
 }
@@ -31,11 +32,11 @@ void Round::playStep(){
 }
 
 bool Round::isEnded(){
-	if((initialNumPlayers - 1) == physics->numAlivePlayers){
+	if((initialNumPlayers - 1) == physics->numAlivePlayers()){
 		// we have one fewer player than we started with.
 		// round will be deconstructed.
 		return true;
-	} else if (initialNumPlayers  == physics->numAlivePlayers){
+	} else if (initialNumPlayers  == physics->numAlivePlayers()){
 		//we have same number of players
 		return false;
 	}

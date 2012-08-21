@@ -1,6 +1,9 @@
 #include "GameMaster.h"
 
+#include <vector>
+
 GameMaster::GameMaster(){
+	physics = NULL;
 	current = NULL;
 }
 
@@ -27,7 +30,7 @@ void GameMaster::playStep(){
 }
 
 Point* GameMaster::getCurrentPoint(){
-	if(current->isEnded()){
+	if(current == NULL || current->isEnded()){
 		delete current;
 		current = new Point();
 	}
@@ -35,5 +38,24 @@ Point* GameMaster::getCurrentPoint(){
 }
 
 bool GameMaster::isEnded(){
-	return false // TODO implement
+
+	int maxPoints = -1;
+
+	std::vector<Elf> elves = physics->getGameState().elves;
+	for(unsigned int i = 0; i<elves.size(); i++){
+		Elf e = elves[i];
+		if (e.alive){
+
+			// TODO add elf score field
+			if (e.x > maxPoints){
+				maxPoints = e.x;
+			}
+		}
+	}
+
+	if (maxPoints < 0){
+		//error...
+	}
+
+	return maxPoints >= 20; // TODO LIMIT constant
 }
