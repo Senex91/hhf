@@ -27,6 +27,7 @@ GamePhysics::GamePhysics() {
 	state.felhound = (Felhound){0, 0, 0, 0, 0};
 	state.orb = (Orb){0,0,-1};
 	felhoundAcceleration = 0;
+	felhoundPlanner = new FelhoundPathPlanner(&state);
 }
 
 GamePhysics::~GamePhysics() {
@@ -48,21 +49,6 @@ void GamePhysics::tick() {
 
 	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
 		Elf& elf = *it;
-		
-		/******
-		 ELF PATH PLANNING
-		 *****/
-
-		// // IF we are at our goalpoint, stop movement
-		// if(dist(elf.xgoal,elf.ygoal,elf.x,elf.y)<dt*PLAYER_VELOCITY) {
-		// 	elf.x = elf.xgoal;
-		// 	elf.y = elf.ygoal;
-		// 	elf.xvel = 0;
-		// 	elf.yvel = 0;
-		// } else { //otherwise, standard kinematics
-		// 	elf.x += elf.xvel * dt;
-		// 	elf.y += elf.yvel * dt;
-		// }
 
 		/******
 		 ORB PATH PLANNING
@@ -92,6 +78,7 @@ void GamePhysics::tick() {
 		}
 	}
 
+	//TODO spawning
 	// assigns orb to the first elf
 	if(!orbOwnerValid && state.elves.size()>0) { //Need at least one elf 
 		state.orb.id = state.elves[0].id;
@@ -99,43 +86,7 @@ void GamePhysics::tick() {
 		state.orb.y = state.elves[0].y;
 	}
 
-	/***
-	FELHOUND PATH PLANNING
-	****/
-	if(orbOwnerValid){
-		double ds = dist(state.orb.x,state.orb.y,state.felhound.x,state.felhound.y);
-		if(ds > 0.1) {
-			double xdir = state.orb.x-state.felhound.x;
-			double ydir = state.orb.y-state.felhound.y;
-			state.felhound.orientation = atan2(state.orb.y-state.felhound.y,state.orb.x-state.felhound.x);
-			
-			if(xdir > 0) {
-				state.felhound.xvel += felhoundAcceleration;
-			} else {
-				state.felhound.xvel -= felhoundAcceleration;
-			}
-			if(ydir > 0) {
-				state.felhound.yvel += felhoundAcceleration;
-			} else {
-				state.felhound.yvel -= felhoundAcceleration;
-			}
-
-			felhoundAcceleration += dt / 400.0;
-
-		} else { //Felhound is at orb
-			//Kill the player if the orb is at a player
-			if(dist(state.orb.x,state.orb.y,orbOwner->x,orbOwner->y)<0.1) {
-				felhoundAcceleration = 0;
-				// removePlayer(orbOwner->id);
-			}
-		}
-		
-		state.felhound.xvel = clamp(state.felhound.xvel,-40,40);
-		state.felhound.yvel = clamp(state.felhound.yvel,-40,40);
-		
-		state.felhound.x += (dt ) * state.felhound.xvel;
-		state.felhound.y += (dt ) * state.felhound.yvel;
-	}
+	felhoundPlanner->tick();
 	
 }
 

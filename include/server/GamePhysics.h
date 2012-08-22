@@ -8,6 +8,7 @@
 
 #include "GameState.h"
 #include "ElfPathPlanner.h"
+#include "FelhoundPathPlanner.h"
 
 #include <vector>
 
@@ -35,6 +36,7 @@ public:
 	// spawners
 	void spawnOrb();
 	void spawnFelhound();
+	//TODO spawn players
 
 	
 private:
@@ -45,6 +47,7 @@ private:
 	double felhoundAcceleration;
 
 	std::vector<ElfPathPlanner*> elfPlanners;
+	FelhoundPathPlanner* felhoundPlanner;
 
 
 };

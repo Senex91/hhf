@@ -3,6 +3,8 @@
 
 #include "GameState.h"
 
+#define ACCEL 0.02
+
 /**
  * @brief An FelhoundPathPlanner
  */
@@ -17,6 +19,8 @@ public:
 private:
 
 	GameState* state;
+
+	double felhoundAcceleration;
 
 };
 
