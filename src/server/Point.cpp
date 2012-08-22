@@ -33,7 +33,9 @@ void Point::playStep(){
 
 Round* Point::getCurrentRound(){
 
-	if(current == NULL || current->isEnded()){
+	if (current == NULL){
+		current = new Round();
+	} else if(current->isEnded()){
 		delete current;
 		current = new Round();
 	}

@@ -30,10 +30,13 @@ void GameMaster::playStep(){
 }
 
 Point* GameMaster::getCurrentPoint(){
-	if(current == NULL || current->isEnded()){
+	if (current == NULL){
+		current = new Point();
+	} else if(current->isEnded()){
 		delete current;
 		current = new Point();
 	}
+
 	return current;
 }
 
