@@ -12,7 +12,7 @@
  */
 class Round {
 public:
-	Round();
+	Round(GamePhysics*);
 	~Round();
 
 	void playStep();

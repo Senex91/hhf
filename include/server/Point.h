@@ -18,7 +18,7 @@
  */
 class Point {
 public:
-	Point();
+	Point(GamePhysics*);
 	~Point();
 
 	void playStep();

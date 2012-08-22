@@ -1,8 +1,8 @@
 #include "Point.h"
 
-Point::Point() {
+Point::Point(GamePhysics* phys) {
+	physics = phys;
 	current = NULL;
-	physics = NULL;
 	playersSpawned = false;
 }
 
@@ -34,10 +34,10 @@ void Point::playStep(){
 Round* Point::getCurrentRound(){
 
 	if (current == NULL){
-		current = new Round();
+		current = new Round(physics);
 	} else if(current->isEnded()){
 		delete current;
-		current = new Round();
+		current = new Round(physics);
 	}
 
 	return current;

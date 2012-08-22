@@ -38,44 +38,70 @@ void GamePhysics::tick() {
 	
 	bool orbOwnerValid = false;
 	Elf* orbOwner = NULL;
-	
+
+
+	for(vector<ElfPathPlanner*>::iterator it = elfPlanners.begin();
+		it != elfPlanners.end(); it++){
+		ElfPathPlanner* planner = *it;
+		planner->tick();
+	}
+
 	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
 		Elf& elf = *it;
 		
-		if(dist(elf.xgoal,elf.ygoal,elf.x,elf.y)<dt*PLAYER_VELOCITY) {
-			elf.x = elf.xgoal;
-			elf.y = elf.ygoal;
-			elf.xvel = 0;
-			elf.yvel = 0;
-		} else {
-			elf.x += elf.xvel * dt;
-			elf.y += elf.yvel * dt;
-		}
+		/******
+		 ELF PATH PLANNING
+		 *****/
+
+		// // IF we are at our goalpoint, stop movement
+		// if(dist(elf.xgoal,elf.ygoal,elf.x,elf.y)<dt*PLAYER_VELOCITY) {
+		// 	elf.x = elf.xgoal;
+		// 	elf.y = elf.ygoal;
+		// 	elf.xvel = 0;
+		// 	elf.yvel = 0;
+		// } else { //otherwise, standard kinematics
+		// 	elf.x += elf.xvel * dt;
+		// 	elf.y += elf.yvel * dt;
+		// }
+
+		/******
+		 ORB PATH PLANNING
+		 *****/
+
+		//if orb is on this elf:
 		if(state.orb.id == elf.id) {
 			orbOwnerValid = true;
 			orbOwner = &elf;
 			
+
 			double ds = dist(state.orb.x,state.orb.y,elf.x,elf.y);
 			if(ds > 0) {
 				double xdir = (elf.x-state.orb.x)/ds;
 				double ydir = (elf.y-state.orb.y)/ds;
 				
+				//if we're close enough, we are on the elf
 				if(ds < dt*ORB_VELOCITY) {
 					state.orb.x = elf.x;
 					state.orb.y = elf.y;
 				} else {
+					//otherwise, standard kinematics
 					state.orb.x += xdir * dt * ORB_VELOCITY;
 					state.orb.y += ydir * dt * ORB_VELOCITY;
 				}
 			}
 		}
 	}
+
+	// assigns orb to the first elf
 	if(!orbOwnerValid && state.elves.size()>0) { //Need at least one elf 
 		state.orb.id = state.elves[0].id;
 		state.orb.x = state.elves[0].x;
 		state.orb.y = state.elves[0].y;
 	}
 
+	/***
+	FELHOUND PATH PLANNING
+	****/
 	if(orbOwnerValid){
 		double ds = dist(state.orb.x,state.orb.y,state.felhound.x,state.felhound.y);
 		if(ds > 0.1) {
@@ -125,6 +151,9 @@ void GamePhysics::addPlayer(int id) {
 	e.x = START_RADIUS * sin(ang);
 	e.y = START_RADIUS * cos(ang);
 	state.elves.push_back(e);
+
+	ElfPathPlanner* planner = new ElfPathPlanner(&state, state.elves.size() -1);
+	elfPlanners.push_back(planner);
 	
 }
 
@@ -162,6 +191,7 @@ void GamePhysics::playerThrow(int id,int id2) {
 	}
 	DEBUG("thrower: " << thrower);
 	DEBUG("catcher: " << catcher);
+	//only throw if sufficiently close to thrower
 	if(thrower && thrower->id == state.orb.id && catcher) {
 		if(dist(state.orb.x,state.orb.y,thrower->x,thrower->y) < 0.05) { //Orb has to be near you
 			state.orb.id = id2;

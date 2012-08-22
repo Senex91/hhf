@@ -2,8 +2,8 @@
 
 #include <vector>
 
-GameMaster::GameMaster(){
-	physics = NULL;
+GameMaster::GameMaster(GamePhysics* phys){
+	physics = phys;
 	current = NULL;
 }
 
@@ -31,10 +31,10 @@ void GameMaster::playStep(){
 
 Point* GameMaster::getCurrentPoint(){
 	if (current == NULL){
-		current = new Point();
+		current = new Point(physics);
 	} else if(current->isEnded()){
 		delete current;
-		current = new Point();
+		current = new Point(physics);
 	}
 
 	return current;

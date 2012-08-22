@@ -2,6 +2,7 @@
 #define GAME_MASTER_H
 
 #include "Point.h"
+#include "GamePhysics.h"
 
 /**
  * @brief A GameMaster plays a game
@@ -11,7 +12,7 @@
 class GameMaster {
 public:
 
-	GameMaster();
+	GameMaster(GamePhysics*);
 	~GameMaster();
 
 	void playStep();

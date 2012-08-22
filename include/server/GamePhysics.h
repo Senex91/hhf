@@ -7,6 +7,7 @@
 #define FELHOUND_ACCEL 0.02
 
 #include "GameState.h"
+#include "ElfPathPlanner.h"
 
 #include <vector>
 
@@ -42,6 +43,8 @@ private:
 	GameState state;
 
 	double felhoundAcceleration;
+
+	std::vector<ElfPathPlanner*> elfPlanners;
 
 
 };

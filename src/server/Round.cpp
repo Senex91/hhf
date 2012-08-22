@@ -1,7 +1,7 @@
 #include "Round.h"
 
-Round::Round(){
-	physics = NULL;
+Round::Round(GamePhysics* phys){
+	physics = phys;
 	initialNumPlayers = physics->numAlivePlayers();
 
 }
