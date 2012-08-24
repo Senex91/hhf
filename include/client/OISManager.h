@@ -41,8 +41,8 @@ public:
 
 protected:
 	// Ogre::WindowEventListener
-    //Adjust mouse clipping area
-    virtual void windowResized(Ogre::RenderWindow* rw);
+	//Adjust mouse clipping area
+	virtual void windowResized(Ogre::RenderWindow* rw);
 	
 private:
 	

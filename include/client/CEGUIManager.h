@@ -5,7 +5,7 @@
 #include <CEGUI.h>
 #include <RendererModules/Ogre/CEGUIOgreRenderer.h>
 
-class CEGUIManager : public OIS::KeyListener, public OIS::MouseListener {
+class CEGUIManager : public OIS::KeyListener, public OIS::MouseListener, public Ogre::WindowEventListener {
 public:
 	CEGUIManager();
 	~CEGUIManager();
@@ -21,7 +21,8 @@ public:
 	virtual bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	
-	
+protected:
+	virtual void windowResized(Ogre::RenderWindow* rw);
 private:
 	void initializeMenuLayout();
 	void initializeGameLayout();
