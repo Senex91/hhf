@@ -1,5 +1,5 @@
 #include "GamePhysics.h"
-#include "GameState.h"
+#include "GameState.h"bv
 #include <cmath>
 #include "Debug.h"
 #include <stdlib.h>
@@ -28,6 +28,7 @@ GamePhysics::GamePhysics() {
 	state.orb = (Orb){0,0,-1};
 	felhoundAcceleration = 0;
 	felhoundPlanner = new FelhoundPathPlanner(&state);
+	orbPlanner = new OrbPathPlanner(&state);
 }
 
 GamePhysics::~GamePhysics() {
@@ -35,57 +36,12 @@ GamePhysics::~GamePhysics() {
 }
 
 void GamePhysics::tick() {
-	double dt = 0.001; //TODO: timers
-	
-	bool orbOwnerValid = false;
-	Elf* orbOwner = NULL;
-
-
 	for(vector<ElfPathPlanner*>::iterator it = elfPlanners.begin();
-		it != elfPlanners.end(); it++){
+		it != elfPlanners.end(); it++ ){
 		ElfPathPlanner* planner = *it;
 		planner->tick();
 	}
-
-	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
-		Elf& elf = *it;
-
-		/******
-		 ORB PATH PLANNING
-		 *****/
-
-		//if orb is on this elf:
-		if(state.orb.id == elf.id) {
-			orbOwnerValid = true;
-			orbOwner = &elf;
-			
-
-			double ds = dist(state.orb.x,state.orb.y,elf.x,elf.y);
-			if(ds > 0) {
-				double xdir = (elf.x-state.orb.x)/ds;
-				double ydir = (elf.y-state.orb.y)/ds;
-				
-				//if we're close enough, we are on the elf
-				if(ds < dt*ORB_VELOCITY) {
-					state.orb.x = elf.x;
-					state.orb.y = elf.y;
-				} else {
-					//otherwise, standard kinematics
-					state.orb.x += xdir * dt * ORB_VELOCITY;
-					state.orb.y += ydir * dt * ORB_VELOCITY;
-				}
-			}
-		}
-	}
-
-	//TODO spawning
-	// assigns orb to the first elf
-	if(!orbOwnerValid && state.elves.size()>0) { //Need at least one elf 
-		state.orb.id = state.elves[0].id;
-		state.orb.x = state.elves[0].x;
-		state.orb.y = state.elves[0].y;
-	}
-
+	orbPlanner->tick();
 	felhoundPlanner->tick();
 	
 }
@@ -142,12 +98,14 @@ void GamePhysics::playerThrow(int id,int id2) {
 	}
 	DEBUG("thrower: " << thrower);
 	DEBUG("catcher: " << catcher);
-	//only throw if sufficiently close to thrower
+	//only throw if sufficiently close to throwerstate
 	if(thrower && thrower->id == state.orb.id && catcher) {
 		if(dist(state.orb.x,state.orb.y,thrower->x,thrower->y) < 0.05) { //Orb has to be near you
 			state.orb.id = id2;
+			DEBUG("Throw successfull: \t orb id=" << state.orb.id);
 		}
 	}
+	// DEBUG()
 }
 
 void GamePhysics::removePlayer(int id) {

@@ -77,6 +77,7 @@ std::string gameStateToString(const GameState& gs) {
 	
 	return ret.str();
 }
+
 GameState deserializeGameState(const std::string& str) {
 	GameState ret;
 	stringstream read(str);
@@ -110,4 +111,13 @@ GameState deserializeGameState(const std::string& str) {
 	}
 	
 	return ret;
+}
+
+int GameState::getIndex(int id){
+	for(unsigned int i = 0; i<elves.size(); i++){
+		if (elves[i].id == id){
+			return i;
+		}
+	}
+	return -1;
 }

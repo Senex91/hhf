@@ -59,6 +59,9 @@ struct GameState{
     GameState(void);
     GameState(const GameState&);
     const GameState& operator=(const GameState&);
+
+    int getIndex(int);
+
 };
 
 std::string serializeGameState(const GameState&);

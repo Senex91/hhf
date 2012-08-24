@@ -2,13 +2,14 @@
 #define GAME_PHYSICS_H
 
 #define PLAYER_VELOCITY 20.0
-#define ORB_VELOCITY 40.0
+// #define ORB_VELOCITY 40.0
 #define START_RADIUS 25.0
 #define FELHOUND_ACCEL 0.02
 
 #include "GameState.h"
 #include "ElfPathPlanner.h"
 #include "FelhoundPathPlanner.h"
+#include "OrbPathPlanner.h"
 
 #include <vector>
 
@@ -38,6 +39,7 @@ public:
 	void spawnFelhound();
 	//TODO spawn players
 
+
 	
 private:
 	GamePhysics(const GamePhysics&) {}
@@ -48,6 +50,7 @@ private:
 
 	std::vector<ElfPathPlanner*> elfPlanners;
 	FelhoundPathPlanner* felhoundPlanner;
+	OrbPathPlanner* orbPlanner;
 
 
 };

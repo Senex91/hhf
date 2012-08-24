@@ -75,7 +75,8 @@ void GameRenderer::initialize(){
 	
 	cameraStyles["TOCameraMan"] = new TOCameraManStyle();
 	cameraStyles["WC3Style"] = new WC3CameraStyle();
-	cameraStyles["WC3Style"]->load();
+	// cameraStyles["WC3Style"]->load();
+	cameraStyles["TOCameraMan"]->load();
 	
 	DEBUG("GameRenderer::initialize done");
 }

@@ -21,7 +21,7 @@ public:
 private:
 
 	GameState* state;
-	int index;
+	int id;
 
 };
 

@@ -3,6 +3,8 @@
 
 #include "GameState.h"
 
+#define ORB_VELOCITY 40.0
+
 /**
  * @brief An OrbPathPlanner
  */

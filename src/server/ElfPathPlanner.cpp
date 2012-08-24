@@ -18,9 +18,11 @@ inline double dist(double x1,double y1,double x2,double y2) {
 	return sqrt(pow(x1-x2,2)+pow(y1-y2,2));
 }
 
-ElfPathPlanner::ElfPathPlanner(GameState* gameState, int gameIndex){
+
+
+ElfPathPlanner::ElfPathPlanner(GameState* gameState, int gameid){
 	state = gameState;
-	index = gameIndex;
+	id = gameid;
 }
 
 ElfPathPlanner::~ElfPathPlanner(){
@@ -30,7 +32,11 @@ ElfPathPlanner::~ElfPathPlanner(){
 void ElfPathPlanner::tick(){
 	double dt = 0.001; //TODO: timers
 
-	Elf& elf = state->elves[index];
+	// Elf* elf = NULL;
+	// for (unsigned int i = 0; i<state->elves.size(); i++){
+	// 	if (state->elves)
+	// }
+	Elf& elf = state->elves[state->getIndex(id)];
 
 	if(dist(elf.xgoal,elf.ygoal,elf.x,elf.y)<dt*VELOCITY) {
 			elf.x = elf.xgoal;
@@ -45,7 +51,7 @@ void ElfPathPlanner::tick(){
 }
 
 void ElfPathPlanner::setGoal(double x, double y){
-	Elf& elf = state->elves[index];
+	Elf& elf = state->elves[state->getIndex(id)];
 
 	double ds = dist(x,y,elf.x,elf.y);
 	double xdir = (x-elf.x)/ds;
