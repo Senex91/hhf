@@ -42,9 +42,14 @@ void CEGUIManager::initialize() {
 	oi.getWindow()->getMetrics(width, height, depth, left, top);
 	
 	CEGUI::System::getSingleton().notifyDisplaySizeChanged(CEGUI::Size(width, height));
+	
+	Ogre::WindowEventUtilities::addWindowEventListener(
+		Client::getInstance().getOgreManager().getWindow(), this);
 }
 
 void CEGUIManager::destroy() {
+	Ogre::WindowEventUtilities::removeWindowEventListener(
+		Client::getInstance().getOgreManager().getWindow(), this);
 	OISManager& ois = Client::getInstance().getOISManager();
 	ois.removeKeyListener(this);
 	ois.removeMouseListener(this);
@@ -140,6 +145,15 @@ bool CEGUIManager::mouseMoved( const OIS::MouseEvent &arg ) {
 bool CEGUIManager::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
 	return CEGUI::System::getSingleton().injectMouseButtonDown(oisToCEGUIMouseButton(id));
 }
+
 bool CEGUIManager::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ) {
 	return CEGUI::System::getSingleton().injectMouseButtonUp(oisToCEGUIMouseButton(id));
+}
+
+void CEGUIManager::windowResized(Ogre::RenderWindow* rw) {
+	unsigned int width, height, depth;
+	int left, top;
+	rw->getMetrics(width, height, depth, left, top);
+	CEGUI::System::getSingleton().notifyDisplaySizeChanged(CEGUI::Size(width,height));
+	DEBUG("Display size changed");
 }

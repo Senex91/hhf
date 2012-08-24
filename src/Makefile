@@ -1,9 +1,19 @@
 
 .PHONY: main
-main:
-	cd shared && $(MAKE)
+main: client server shared
+	
+
+.PHONY: client
+client: shared
 	cd client && $(MAKE)
+
+.PHONY: server
+server: shared
 	cd server && $(MAKE)
+	
+.PHONY: shared
+shared:
+	cd shared && $(MAKE)
 
 .PHONY: tests
 tests:
