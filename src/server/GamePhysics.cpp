@@ -65,56 +65,46 @@ void GamePhysics::addPlayer(int id) {
 }
 
 void GamePhysics::playerSetGoal(int id,double x,double y) {
-	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
-		Elf& elf = *it;
-		if(elf.id == id) {
-			double ds = dist(x,y,elf.x,elf.y);
-			double xdir = (x-elf.x)/ds;
-			double ydir = (y-elf.y)/ds;
-			//TODO: gradual turning
-			elf.xvel = xdir * PLAYER_VELOCITY;
-			elf.yvel = ydir * PLAYER_VELOCITY;
-			elf.xgoal = x;
-			elf.ygoal = y;
-			elf.orientation = atan2(elf.xvel,elf.yvel);
-			return;
-		}
-	}
+	elfPlanners[state.getIndex(id)]->setGoal(x, y);
 }
 
 void GamePhysics::playerThrow(int id,int id2) {
 	DEBUG("attempting throw between " << id << " and " << id2);
-	//Iterate through all our elves to make sure id is the current holder, and id2 exists.
-	Elf* thrower = NULL;
-	Elf* catcher = NULL;
-	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
-		Elf& elf = *it;
-		if(elf.id == id) {
-			thrower = &elf;
-		}
-		if(elf.id == id2) {
-			catcher = &elf;
-		}
-	}
-	DEBUG("thrower: " << thrower);
-	DEBUG("catcher: " << catcher);
-	//only throw if sufficiently close to throwerstate
-	if(thrower && thrower->id == state.orb.id && catcher) {
-		if(dist(state.orb.x,state.orb.y,thrower->x,thrower->y) < 0.05) { //Orb has to be near you
-			state.orb.id = id2;
-			DEBUG("Throw successfull: \t orb id=" << state.orb.id);
-		}
-	}
-	// DEBUG()
+	elfPlanners[state.getIndex(id)]->throwOrb(id2);
 }
 
 void GamePhysics::removePlayer(int id) {
-	for(vector<Elf>::iterator it = state.elves.begin(); it != state.elves.end(); it++) {
-		if((*it).id == id) {
-			state.elves.erase(it);
-			return;
-		}
-	}
+
+	/*
+	This doesn't work 100%--
+	test that breaks:
+	server start
+	client joins
+	client quits
+	client rejoins (client now doesn't have a real ogre model)
+	client quits (server segfault)
+	*/
+	state.elves.erase(state.elves.begin() + state.getIndex(id));
+	elfPlanners.erase(elfPlanners.begin() + state.getIndex(id));
+
+
+	// for(vector<Elf>::iterator it = state.elves.begin(); 
+	// 	it != state.elves.end(); it++) {
+	// 	if((*it).id == id) {
+	// 		state.elves.erase(it);
+	// 		break;
+	// 	}
+	// }
+
+	// for(vector<ElfPathPlanner*>::iterator it = elfPlanners.begin(); 
+	// 	it != elfPlanners.end(); it++) {
+	// 	if((*it)->getId() == id) {
+	// 		elfPlanners.erase(it);
+	// 		break;
+	// 	}
+	// }
+
+
 }
 
 int GamePhysics::numAlivePlayers(){

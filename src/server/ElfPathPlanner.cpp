@@ -64,3 +64,23 @@ void ElfPathPlanner::setGoal(double x, double y){
 	elf.orientation = atan2(elf.xvel,elf.yvel);
 
 }
+
+void ElfPathPlanner::throwOrb(int targetId){
+
+	int throwerIndex = state->getIndex(id);
+	int catcherIndex = state->getIndex(targetId);
+
+	if (throwerIndex != -1 && 
+		catcherIndex != -1){
+		Elf& thrower = state->elves[throwerIndex];
+
+		if(thrower.id == state->orb.id &&
+			dist(state->orb.x,
+				state->orb.y,
+				thrower.x,
+				thrower.y) < 0.05) {
+
+			state->orb.id = targetId;
+		}
+	}
+}

@@ -17,6 +17,9 @@ public:
 	void tick();
 
 	void setGoal(double x, double y);
+	void throwOrb(int target);
+
+	int getId() { return id;}
 	
 private:
 
