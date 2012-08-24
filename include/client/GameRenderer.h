@@ -26,6 +26,8 @@ public:
 	void initialize();
 	void destroy();
 	
+	void setCameraStyle(const std::string& style);
+	
 	// OIS::KeyListener
 	virtual bool keyPressed( const OIS::KeyEvent &arg );
 	virtual bool keyReleased( const OIS::KeyEvent &arg );
@@ -48,6 +50,7 @@ private:
 	
 	std::map<int, OgreElf*> elves;
 	std::map<std::string,CameraStyle*> cameraStyles;
+	CameraStyle* currentCameraStyle;
 	OgreOrb* orb;
 	OgreFelhound* felhound;
 	

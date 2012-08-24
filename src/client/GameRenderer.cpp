@@ -10,8 +10,8 @@
 
 #include <cmath>
 
-GameRenderer::GameRenderer(){
-
+GameRenderer::GameRenderer() {
+	currentCameraStyle = NULL;
 }
 
 GameRenderer::~GameRenderer(){
@@ -73,22 +73,39 @@ void GameRenderer::initialize(){
 	orb = new OgreOrb(Client::getInstance().getOgreManager().getSceneManager());
 	felhound = new OgreFelhound(Client::getInstance().getOgreManager().getSceneManager(),0);
 	
+	//TODO: magic strings
 	cameraStyles["TOCameraMan"] = new TOCameraManStyle();
 	cameraStyles["WC3Style"] = new WC3CameraStyle();
-	// cameraStyles["WC3Style"]->load();
-	cameraStyles["TOCameraMan"]->load();
+	//TODO: configurable default
+	setCameraStyle("WC3Style");
 	
 	DEBUG("GameRenderer::initialize done");
 }
 
 void GameRenderer::destroy() {
+	if(currentCameraStyle) {
+		currentCameraStyle->unload();
+	}
 	Client::getInstance().getOISManager().removeMouseListener(this);
 	Client::getInstance().getOISManager().removeKeyListener(this);
 	for(std::map<int,OgreElf*>::iterator it = elves.begin(); it != elves.end(); it++) {
 		delete it->second;
 	}
+	for(std::map<std::string,CameraStyle*>::iterator it = cameraStyles.begin(); it != cameraStyles.end(); it++) {
+		delete it->second;
+	}
 	elves.clear();
 	delete orb;
+}
+
+void GameRenderer::setCameraStyle(const std::string& style) {
+	if(cameraStyles.count(style)) {
+		if(currentCameraStyle) {
+			currentCameraStyle->unload();
+		}
+		currentCameraStyle = cameraStyles[style];
+		currentCameraStyle->load();
+	}
 }
 
 void GameRenderer::renderNextState(GameState const& newState){

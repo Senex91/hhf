@@ -236,6 +236,8 @@ void OgreManager::windowResized(Ogre::RenderWindow* rw)
 	unsigned int width, height, depth;
 	int left, top;
 	rw->getMetrics(width, height, depth, left, top);
+	mCamera->setAspectRatio(
+		Ogre::Real(width) / Ogre::Real(height));
 }
 
 //Unattach OIS before window shutdown (very important under Linux)
