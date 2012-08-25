@@ -41,10 +41,10 @@ public:
 		TS_ASSERT(out == out2);
 	}
 	void testGameStateCommand() {
-		std::vector<Elf> elves;
-		elves.push_back((Elf) {1, 0, 0, 0, 0, 0.0f, 0.1, 0.2, (ElfColor){1.0f,0.0f,0.0f}, true});
-		elves.push_back((Elf) {2, 0, 1, 0, 0, 1.0f, 0.3, 0.4, (ElfColor){0.0f,1.0f,0.0f}, true});
-		elves.push_back((Elf) {3, 1, 0, 0, 0, 2.0f, 0.5, 0.6, (ElfColor){0.0f,0.0f,1.0f}, false});
+		std::map<int,Elf> elves;
+		elves[0] = ((Elf) {1, 0, 0, 0, 0, 0.0f, 0.1, 0.2, (ElfColor){1.0f,0.0f,0.0f}, true});
+		elves[1] = ((Elf) {2, 0, 1, 0, 0, 1.0f, 0.3, 0.4, (ElfColor){0.0f,1.0f,0.0f}, true});
+		elves[2] = ((Elf) {3, 1, 0, 0, 0, 2.0f, 0.5, 0.6, (ElfColor){0.0f,0.0f,1.0f}, false});
 		GameState state1;
 		state1.elves = elves;
 		state1.felhound = (Felhound) {2,2, 0, 0, false};

@@ -2,6 +2,7 @@
 #define GAME_STATE_H
 
 #include <vector>
+#include <map>
 #include <string>
 
 
@@ -52,7 +53,7 @@ struct Orb {
 };
 
 struct GameState{
-	std::vector<Elf> elves;
+	std::map<int, Elf> elves;
 	Felhound felhound;
 	Orb orb;
 	
@@ -60,7 +61,7 @@ struct GameState{
     GameState(const GameState&);
     const GameState& operator=(const GameState&);
 
-    int getIndex(int);
+    // int getIndex(int);
 
 };
 

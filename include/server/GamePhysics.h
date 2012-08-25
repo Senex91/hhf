@@ -48,7 +48,7 @@ private:
 
 	double felhoundAcceleration;
 
-	std::vector<ElfPathPlanner*> elfPlanners;
+	std::map<int, ElfPathPlanner*> elfPlanners;
 	FelhoundPathPlanner* felhoundPlanner;
 	OrbPathPlanner* orbPlanner;
 

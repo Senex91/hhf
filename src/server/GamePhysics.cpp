@@ -36,14 +36,14 @@ GamePhysics::~GamePhysics() {
 }
 
 void GamePhysics::tick() {
-	for(vector<ElfPathPlanner*>::iterator it = elfPlanners.begin();
-		it != elfPlanners.end(); it++ ){
-		ElfPathPlanner* planner = *it;
-		planner->tick();
+	typedef std::map<int, ElfPathPlanner*>::const_iterator it_type;
+	for(it_type iterator = elfPlanners.begin(); 
+		iterator != elfPlanners.end(); iterator++) {
+		iterator->second->tick();
 	}
+	
 	orbPlanner->tick();
 	felhoundPlanner->tick();
-	
 }
 
 void GamePhysics::addPlayer(int id) {
@@ -57,23 +57,25 @@ void GamePhysics::addPlayer(int id) {
 	double ang = 2.0 * 3.1415926 * (double)rand()/(double)RAND_MAX;
 	e.x = START_RADIUS * sin(ang);
 	e.y = START_RADIUS * cos(ang);
-	state.elves.push_back(e);
+	state.elves[e.id] = e;
 
 	ElfPathPlanner* planner = new ElfPathPlanner(&state, state.elves.size() -1);
-	elfPlanners.push_back(planner);
+	elfPlanners[e.id] = planner;
 	
 }
 
 void GamePhysics::playerSetGoal(int id,double x,double y) {
-	elfPlanners[state.getIndex(id)]->setGoal(x, y);
+	elfPlanners[id]->setGoal(x, y);
 }
 
 void GamePhysics::playerThrow(int id,int id2) {
 	DEBUG("attempting throw between " << id << " and " << id2);
-	elfPlanners[state.getIndex(id)]->throwOrb(id2);
+	elfPlanners[id]->throwOrb(id2);
 }
 
 void GamePhysics::removePlayer(int id) {
+
+
 
 	/*
 	This doesn't work 100%--
@@ -84,8 +86,10 @@ void GamePhysics::removePlayer(int id) {
 	client rejoins (client now doesn't have a real ogre model)
 	client quits (server segfault)
 	*/
-	state.elves.erase(state.elves.begin() + state.getIndex(id));
-	elfPlanners.erase(elfPlanners.begin() + state.getIndex(id));
+	state.elves.erase(id);
+	elfPlanners.erase(id);
+	// state.elves.erase(state.elves.begin() + state.getIndex(id));
+	// elfPlanners.erase(elfPlanners.begin() + state.getIndex(id));
 
 
 	// for(vector<Elf>::iterator it = state.elves.begin(); 

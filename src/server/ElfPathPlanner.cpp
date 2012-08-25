@@ -36,9 +36,11 @@ void ElfPathPlanner::tick(){
 	// for (unsigned int i = 0; i<state->elves.size(); i++){
 	// 	if (state->elves)
 	// }
-	Elf& elf = state->elves[state->getIndex(id)];
 
-	if(dist(elf.xgoal,elf.ygoal,elf.x,elf.y)<dt*VELOCITY) {
+	if( state->elves.count(id) != 0){
+		Elf& elf = state->elves[id];
+
+		if(dist(elf.xgoal,elf.ygoal,elf.x,elf.y)<dt*VELOCITY) {
 			elf.x = elf.xgoal;
 			elf.y = elf.ygoal;
 			elf.xvel = 0;
@@ -47,40 +49,46 @@ void ElfPathPlanner::tick(){
 			elf.x += elf.xvel * dt;
 			elf.y += elf.yvel * dt;
 		}
+	}
+
+	
 
 }
 
 void ElfPathPlanner::setGoal(double x, double y){
-	Elf& elf = state->elves[state->getIndex(id)];
 
-	double ds = dist(x,y,elf.x,elf.y);
-	double xdir = (x-elf.x)/ds;
-	double ydir = (y-elf.y)/ds;
-	//TODO: gradual turning
-	elf.xvel = xdir * VELOCITY; 
-	elf.yvel = ydir * VELOCITY;
-	elf.xgoal = x;
-	elf.ygoal = y;
-	elf.orientation = atan2(elf.xvel,elf.yvel);
+	if( state->elves.count(id) != 0){
+		Elf& elf = state->elves[id];
+
+		double ds = dist(x,y,elf.x,elf.y);
+		double xdir = (x-elf.x)/ds;
+		double ydir = (y-elf.y)/ds;
+		//TODO: gradual turning
+		elf.xvel = xdir * VELOCITY; 
+		elf.yvel = ydir * VELOCITY;
+		elf.xgoal = x;
+		elf.ygoal = y;
+		elf.orientation = atan2(elf.xvel,elf.yvel);
+	}
 
 }
 
 void ElfPathPlanner::throwOrb(int targetId){
 
-	int throwerIndex = state->getIndex(id);
-	int catcherIndex = state->getIndex(targetId);
+	// int throwerIndex = state->getIndex(id);
+	// int catcherIndex = state->getIndex(targetId);
 
-	if (throwerIndex != -1 && 
-		catcherIndex != -1){
-		Elf& thrower = state->elves[throwerIndex];
+	// if (throwerIndex != -1 && 
+	// 	catcherIndex != -1){
+	// 	Elf& thrower = state->elves[throwerIndex];
 
-		if(thrower.id == state->orb.id &&
-			dist(state->orb.x,
-				state->orb.y,
-				thrower.x,
-				thrower.y) < 0.05) {
+	// 	if(thrower.id == state->orb.id &&
+	// 		dist(state->orb.x,
+	// 			state->orb.y,
+	// 			thrower.x,
+	// 			thrower.y) < 0.05) {
 
-			state->orb.id = targetId;
-		}
-	}
+	// 		state->orb.id = targetId;
+	// 	}
+	// }
 }

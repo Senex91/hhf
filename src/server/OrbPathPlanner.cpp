@@ -31,10 +31,10 @@ void OrbPathPlanner::tick(){
 
 	double dt = 0.001; //TODO: timers
 
-	
-	if(state->orb.id != -1){
+	//no elves of this ID
+	if(state->elves.count(state->orb.id) != 0){
 
-		Elf&  elf = state->elves[state->getIndex(state->orb.id)];
+		Elf&  elf = state->elves[state->orb.id];
 
 		double ds = dist(state->orb.x,state->orb.y,elf.x,elf.y);
 		if(ds > 0) {
@@ -53,12 +53,24 @@ void OrbPathPlanner::tick(){
 		}
 
 	}else{
-		//hacky orb spawn
-		if (state->elves.size() > 0){
-			state->orb.id = state->elves[0].id;
-			state->orb.x = state->elves[0].x;
-			state->orb.y = state->elves[0].y;
+		DEBUG("Spawning Orb on index 0");
+
+		typedef std::map<int, Elf>::const_iterator it_type;
+		for(it_type iterator = state->elves.begin(); 
+			iterator != state->elves.end(); iterator++) {
+			// if(iterator->second.alive){
+				state->orb.id = iterator->second.id;
+				state->orb.x = iterator->second.x;
+				state->orb.y = iterator->second.y;
+			// }
 		}
+		//hacky orb spawn
+		// if (state->elves.size() > 0){
+		// 	DEBUG("Spawning Orb on index 0, id=" << state->elves[0].id );
+		// 	state->orb.id = state->elves[0].id;
+		// 	state->orb.x = state->elves[0].x;
+		// 	state->orb.y = state->elves[0].y;
+		// }
 
 	}
 

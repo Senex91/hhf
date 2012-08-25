@@ -109,9 +109,14 @@ void GameRenderer::setCameraStyle(const std::string& style) {
 }
 
 void GameRenderer::renderNextState(GameState const& newState){
-	for(unsigned int i = 0; i < newState.elves.size(); i++){
+	// for(unsigned int i = 0; i < newState.elves.size(); i++){
+
+	typedef std::map<int, Elf>::const_iterator it_type;
+	for(it_type iterator = newState.elves.begin(); 
+		iterator != newState.elves.end(); iterator++) {
+	 
 		
-		const Elf& elfState = newState.elves[i];
+		const Elf& elfState = iterator->second;
 		int elfID = elfState.id;
 
 		OgreElf* current = NULL;

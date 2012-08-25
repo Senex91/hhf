@@ -44,14 +44,16 @@ bool GameMaster::isEnded(){
 
 	int maxPoints = -1;
 
-	std::vector<Elf> elves = physics->getGameState().elves;
-	for(unsigned int i = 0; i<elves.size(); i++){
-		Elf e = elves[i];
-		if (e.alive){
+	std::map<int, Elf> elves = physics->getGameState().elves;
+
+	typedef std::map<int, Elf>::const_iterator it_type;
+	for(it_type iterator = elves.begin(); iterator != elves.end(); iterator++) {
+		// Elf e = elves[i];
+		if (iterator->second.alive){
 
 			// TODO add elf score field
-			if (e.x > maxPoints){
-				maxPoints = e.x;
+			if (iterator->second.x > maxPoints){
+				maxPoints = iterator->second.x;
 			}
 		}
 	}
