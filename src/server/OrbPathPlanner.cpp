@@ -53,8 +53,8 @@ void OrbPathPlanner::tick(){
 		}
 
 	}else{
-		DEBUG("Spawning Orb on index 0");
-
+		// DEBUG("Spawning Orb on index 0");
+		state->orb.id = -1;
 		typedef std::map<int, Elf>::const_iterator it_type;
 		for(it_type iterator = state->elves.begin(); 
 			iterator != state->elves.end(); iterator++) {
@@ -64,6 +64,8 @@ void OrbPathPlanner::tick(){
 				state->orb.y = iterator->second.y;
 			// }
 		}
+
+
 		//hacky orb spawn
 		// if (state->elves.size() > 0){
 		// 	DEBUG("Spawning Orb on index 0, id=" << state->elves[0].id );

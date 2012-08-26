@@ -57,10 +57,10 @@ void GamePhysics::addPlayer(int id) {
 	double ang = 2.0 * 3.1415926 * (double)rand()/(double)RAND_MAX;
 	e.x = START_RADIUS * sin(ang);
 	e.y = START_RADIUS * cos(ang);
-	state.elves[e.id] = e;
+	state.elves[id] = e;
 
-	ElfPathPlanner* planner = new ElfPathPlanner(&state, state.elves.size() -1);
-	elfPlanners[e.id] = planner;
+	ElfPathPlanner* planner = new ElfPathPlanner(&state, id);
+	elfPlanners[id] = planner;
 	
 }
 
