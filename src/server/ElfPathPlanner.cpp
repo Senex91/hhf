@@ -75,20 +75,16 @@ void ElfPathPlanner::setGoal(double x, double y){
 
 void ElfPathPlanner::throwOrb(int targetId){
 
-	// int throwerIndex = state->getIndex(id);
-	// int catcherIndex = state->getIndex(targetId);
+	if (state->elves.count(targetId) != 0){
+		Elf& thrower = state->elves[id];
 
-	// if (throwerIndex != -1 && 
-	// 	catcherIndex != -1){
-	// 	Elf& thrower = state->elves[throwerIndex];
+		if(thrower.id == state->orb.id &&
+			dist(state->orb.x,
+				state->orb.y,
+				thrower.x,
+				thrower.y) < 0.05) {
 
-	// 	if(thrower.id == state->orb.id &&
-	// 		dist(state->orb.x,
-	// 			state->orb.y,
-	// 			thrower.x,
-	// 			thrower.y) < 0.05) {
-
-	// 		state->orb.id = targetId;
-	// 	}
-	// }
+			state->orb.id = targetId;
+		}
+	}
 }

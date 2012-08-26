@@ -1,5 +1,5 @@
 #include "GamePhysics.h"
-#include "GameState.h"bv
+#include "GameState.h"
 #include <cmath>
 #include "Debug.h"
 #include <stdlib.h>
@@ -69,7 +69,7 @@ void GamePhysics::playerSetGoal(int id,double x,double y) {
 }
 
 void GamePhysics::playerThrow(int id,int id2) {
-	DEBUG("attempting throw between " << id << " and " << id2);
+	// DEBUG("attempting throw between " << id << " and " << id2);
 	elfPlanners[id]->throwOrb(id2);
 }
 
