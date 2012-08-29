@@ -37,6 +37,7 @@ public:
 	// spawners
 	void spawnOrb();
 	void spawnFelhound();
+	void spawnPlayers();
 	//TODO spawn players
 
 

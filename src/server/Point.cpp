@@ -24,6 +24,8 @@ void Point::playStep(){
 
 	} else { // 1 player left:
 
+		//unspawn final player
+
 		// Point::isEnded() = true, 
 		// this point will be deconstructed by the GM
 	}
@@ -44,9 +46,9 @@ Round* Point::getCurrentRound(){
 }
 
 void Point::spawnPlayers(){
-
-	//called once playerSpawn is complete
+	// TODO should we wait some time before setting pla
 	playersSpawned = true;
+	physics->spawnPlayers();
 
 }
 

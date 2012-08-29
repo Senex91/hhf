@@ -12,8 +12,17 @@ struct ElfColor {
 	float b;
 };
 
+enum ElfState {
+	ELF_UNSPAWNED=0,
+	ELF_SPAWNED=1,
+	ELF_DEAD=2,
+	ELF_SPECTATING=3
+};
+
 struct Elf {
-    int id;		//must start at 0
+    int id;
+
+    // Physical state
     double x;
     double y;
 	
@@ -25,11 +34,18 @@ struct Elf {
 	double xgoal;
 	double ygoal;
 
+	//Color
 	ElfColor color;
 
-	bool alive;
+	//
+	ElfState state;
 };
 
+enum FelhoundState {
+	FELHOUND_UNSPAWNED=0,
+	FELHOUND_SPAWNED=1,
+	FELHOUND_FEEDING=2
+};
 
 struct Felhound {
     double x;
@@ -40,7 +56,12 @@ struct Felhound {
 
 	double orientation;
 
-	bool alive;
+	FelhoundState state;
+};
+
+enum OrbState {
+	ORB_UNSPAWNED=0,
+	ORB_SPAWNED=1
 };
 
 struct Orb {
@@ -49,7 +70,7 @@ struct Orb {
 	
 	int id;
 
-	bool alive;
+	OrbState state;
 };
 
 struct GameState{

@@ -28,13 +28,13 @@ std::string serializeGameState(const GameState& gs) {
 	ret << gs.orb.x << delim;
 	ret << gs.orb.y << delim;
 	ret << gs.orb.id << delim;
-	ret << gs.orb.alive << delim;
+	ret << gs.orb.state << delim;
 	ret << gs.felhound.x << delim;
 	ret << gs.felhound.y << delim;
 	ret << gs.felhound.xvel << delim;
 	ret << gs.felhound.yvel << delim;
 	ret << gs.felhound.orientation << delim;
-	ret << gs.felhound.alive << delim;
+	ret << gs.felhound.state << delim;
 	ret << gs.elves.size() << delim;
 	typedef std::map<int, Elf>::const_iterator it_type;
 	for(it_type iterator = gs.elves.begin(); iterator != gs.elves.end(); iterator++) {
@@ -53,7 +53,7 @@ std::string serializeGameState(const GameState& gs) {
 		ret << iterator->second.color.r << delim;
 		ret << iterator->second.color.g << delim;
 		ret << iterator->second.color.b << delim;
-		ret << iterator->second.alive << delim;
+		ret << iterator->second.state << delim;
 	}
 	// for(unsigned int i=0;i<gs.elves.size();i++) {
 	// 	ret << gs.elves[i].x << delim;
@@ -67,7 +67,7 @@ std::string serializeGameState(const GameState& gs) {
 	// 	ret << gs.elves[i].color.r << delim;
 	// 	ret << gs.elves[i].color.g << delim;
 	// 	ret << gs.elves[i].color.b << delim;
-	// 	ret << gs.elves[i].alive << delim;
+	// 	ret << gs.elves[i].state << delim;
 	// }
 	
 	return ret.str();
@@ -79,7 +79,7 @@ std::string gameStateToString(const GameState& gs) {
 	ret << "{GameState:\n";
 	ret << "{FH: pos=";
 	ret << "(" << gs.felhound.x << "," << gs.felhound.y << "), vel=(" << gs.felhound.xvel << "," << gs.felhound.yvel << "), orientation=" << gs.felhound.orientation << " }\n";
-	ret << "{Orb: pos=(" << gs.orb.x << ", " << gs.orb.y << "), id=" << gs.orb.id << ", alive=" << gs.orb.alive <<"}\n";
+	ret << "{Orb: pos=(" << gs.orb.x << ", " << gs.orb.y << "), id=" << gs.orb.id << ", state=" << gs.orb.state <<"}\n";
 	ret << gs.elves.size() << "Elves:\n";
 
 	typedef std::map<int, Elf>::const_iterator it_type;
@@ -95,7 +95,7 @@ std::string gameStateToString(const GameState& gs) {
 		ret << "orientation=(" << iterator->second.orientation << ")";
 		ret << "goal=(" << iterator->second.xgoal << ", " << iterator->second.ygoal << ")";
 		ret << "color=(" << iterator->second.color.r << ", " << iterator->second.color.g << ", " << iterator->second.color.b << ")";
-		ret << "alive=" << iterator->second.alive << "";
+		ret << "state=" << iterator->second.state << "";
 		ret << "]\n";
 		// ret << iterator->second.x << delim;
 		// ret << iterator->second.y << delim;
@@ -108,7 +108,7 @@ std::string gameStateToString(const GameState& gs) {
 		// ret << iterator->second.color.r << delim;
 		// ret << iterator->second.color.g << delim;
 		// ret << iterator->second.color.b << delim;
-		// ret << iterator->second.alive << delim;
+		// ret << iterator->second.state << delim;
 	}
 	// for(unsigned int i=0;i<gs.elves.size();i++) {
 	// 	ret << "[";
@@ -118,7 +118,7 @@ std::string gameStateToString(const GameState& gs) {
 	// 	ret << "orientation=(" << gs.elves[i].orientation << ")";
 	// 	ret << "goal=(" << gs.elves[i].xgoal << ", " << gs.elves[i].ygoal << ")";
 	// 	ret << "color=(" << gs.elves[i].color.r << ", " << gs.elves[i].color.g << ", " << gs.elves[i].color.b << ")";
-	// 	ret << "alive=" << gs.elves[i].alive << "";
+	// 	ret << "state=" << gs.elves[i].state << "";
 	// 	ret << "]\n";
 	// }
 	ret << "}";
@@ -132,13 +132,19 @@ GameState deserializeGameState(const std::string& str) {
 	read >> ret.orb.x;
 	read >> ret.orb.y;
 	read >> ret.orb.id;
-	read >> ret.orb.alive;
+	int orbState = -1;
+	// read >> ret.orb.state;
+	read >> orbState;
+	ret.orb.state = static_cast<OrbState>(orbState);
 	read >> ret.felhound.x;
 	read >> ret.felhound.y;
 	read >> ret.felhound.xvel;
 	read >> ret.felhound.yvel;
 	read >> ret.felhound.orientation;
-	read >> ret.felhound.alive;
+	// read >> ret.felhound.state;
+	int felhoundState = -1;
+	read >> felhoundState;
+	ret.felhound.state = static_cast<FelhoundState>(felhoundState);
 	int n; read >> n;
 	
 	for(int i=0;i<n;i++) {
@@ -154,7 +160,10 @@ GameState deserializeGameState(const std::string& str) {
 		read >> e.color.r;
 		read >> e.color.g;
 		read >> e.color.b;
-		read >> e.alive;
+		// read >> static_cast<ElfState>(e.state);
+		int elfState = -1;
+		read >> elfState;
+		e.state = static_cast<ElfState>(elfState);
 		ret.elves[e.id] = e;
 		// ret.elves.push_back(e);
 	}

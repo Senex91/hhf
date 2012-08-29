@@ -16,7 +16,7 @@ void GameMaster::playStep(){
 	if (!this->isEnded()){  // Game in progress
 
 		// get current Point
-		Point* toPlay = getCurrentPoint(); 
+		Point* toPlay = getCurrentPoint();
 
 		// play current point
 		toPlay->playStep();
@@ -49,7 +49,7 @@ bool GameMaster::isEnded(){
 	typedef std::map<int, Elf>::const_iterator it_type;
 	for(it_type iterator = elves.begin(); iterator != elves.end(); iterator++) {
 		// Elf e = elves[i];
-		if (iterator->second.alive){
+		if (iterator->second.state == ELF_SPAWNED){
 
 			// TODO add elf score field
 			if (iterator->second.x > maxPoints){

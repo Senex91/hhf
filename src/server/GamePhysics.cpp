@@ -36,12 +36,12 @@ GamePhysics::~GamePhysics() {
 }
 
 void GamePhysics::tick() {
+
 	typedef std::map<int, ElfPathPlanner*>::const_iterator it_type;
 	for(it_type iterator = elfPlanners.begin(); 
 		iterator != elfPlanners.end(); iterator++) {
 		iterator->second->tick();
 	}
-	
 	orbPlanner->tick();
 	felhoundPlanner->tick();
 }
@@ -74,41 +74,8 @@ void GamePhysics::playerThrow(int id,int id2) {
 }
 
 void GamePhysics::removePlayer(int id) {
-
-
-
-	/*
-	This doesn't work 100%--
-	test that breaks:
-	server start
-	client joins
-	client quits
-	client rejoins (client now doesn't have a real ogre model)
-	client quits (server segfault)
-	*/
 	state.elves.erase(id);
 	elfPlanners.erase(id);
-	// state.elves.erase(state.elves.begin() + state.getIndex(id));
-	// elfPlanners.erase(elfPlanners.begin() + state.getIndex(id));
-
-
-	// for(vector<Elf>::iterator it = state.elves.begin(); 
-	// 	it != state.elves.end(); it++) {
-	// 	if((*it).id == id) {
-	// 		state.elves.erase(it);
-	// 		break;
-	// 	}
-	// }
-
-	// for(vector<ElfPathPlanner*>::iterator it = elfPlanners.begin(); 
-	// 	it != elfPlanners.end(); it++) {
-	// 	if((*it)->getId() == id) {
-	// 		elfPlanners.erase(it);
-	// 		break;
-	// 	}
-	// }
-
-
 }
 
 int GamePhysics::numAlivePlayers(){
@@ -129,6 +96,12 @@ void GamePhysics::spawnOrb(){
 
 
 void GamePhysics::spawnFelhound(){
+
+}
+
+void GamePhysics::spawnPlayers(){
+	//TODO what players to spawn?
+	//signal all pathplanners to spawn
 
 }
 

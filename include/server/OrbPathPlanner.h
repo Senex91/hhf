@@ -15,11 +15,13 @@ public:
 	~OrbPathPlanner();
 
 	void tick();
+
+	// void spawn();
+	// void unSpawn();
 	
 private:
 
 	GameState* state;
-
 };
 
 #endif

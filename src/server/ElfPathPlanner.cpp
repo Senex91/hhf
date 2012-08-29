@@ -32,12 +32,7 @@ ElfPathPlanner::~ElfPathPlanner(){
 void ElfPathPlanner::tick(){
 	double dt = 0.001; //TODO: timers
 
-	// Elf* elf = NULL;
-	// for (unsigned int i = 0; i<state->elves.size(); i++){
-	// 	if (state->elves)
-	// }
-
-	if( state->elves.count(id) != 0){
+	// if( state->elves.count(id) != 0){
 		Elf& elf = state->elves[id];
 
 		if(dist(elf.xgoal,elf.ygoal,elf.x,elf.y)<dt*VELOCITY) {
@@ -49,7 +44,7 @@ void ElfPathPlanner::tick(){
 			elf.x += elf.xvel * dt;
 			elf.y += elf.yvel * dt;
 		}
-	}
+	// }
 
 	
 
@@ -57,7 +52,7 @@ void ElfPathPlanner::tick(){
 
 void ElfPathPlanner::setGoal(double x, double y){
 
-	if( state->elves.count(id) != 0){
+	// if( state->elves.count(id) != 0){
 		Elf& elf = state->elves[id];
 
 		double ds = dist(x,y,elf.x,elf.y);
@@ -69,7 +64,7 @@ void ElfPathPlanner::setGoal(double x, double y){
 		elf.xgoal = x;
 		elf.ygoal = y;
 		elf.orientation = atan2(elf.xvel,elf.yvel);
-	}
+	// }
 
 }
 

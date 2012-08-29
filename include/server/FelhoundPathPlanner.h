@@ -15,11 +15,15 @@ public:
 	~FelhoundPathPlanner();
 
 	void tick();
+
+	// State operations
+	// void spawn();	//enter with god rays
+	// void unSpawn();	//vanish 
+	// void die();		//suffer and vanish
 	
 private:
 
 	GameState* state;
-
 	double felhoundAcceleration;
 
 };
