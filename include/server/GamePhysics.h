@@ -27,19 +27,21 @@ public:
 	void playerThrow(int id,int id2);
 	void removePlayer(int id);
 
-	// accessors for game master
-	// TODO consider placing these somewhere else
-	int numAlivePlayers();
 	GameState getGameState();
-	bool isOrbAlive();
-	bool isFelhoundAlive();
 
-	// spawners
+	// Element state control
+	void unQueuePlayers();
+	void spawnPlayers();
 	void spawnOrb();
 	void spawnFelhound();
-	void spawnPlayers();
-	//TODO spawn players
+	void agroFelhound();
 
+	int getNumAlivePlayers();
+	int getMaxPlayerPoints();
+
+	bool isOrbSpawned();
+	bool isFelhoundSpawned();
+	bool isFelhoundResting();
 
 	
 private:

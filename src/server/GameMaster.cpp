@@ -13,7 +13,7 @@ GameMaster::~GameMaster(){
 
 void GameMaster::playStep(){
 	//TODO if maxNumPoints < LIMIT
-	if (!this->isEnded()){  // Game in progress
+	if (physics->getMaxPlayerPoints() > 20){  // Game in progress
 
 		// get current Point
 		Point* toPlay = getCurrentPoint();
@@ -38,29 +38,4 @@ Point* GameMaster::getCurrentPoint(){
 	}
 
 	return current;
-}
-
-bool GameMaster::isEnded(){
-
-	int maxPoints = -1;
-
-	std::map<int, Elf> elves = physics->getGameState().elves;
-
-	typedef std::map<int, Elf>::const_iterator it_type;
-	for(it_type iterator = elves.begin(); iterator != elves.end(); iterator++) {
-		// Elf e = elves[i];
-		if (iterator->second.state == ELF_SPAWNED){
-
-			// TODO add elf score field
-			if (iterator->second.x > maxPoints){
-				maxPoints = iterator->second.x;
-			}
-		}
-	}
-
-	if (maxPoints < 0){
-		//error...
-	}
-
-	return maxPoints >= 20; // TODO LIMIT constant
 }

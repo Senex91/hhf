@@ -53,10 +53,13 @@ void GamePhysics::addPlayer(int id) {
 		(float)rand()/(float)RAND_MAX,
 		(float)rand()/(float)RAND_MAX };
 	Elf e = { id, 0, 0, 0, 0, 0, 0};
+	//TODO nicer color allocation-- a huge table?
 	e.color = c;
-	double ang = 2.0 * 3.1415926 * (double)rand()/(double)RAND_MAX;
-	e.x = START_RADIUS * sin(ang);
-	e.y = START_RADIUS * cos(ang);
+	// double ang = 2.0 * 3.1415926 * (double)rand()/(double)RAND_MAX;
+	// e.x = START_RADIUS * sin(ang);
+	// e.y = START_RADIUS * cos(ang);
+	//TODO this stuff goes in spawning code
+	e.state = ELF_SPECTATING;
 	state.elves[id] = e;
 
 	ElfPathPlanner* planner = new ElfPathPlanner(&state, id);
@@ -78,33 +81,76 @@ void GamePhysics::removePlayer(int id) {
 	elfPlanners.erase(id);
 }
 
-int GamePhysics::numAlivePlayers(){
-	return 1; //TODO implement
+GameState GamePhysics::getGameState(){
+	return state;
 }
 
-bool GamePhysics::isOrbAlive(){
-	return true;//TODO implement
+void unQueuePlayers(){
+
 }
 
-bool GamePhysics::isFelhoundAlive(){
-	return true;//TODO implement
+void GamePhysics::spawnPlayers(){
+
 }
 
 void GamePhysics::spawnOrb(){
-	
-}
 
+}
 
 void GamePhysics::spawnFelhound(){
 
 }
 
-void GamePhysics::spawnPlayers(){
-	//TODO what players to spawn?
-	//signal all pathplanners to spawn
+void GamePhysics::agroFelhound(){
 
 }
 
-GameState GamePhysics::getGameState(){
-	return state;
+int GamePhysics::getNumAlivePlayers(){
+
+	return -1;
+}
+
+int GamePhysics::getMaxPlayerPoints(){
+
+
+// bool GameMaster::isEnded(){
+
+// 	int maxPoints = -1;
+
+// 	std::map<int, Elf> elves = physics->getGameState().elves;
+
+// 	typedef std::map<int, Elf>::const_iterator it_type;
+// 	for(it_type iterator = elves.begin(); iterator != elves.end(); iterator++) {
+// 		// Elf e = elves[i];
+// 		if (iterator->second.state == ELF_SPAWNED ||
+// 			iterator->second.state == ELF_UNSPAWNED ||
+// 			iterator->second.state == ELF_DEAD){
+
+// 			// TODO add elf score field
+// 			if (iterator->second.x > maxPoints){
+// 				maxPoints = iterator->second.x;
+// 			}
+// 		}
+// 	}
+
+// 	if (maxPoints < 0){
+// 		//error...
+// 	}
+
+// 	return maxPoints >= 20; // TODO LIMIT constant
+// }
+
+	return -1;
+}
+
+bool GamePhysics::isOrbSpawned(){
+	return false;
+}
+
+bool GamePhysics::isFelhoundSpawned(){
+	return false;
+}
+
+bool GamePhysics::isFelhoundResting(){
+	return false;
 }

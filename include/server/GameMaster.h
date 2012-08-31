@@ -17,8 +17,6 @@ public:
 
 	void playStep();
 
-	bool isEnded();
-	
 private:
 
 	Point* getCurrentPoint();

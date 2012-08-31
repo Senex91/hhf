@@ -26,6 +26,8 @@ void Point::playStep(){
 
 		//unspawn final player
 
+		
+
 		// Point::isEnded() = true, 
 		// this point will be deconstructed by the GM
 	}
@@ -46,12 +48,14 @@ Round* Point::getCurrentRound(){
 }
 
 void Point::spawnPlayers(){
-	// TODO should we wait some time before setting pla
+	// TODO should we wait some time before setting?
 	playersSpawned = true;
+
+	//spawn only dead and unspawned playerss
 	physics->spawnPlayers();
 
 }
 
 bool Point::isEnded(){
-	return !(physics->numAlivePlayers() > 1); 
+	return !(physics->getNumAlivePlayers() > 1); 
 }

@@ -44,7 +44,7 @@ struct Elf {
 enum FelhoundState {
 	FELHOUND_UNSPAWNED=0,
 	FELHOUND_SPAWNED=1,
-	FELHOUND_FEEDING=2
+	FELHOUND_RESTING=2
 };
 
 struct Felhound {
