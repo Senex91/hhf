@@ -13,7 +13,7 @@ Game::~Game(){
 
 void Game::playStep(){
 	//TODO if maxNumPoints < LIMIT
-	if (physics->getMaxPlayerPoints() > 20){  // Game in progress
+	if (!this->isEnded()){  // Game in progress
 
 		// get current Point
 		Point* toPlay = getCurrentPoint();
@@ -39,3 +39,8 @@ Point* Game::getCurrentPoint(){
 
 	return current;
 }
+
+bool Game::isEnded(){
+	return physics->getMaxPlayerPoints() > 20;
+}
+

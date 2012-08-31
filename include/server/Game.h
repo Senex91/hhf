@@ -1,5 +1,5 @@
-#ifndef GAME_MASTER_H
-#define GAME_MASTER_H
+#ifndef GAME_H
+#define GAME_H
 
 #include "Point.h"
 #include "GamePhysics.h"
@@ -17,12 +17,16 @@ public:
 
 	void playStep();
 
+	bool isEnded();
+
 private:
 
 	Point* getCurrentPoint();
 	Point* current;
 
 	GamePhysics* physics;
+
+
 	
 };
 

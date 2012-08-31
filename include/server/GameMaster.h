@@ -3,24 +3,23 @@
 
 #include "Point.h"
 #include "GamePhysics.h"
+#include "Game.h"
 
 /**
- * @brief A Game plays a game
- * A game is played until a player reaches a limit
- * number of points to win.
+ * @brief A GameMaster conducts games, and allows players to join the game.
  */
-class Game {
+class GameMaster {
 public:
 
-	Game(GamePhysics*);
-	~Game();
+	GameMaster(GamePhysics*);
+	~GameMaster();
 
 	void playStep();
 
 private:
 
-	Point* getCurrentPoint();
-	Point* current;
+	Game* getCurrentGame();
+	Game* current;
 
 	GamePhysics* physics;
 	
