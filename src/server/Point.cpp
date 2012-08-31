@@ -1,9 +1,9 @@
 #include "Point.h"
+#include "Debug.h"
 
 Point::Point(GamePhysics* phys) {
 	physics = phys;
 	current = NULL;
-	playersSpawned = false;
 }
 
 Point::~Point(){
@@ -15,18 +15,24 @@ void Point::playStep(){
 	//TODO consider a switch statement here
 
 	// Spawn players if not spawned yet
-	if (!playersSpawned){
-		spawnPlayers();
+	if (!physics->arePlayersSpawned()){
+		physics->spawnPlayers();
 	} else if (!this->isEnded()){ //Normal mode, play game
 
 		Round* toPlay = getCurrentRound();
 		toPlay->playStep();
 
-	} else { // 1 player left:
+	} else { // 1 player left: unspawn final player
 
-		//unspawn final player
-
-		
+		//TODO throw error if numAlivePlayers != 1;
+		if(physics->getAlivePlayers().size() != 1){
+			DEBUG("ERROR: NOT 1 PLAYER LEFT AT POINT END");
+		}
+		int finalID = physics->getAlivePlayers()[0];
+		//unspawn worthless human
+		std::vector<int> unspawnList;
+		unspawnList.push_back(finalID);
+		physics->unSpawnPlayers(unspawnList);
 
 		// Point::isEnded() = true, 
 		// this point will be deconstructed by the GM
@@ -45,15 +51,6 @@ Round* Point::getCurrentRound(){
 	}
 
 	return current;
-}
-
-void Point::spawnPlayers(){
-	// TODO should we wait some time before setting?
-	playersSpawned = true;
-
-	//spawn only dead and unspawned playerss
-	physics->spawnPlayers();
-
 }
 
 bool Point::isEnded(){

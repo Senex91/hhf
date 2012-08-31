@@ -31,17 +31,21 @@ public:
 
 	// Element state control
 	void unQueuePlayers();
+	void unSpawnPlayers(std::vector<int>);
 	void spawnPlayers();
 	void spawnOrb();
 	void spawnFelhound();
 	void agroFelhound();
 
+
 	int getNumAlivePlayers();
+	std::vector<int> getAlivePlayers();
 	int getMaxPlayerPoints();
 
 	bool isOrbSpawned();
 	bool isFelhoundSpawned();
 	bool isFelhoundResting();
+	bool arePlayersSpawned();
 
 	
 private:

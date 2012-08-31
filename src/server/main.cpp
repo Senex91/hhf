@@ -4,7 +4,7 @@
 #include "Server.h"
 
 #include <SDL.h>
-#include "GameMaster.h"
+#include "Game.h"
 
 using std::cout;
 using std::endl;
@@ -18,7 +18,7 @@ int main() {
 	s.run();
 	// GamePhysics physics;
 
-	// GameMaster master(NULL);
+	// Game master(NULL);
 	// while(true){
 	// 	DEBUG("tick");
 

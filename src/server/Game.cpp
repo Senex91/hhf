@@ -1,17 +1,17 @@
-#include "GameMaster.h"
+#include "Game.h"
 
 #include <vector>
 
-GameMaster::GameMaster(GamePhysics* phys){
+Game::Game(GamePhysics* phys){
 	physics = phys;
 	current = NULL;
 }
 
-GameMaster::~GameMaster(){
+Game::~Game(){
 	delete current;
 }
 
-void GameMaster::playStep(){
+void Game::playStep(){
 	//TODO if maxNumPoints < LIMIT
 	if (physics->getMaxPlayerPoints() > 20){  // Game in progress
 
@@ -23,13 +23,13 @@ void GameMaster::playStep(){
 
 	} else { // Game over
 
-		// GameMaster::isEnded() = true, 
+		// Game::isEnded() = true, 
 		// this game will be deconstructed by the server.
 	}
 	
 }
 
-Point* GameMaster::getCurrentPoint(){
+Point* Game::getCurrentPoint(){
 	if (current == NULL){
 		current = new Point(physics);
 	} else if(current->isEnded()){

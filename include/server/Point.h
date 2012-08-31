@@ -30,10 +30,6 @@ private:
 	Round* getCurrentRound();
 	Round* current;
 
-	void spawnPlayers();
-	bool playersSpawned;
-
-
 	GamePhysics* physics; // TODO how this gets here
 
 	

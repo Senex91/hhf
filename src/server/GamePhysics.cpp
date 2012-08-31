@@ -85,15 +85,22 @@ GameState GamePhysics::getGameState(){
 	return state;
 }
 
-void unQueuePlayers(){
+void GamePhysics::unQueuePlayers(){
+	//moves players from queue into unspawned
 
 }
 
+void GamePhysics::unSpawnPlayers(std::vector<int> playerIds){
+	
+}
+
 void GamePhysics::spawnPlayers(){
+	//moves players from unspawned/dead to spawned
 
 }
 
 void GamePhysics::spawnOrb(){
+	//moves orb from unspawned to spawned
 
 }
 
@@ -110,10 +117,14 @@ int GamePhysics::getNumAlivePlayers(){
 	return -1;
 }
 
+std::vector<int> GamePhysics::getAlivePlayers(){
+	return std::vector<int>();
+}
+
 int GamePhysics::getMaxPlayerPoints(){
 
 
-// bool GameMaster::isEnded(){
+// bool Game::isEnded(){
 
 // 	int maxPoints = -1;
 
@@ -152,5 +163,9 @@ bool GamePhysics::isFelhoundSpawned(){
 }
 
 bool GamePhysics::isFelhoundResting(){
+	return false;
+}
+
+bool GamePhysics::arePlayersSpawned(){
 	return false;
 }
